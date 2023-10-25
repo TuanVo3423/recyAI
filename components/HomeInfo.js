@@ -57,7 +57,7 @@ function HomeInfo() {
 
                 </div>
             </div>
-            <div className='flex items-center justify-center space-x-44 mt-16'>
+            <div className='flex items-center justify-center lg:space-x-44 mt-16 ml-5'>
                 <div>
                     <img src='https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg'
                         alt=""
@@ -67,10 +67,10 @@ function HomeInfo() {
                 <div className='-mt-5'>
                     <div className='flex items-center justify-center space-x-3'>
                         <p className='mt-3 mr-32 text-2xl lg:text-2xl'>PuPu</p>
-                        <button className="bg-gray-200 hover:bg-gray-400 text-black w-[300px] h-[45px] ml-[75px] rounded-xl text-xl font-semibold mt-2">
+                        <button className="bg-gray-200 hover:bg-gray-400 text-black w-[280px] h-[45px] ml-[75px] rounded-xl text-xl font-semibold mt-2">
                             Chinh sua trang ca nhan
                         </button>
-                        <button className="bg-gray-200 hover:bg-gray-400 text-black w-[210px] h-[45px] ml-[75px] rounded-xl text-xl font-semibold mt-2">
+                        <button className="bg-gray-200 hover:bg-gray-400 text-black w-[200px] h-[45px] ml-[75px] rounded-xl text-xl font-semibold mt-2">
                             Xem kho luu tru
                         </button>
                     </div>
@@ -102,7 +102,7 @@ function HomeInfo() {
                 </div>
             </div>
             <hr className='mx-[500px] border-gray-600'></hr>
-            <div className='lg:flex justify-center items-center space-x-3 mt-5'>
+            <div className='flex justify-center items-center space-x-2 mt-5 w-auto h-auto ml-1'>
                 <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
                     <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
                         className='h-[400px] w-[400px] object-cover'
@@ -122,46 +122,7 @@ function HomeInfo() {
                 </div>
 
             </div>
-            <div className='lg:flex justify-center items-center space-x-3 mt-5'>
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-            </div>
-            <div className='flex justify-center items-center space-x-3 mt-5'>
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-                <div className='w-[400px] h-[400px] border-gray-300 cursor-pointer hover:opacity-75'>
-                    <img src="https://cdn.vnreview.vn/524288_141218525055777_1847291203813376?wt=310bb374e23b5e38073cb93b18733881&rt=3aa018865eb3fadcaae3924d41bd5783"
-                        className='h-[400px] w-[400px] object-cover'
-                        alt="" />
-                </div>
-
-            </div>
+            
         </div>
     )
 }
