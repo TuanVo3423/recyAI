@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -52,6 +53,7 @@
     "react-i18next": "^12.2.0",
     "react-lottie": "^1.2.3",
     "react-query": "^3.39.3",
+    "react-textarea-autosize": "^8.5.3",
     "react-typist": "^2.0.5",
     "reactflow": "^11.7.0",
     "recharts": "^2.5.0",
@@ -67,7 +69,7 @@
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-lottie": "^1.2.6",
     "@types/react-typist": "^2.0.3",
-  "@types/uuid": "^9.0.1",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "autoprefixer": "^10",

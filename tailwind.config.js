@@ -6,13 +6,11 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      
-    },
+    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),
     require('tailwind-scrollbar'),
     require('tailwind-scrollbar-hide'),
   ],
-}
+};
