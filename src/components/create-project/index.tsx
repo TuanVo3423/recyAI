@@ -1,28 +1,25 @@
 import { Stack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import StepChooseApps from './components/StepChooseApps';
-import StepChooseCategories from './components/StepChooseCategories';
+import StepInputMaterials from './components/StepInputMaterials';
 import StepChooseDocumentType from './components/StepChooseDocumentType';
-import StepStepTypeShortDesc from './components/StepTypeShortDesc';
-import { defaultValues, documentModes } from './data';
+import { defaultValues, documentModes, schema_Input_Materials } from './data';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {};
 
 const CreateProjectSection = (props: Props) => {
-  const form = useForm({ defaultValues });
+  const form = useForm({
+    resolver: yupResolver(schema_Input_Materials),
+    defaultValues,
+  });
   const { watch } = form;
-  const [documentMode, category, appId, step] = watch([
-    'documentMode',
-    'category',
-    'appId',
-    'step',
-  ]);
+  const [documentMode, step] = watch(['documentMode', 'step']);
   const AvailableModeRender = () => {
     return (
       <>
-        {step >= 1 && <StepChooseCategories form={form} />}
-        {step >= 2 && <StepChooseApps form={form} />}
-        {step >= 3 && <StepStepTypeShortDesc form={form} />}
+        {step >= 1 && <StepInputMaterials form={form} />}
+        {/* {step >= 2 && <StepChooseApps form={form} />} */}
+        {/* {step >= 3 && <StepStepTypeShortDesc form={form} />} */}
       </>
     );
   };

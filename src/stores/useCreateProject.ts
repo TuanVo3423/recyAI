@@ -1,18 +1,13 @@
-import { TColumn, TSection } from 'components/document-page/data';
+import { IMaterial } from '@/components/create-project/components/StepInputMaterials/data';
 import { create } from 'zustand';
 
-export interface ICreateProject {
-  appId: any;
-  projectName: string;
-  description: string;
-}
 export interface ICreateProjectContent {
-  data: ICreateProject;
-  updateCreateProjectContent: (data: ICreateProject) => void;
+  data: Array<IMaterial>;
+  updateCreateProjectContent: (data: Array<IMaterial>) => void;
 }
 
 export const useCreateProject = create<ICreateProjectContent>((set, get) => ({
-  data: undefined,
+  data: [],
   updateCreateProjectContent: (data) =>
     set({
       data,

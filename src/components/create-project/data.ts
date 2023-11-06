@@ -1,26 +1,34 @@
+import { schema_number_required, schema_string_no_length_required } from '@/form/schema';
 import { TCardModeProps } from './components/StepChooseDocumentType/CardMode';
+import * as Yup from 'yup';
+export const schema_Input_Materials = Yup.object({
+  name: schema_string_no_length_required,
+  description : schema_string_no_length_required,
+  quantity : schema_number_required,
+});
+
 
 export enum documentModes {
   not_choose,
   available,
   new,
 }
+
+export interface IMaterialInput {
+  name: string;
+  description: string;
+  quantity: number;
+}
 export interface ICreateProject {
   documentMode: documentModes;
-  category: any;
-  appId: any;
-  projectName: string;
-  description: string;
   step: number;
+  MaterialInput: IMaterialInput[] | [];
 }
 
 export const defaultValues: ICreateProject = {
   documentMode: documentModes.not_choose,
-  appId: '',
-  category: '',
-  description: '',
-  projectName: '',
   step: 0,
+  MaterialInput: [],
 };
 
 export const documentModeData: Omit<TCardModeProps, 'form'>[] = [

@@ -31,7 +31,7 @@ export const schema_string_required = Yup.string()
 
 export const schema_string_no_length_required = Yup.string()
   .trim()
-  .required('field_is_a_required_field')
+  .required('field is a required field')
   .nullable(true);
 
 export const schema_string = Yup.string()
