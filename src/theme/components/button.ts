@@ -12,15 +12,107 @@ const Button: ComponentStyleConfig = {
   },
 
   variants: {
-    'primary-fill': {
-      bg: 'pri.1',
-      background: 'pri.1',
-      color: 'text.900',
+    primary: {
+      bg: '#3f04d8',
+      background: 'red',
+      color: 'gray.100',
+      borderRadius: 'md',
+      boxShadow: 'md',
+      borderWidth: '1px',
+      borderColor: '#e5e0df',
+      minHeight: '16px',
+      width: 'fit-content',
+      padding: '12px 16px',
 
       _hover: {
-        bg: '#EFFEB7',
-        background: '#EFFEB7',
-        color: 'text.900',
+        bg: '#3d4de4',
+        background: '#3d4de4',
+      },
+
+      _active: {
+        // bg: "#B1C36B",
+        // background: "#B1C36B",
+        // backdropFilter: "blur(3px)",
+      },
+
+      _disabled: {
+        background: 'blackAlpha.800',
+        opacity: 0.5,
+        _hover: {
+          background: 'blackAlpha.800 !important',
+        },
+      },
+    },
+    secondary: {
+      bg: 'blackAlpha.700',
+      background: 'blackAlpha.700',
+      color: 'whiteAlpha.900',
+
+      _hover: {
+        bg: 'blackAlpha.800',
+        background: 'blackAlpha.800',
+      },
+
+      _active: {
+        // bg: "#B1C36B",
+        // background: "#B1C36B",
+        // backdropFilter: "blur(3px)",
+      },
+
+      _disabled: {
+        background: 'blackAlpha.800',
+        opacity: 0.5,
+        _hover: {
+          background: 'blackAlpha.800 !important',
+        },
+      },
+    },
+    secondary_2: {
+      bg: '#999999',
+      background: '#999999',
+      color: 'gray.100',
+      borderRadius: 'md',
+      boxShadow: 'md',
+      borderWidth: '1px',
+      borderColor: '#e5e0df',
+      minHeight: '16px',
+      width: 'fit-content',
+      padding: '12px 16px',
+
+      _hover: {
+        opacity: 0.7,
+      },
+
+      _active: {
+        bg: '#3f04d8',
+        background: '#3f04d8',
+        // bg: "#B1C36B",
+        // background: "#B1C36B",
+        // backdropFilter: "blur(3px)",
+      },
+
+      _disabled: {
+        background: 'blackAlpha.800',
+        opacity: 0.5,
+        _hover: {
+          background: 'blackAlpha.800 !important',
+        },
+      },
+    },
+    outline: {
+      bg: 'transparent',
+      background: 'transparent',
+      color: '#2208cc',
+      borderColor: '#2208cc',
+      minHeight: '2rem',
+      width: 'fit-content',
+      padding: '12px 16px',
+      borderRadius: 'md',
+      borderWidth: '2px',
+      boxShadow: 'md',
+      _hover: {
+        bg: '#EBD2F4',
+        background: '#EBD2F4',
       },
 
       _active: {
@@ -30,161 +122,11 @@ const Button: ComponentStyleConfig = {
       },
 
       _disabled: {
-        bg: '#373543',
-        background: '#373543',
-        pointerEvents: 'none',
-        color: 'text.400',
-      },
-    },
-
-    'primary-ghost': {
-      bg: 'transparent',
-      background: 'transparent',
-      color: 'pri.1',
-
-      _hover: {
-        color: '#EFFEB7',
-      },
-
-      _active: {
-        color: '#B1C36B',
-      },
-
-      _disabled: {
-        bg: '#373543',
-        background: '#373543',
-        pointerEvents: 'none',
-        color: 'text.400',
-      },
-    },
-
-    'primary-fill-while': {
-      bg: 'pri.2',
-      background: 'pri.2',
-      color: 'text.900',
-
-      _hover: {
-        bg: '#C8EB6A',
-        background: '#C8EB6A',
-        color: 'text.900',
-      },
-
-      _active: {
-        bg: '#A4DA0D',
-        background: '#A4DA0D',
-        backdropFilter: 'blur(3px)',
-      },
-
-      _disabled: {
-        bg: 'text.50',
-        background: 'text.50',
-        pointerEvents: 'none',
-        color: 'text.200',
-      },
-    },
-
-    'primary-transparent': {
-      bg: 'transparent',
-      background: 'transparent',
-      color: 'text.0',
-
-      _hover: {
-        bg: 'transparent',
-        background: 'transparent',
-        color: 'text.0',
-      },
-
-      _active: {
-        bg: 'transparent',
-        background: 'transparent',
-        color: 'text.0',
-      },
-
-      _disabled: {
-        bg: 'transparent',
-        background: 'transparent',
-        pointerEvents: 'none',
-        color: 'text.400',
-      },
-    },
-
-    'while-line': {
-      bg: 'transparent',
-      background: 'transparent',
-      border: '1px solid #5F5D69',
-      color: 'text.50',
-
-      _hover: {
-        bg: 'transparent',
-        background: 'transparent',
-        border: '1px solid #EFEFF0',
-      },
-
-      _active: {
-        bg: '#373543',
-        background: '#373543',
-        border: '1px solid #EFEFF0',
-        backdropFilter: 'blur(3px)',
-      },
-
-      _disabled: {
-        bg: 'transparent',
-        background: 'transparent',
-        pointerEvents: 'none',
-        border: '1px solid #5F5D69',
-        color: 'text.400',
-      },
-    },
-
-    'while-line-while': {
-      bg: 'transparent',
-      background: 'transparent',
-      border: '1px solid #B7B6BB',
-      color: 'text.900',
-
-      _hover: {
-        bg: 'transparent',
-        background: 'transparent',
-        border: '1px solid #141318',
-      },
-
-      _active: {
-        bg: 'text.50',
-        background: 'text.50',
-        border: '1px solid #141318',
-      },
-
-      _disabled: {
-        bg: 'transparent',
-        background: 'transparent',
-        pointerEvents: 'none',
-        border: '1px solid #B7B6BB',
-        color: 'text.200',
-      },
-    },
-
-    'dark-fill': {
-      bg: 'text.900',
-      background: 'text.900',
-      color: 'text.0',
-
-      _hover: {
-        bg: 'text.900',
-        background: 'text.900',
-        color: 'text.0',
-      },
-
-      _active: {
-        bg: 'text.900',
-        background: 'text.900',
-        color: 'text.0',
-      },
-
-      _disabled: {
-        bg: '#373543',
-        background: '#373543',
-        pointerEvents: 'none',
-        color: 'text.400',
+        background: 'blackAlpha.800',
+        opacity: 0.5,
+        _hover: {
+          background: 'blackAlpha.800 !important',
+        },
       },
     },
   },

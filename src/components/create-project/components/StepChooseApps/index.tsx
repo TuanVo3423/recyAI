@@ -36,7 +36,48 @@ const StepChooseApps = ({ form, ...rest }: StepChooseAppsProps) => {
   const ref = useRef(null);
   const [appState, setAppState] = useState<number | null>();
   const isLoading = false;
-  const apps = [];
+  const apps = [
+    {
+      id: 1,
+      name: 'Business',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 2,
+      name: 'Education',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 3,
+      name: 'Legal',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 4,
+      name: 'Medical',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 5,
+      name: 'Personal',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 6,
+      name: 'Real Estate',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 7,
+      name: 'Technology',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 8,
+      name: 'Other',
+      status: 'AVAILABLE',
+    },
+  ];
   // const { name } = useMemo(() => {
   //   if (appState) {
   //     return apps.find((app) => app.id === appState);

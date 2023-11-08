@@ -1,4 +1,4 @@
-import { TColumn, TSection } from 'components/document-page/data';
+import { TColumn, TSection, TSection } from '../components/result/data';
 import { create } from 'zustand';
 
 export interface ITableContentItem {
@@ -48,11 +48,42 @@ export const sections: Array<TSection> = [
   },
 ];
 
+export const sections2: Array<TSection> = [
+  {
+    id: 1,
+    content: 'Purpose',
+  },
+  {
+    id: 2,
+    content: 'User interfaces',
+  },
+  {
+    id: 3,
+    content: 'User characteristics',
+  },
+  {
+    id: 4,
+    content: 'User characteristics',
+  },
+  {
+    id: 5,
+    content: 'User characteristics',
+  },
+  {
+    id: 6,
+    content: 'User characteristics',
+  },
+  {
+    id: 7,
+    content: 'User characteristics',
+  },
+];
+
 export const DefaultValue: TColumn[] = [
   {
     id: 1,
     name: 'Table Content',
-    tableOfContents: sections,
+    tableOfContents: sections2,
   },
 ];
 
