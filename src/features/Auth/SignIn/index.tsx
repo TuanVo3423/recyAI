@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-function Login() {
+export const SignIn = () => {
   return (
-    <div className="flex items-center justify-center mt-[100px] mx-10 mx-auto">
+    <div className="flex items-center justify-center mt-[100px] mx-auto">
       <div className="mr-10 mt-8 hidden lg:block">
         <Image
           src="https://blog.hootsuite.com/wp-content/uploads/2022/01/Instagram-statistics.png"
@@ -71,6 +71,4 @@ function Login() {
       </div>
     </div>
   );
-}
-
-export default Login;
+};

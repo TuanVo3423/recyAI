@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { Path, publicPaths } from './data';
 import _isEmpty from 'lodash/isEmpty';
-import { useAuth } from '@/store';
+import { useAuth } from '@/stores';
 
 export const useAuthCheck = () => {
   const [authorized, setAuthorized] = useState(false);
@@ -19,30 +19,30 @@ export const useAuthCheck = () => {
       const path = url.split('?')[0];
       const isPublicPath = publicPaths.includes(path as Path);
 
-      // if (
-      //   (path === Path.LOGIN || path === Path.SIGN_UP) &&
-      //   !_isEmpty(profileStore)
-      // ) {
-      //   redirectToHome();
-      //   return;
-      // }
+      if (
+        (path === Path.LOGIN || path === Path.SIGN_UP) &&
+        !_isEmpty(profileStore)
+      ) {
+        redirectToHome();
+        return;
+      }
 
-      // if (isPublicPath) {
-      //   setAuthorized(true);
-      //   return;
-      // }
+      if (isPublicPath) {
+        setAuthorized(true);
+        return;
+      }
 
-      // if (_isEmpty(profile)) {
-      //   redirectToLogin();
-      //   return;
-      // }
+      if (_isEmpty(profile)) {
+        redirectToLogin();
+        return;
+      }
 
-      // if (_isEmpty(profileStore)) {
-      //   setAuthorized(false);
-      //   return;
-      // }
+      if (_isEmpty(profileStore)) {
+        setAuthorized(false);
+        return;
+      }
 
-      // setAuthorized(true);
+      setAuthorized(true);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [profile, profileStore, pathname]
@@ -50,7 +50,7 @@ export const useAuthCheck = () => {
 
   const redirectToLogin = () => {
     setAuthorized(false);
-    router.push('/auth/sign-in');
+    router.push('/sign-in');
   };
 
   const redirectToHome = () => {

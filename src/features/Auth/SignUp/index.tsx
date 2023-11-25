@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-function SignUp() {
+export const SignUp = () => {
   return (
-    <div className="flex items-center justify-center mt-[50px] mx-10 mx-auto">
+    <div className="flex items-center justify-center mt-[50px]  mx-auto">
       <div>
         <div className="border border-gray-300 w-[500px] h-[800px] ">
           <div className="lg:block ml-[100px] mt-[50px] w-[300px] justify-center mb-8">
@@ -83,6 +83,4 @@ function SignUp() {
       </div>
     </div>
   );
-}
-
-export default SignUp;
+};
