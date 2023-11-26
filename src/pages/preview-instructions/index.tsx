@@ -1,21 +1,22 @@
-import { CreateInstructions } from '@/features';
+import { PreviewInstructions } from '@/features';
 import { LayoutInstructions } from '@/layouts';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-export default function CreateInstructionsPage() {
+export default function PreviewInstructionsPage() {
   return (
     <>
       <Head>
-        <title>CreateInstructionsPage - AI.recycling.website</title>
+        <title>PreviewInstructionsPage - AI.recycling.website</title>
         <meta
           name="description"
           content="Meta description for the Assistant page"
         />
       </Head>
-      <LayoutInstructions page="Home">
-        <CreateInstructions />
+
+      <LayoutInstructions page="Create project">
+        <PreviewInstructions />
       </LayoutInstructions>
     </>
   );

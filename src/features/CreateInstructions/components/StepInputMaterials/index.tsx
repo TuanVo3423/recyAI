@@ -63,7 +63,7 @@ export const StepInputMaterials = ({
 
   const handleFinishCreateProject = () => {
     updateCreateProjectContent(MaterialInput);
-    router.push('/result');
+    router.push('/preview-instructions');
   };
 
   const handleChangeQuantity = (value: IMaterial) => {

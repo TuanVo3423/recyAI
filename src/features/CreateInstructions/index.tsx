@@ -33,11 +33,9 @@ export const CreateInstructions = (props: Props) => {
   };
 
   return (
-    <LayoutCreateProject page="Home">
       <Stack spacing="24px" pt="48px" w="container.lg" zIndex={2} pb={18}>
         <StepChooseDocumentType form={form} />
         {renderSteps()}
       </Stack>
-    </LayoutCreateProject>
   );
 };
