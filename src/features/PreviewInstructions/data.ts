@@ -1,7 +1,15 @@
 import * as Yup from 'yup';
-import { schema_string_no_length_required } from '../../form/schema';
+import {
+  schema_number,
+  schema_string_no_length_required,
+} from '../../form/schema';
 export const schema_create_section = Yup.object({
   instruction: schema_string_no_length_required,
+});
+
+export const schema_share = Yup.object({
+  content: schema_string_no_length_required,
+  is_public: schema_number,
 });
 
 export interface IDefaultValue {
@@ -11,6 +19,17 @@ export interface IDefaultValue {
 export const defaultValues: IDefaultValue = {
   instruction: '',
 };
+
+export interface IDefaultValueShare {
+  content: string;
+  is_public: number;
+}
+
+export const defaultValueShare: IDefaultValueShare = {
+  content: '',
+  is_public: 0,
+};
+
 export type TSection = {
   id?: number | string;
   content: string;

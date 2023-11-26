@@ -1,28 +1,35 @@
 import {
-    BookmarkIcon,
-    ChatIcon,
-    DotsHorizontalIcon,
-    EmojiHappyIcon,
-    HeartIcon,
-    PaperAirplaneIcon,
+  BookmarkIcon,
+  ChatIcon,
+  DotsHorizontalIcon,
+  EmojiHappyIcon,
+  HeartIcon,
+  PaperAirplaneIcon,
 } from '@heroicons/react/outline';
-import { posts_fake_data } from './data';
+import { useGetTweets } from '@/api/tweets';
 
 export const Posts = () => {
-  return (
-    <div>
-      {posts_fake_data.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          username={post.username}
-          userImg={post.userImg}
-          img={post.img}
-          caption={post.caption}
-        />
-      ))}
-    </div>
-  );
+  const { data, isLoading } = useGetTweets();
+  if (isLoading) return <div>Loading...</div>;
+  else
+    return (
+      <div>
+        {data.tweets.map((post) => (
+          <Post
+            key={post._id}
+            id={post._id}
+            username={'Tuan Vo'}
+            userImg={
+              'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
+            }
+            img={
+              'https://images.pexels.com/photos/409696/pexels-photo-409696.jpeg?cs=srgb&dl=pexels-karol-d-409696.jpg&fm=jpg'
+            }
+            caption={post.content}
+          />
+        ))}
+      </div>
+    );
 };
 
 function Post({ id, username, userImg, img, caption }) {
