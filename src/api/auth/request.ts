@@ -3,7 +3,7 @@ import { ISignIn, ISignUp } from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
-    url: `users/signup`,
+    url: `users/register`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

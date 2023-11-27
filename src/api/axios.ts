@@ -120,18 +120,20 @@ request.interceptors.response.use(
     // if (waitForLogout) return;
 
     const { status, data, config } = error?.response || {};
+    console.log('status: ', status);
     switch (status) {
       case ERROR.UNAUTHORIZED: {
-        if (LocalStorage.get(PROJECT_AUTH_TOKEN)) {
-          // if (data?.message) {
-          //   toast({
-          //     description: data?.message,
-          //     status: "error",
-          //   });
-          // }
-          clearLocalStorageAndGotoLogin();
-          return;
-        }
+        clearLocalStorageAndGotoLogin();
+        return;
+        // if (LocalStorage.get(PROJECT_AUTH_TOKEN)) {
+        // if (data?.message) {
+        //   toast({
+        //     description: data?.message,
+        //     status: "error",
+        //   });
+        // }
+        //   console.log('err ath');
+        // }
         // let token;
         // if (isFetchingNewToken) {
         //   token = await waitForGetNewToken();

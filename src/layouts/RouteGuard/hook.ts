@@ -11,7 +11,7 @@ export const useAuthCheck = () => {
   const router = useRouter();
   const { pathname } = router;
 
-  // const profileStore = useAuth((state) => state.profile);
+  const profileStore = useAuth((state) => state.profile);
   const profile = LocalStorage.get(PROJECT_AUTH_TOKEN);
 
   const checkAuthorization = useCallback(
@@ -34,7 +34,7 @@ export const useAuthCheck = () => {
 
       if (path === Path.LOGIN || path === Path.SIGN_UP) {
         if (!_isEmpty(profile)) {
-          redirectToFeed();
+          redirectToProfile();
         }
         setAuthorized(true);
       }
@@ -48,10 +48,10 @@ export const useAuthCheck = () => {
         return;
       }
 
-      // if (_isEmpty(profileStore)) {
-      //   setAuthorized(false);
-      //   return;
-      // }
+      if (_isEmpty(profileStore)) {
+        setAuthorized(false);
+        return;
+      }
 
       setAuthorized(true);
     },
@@ -64,9 +64,9 @@ export const useAuthCheck = () => {
     router.push('/auth/sign-in');
   };
 
-  const redirectToFeed = () => {
+  const redirectToProfile = () => {
     // setAuthorized(false);
-    router.push('/feed');
+    router.push('/profile');
   };
 
   return { checkAuthorization, authorized };

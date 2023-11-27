@@ -2,9 +2,8 @@ import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import {
-  LayoutCreateProject,
   StepChooseDocumentType,
-  StepInputMaterials,
+  StepInputMaterials
 } from './components';
 import { defaultValues, documentModes, schema_Input_Materials } from './data';
 

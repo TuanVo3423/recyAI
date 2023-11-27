@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useMemo, useState } from 'react';
@@ -29,6 +30,8 @@ import {
   schema_share,
 } from './data';
 import { createTweet } from '@/api/tweets';
+import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
 
 const fake = {
   type: 0,
@@ -45,10 +48,14 @@ const fake = {
 interface TPreviewInstructionsProps extends BoxProps {}
 
 export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
-  const data = useCreateProject((state) => state.data);
+  const [columns, setColumns] = useState<TColumn[]>([]);
+  const [stepToken, setStepToken] = useState('');
+
+  const router = useRouter();
+  const toast = useToast();
   const CreateNewSection = useDisclosure();
   const ShareSection = useDisclosure();
-  const [columns, setColumns] = useState<TColumn[]>([]);
+
   const form = useForm<any>({
     resolver: yupResolver(schema_create_section),
     defaultValues,
@@ -58,7 +65,9 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
     defaultValues: defaultValueShare,
   });
   const { watch, setValue, reset } = form;
-  const [stepToken, setStepToken] = useState('');
+
+  const data = useCreateProject((state) => state.data);
+
   const { StepChain } = useMemo(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { chatPrompt: stepPrompt } = useGenerateStepsPrompt(data);
@@ -94,10 +103,34 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleOnSave = async () => {
-    const res = await createInstruction({ steps: columns[0].tableOfContents });
-    console.log(res);
-  };
+  const { mutateAsync: handleOnSave, isLoading } = useMutation(
+    async () => {
+      const res = await createInstruction({
+        steps: columns[0].tableOfContents,
+      });
+      return res;
+    },
+    {
+      onSuccess: async (data) => {
+        await router.push('/feed');
+        toast({
+          description: data.message,
+          status: 'success',
+        });
+      },
+      onError: async (error: any) => {
+        toast({
+          description: error.message,
+          status: 'error',
+        });
+      },
+    }
+  );
+
+  // const handleOnSave = async () => {
+  //   const res = await createInstruction({ steps: columns[0].tableOfContents });
+  //   console.log(res);
+  // };
 
   const onSubmit = async (values) => {
     const newtableOfContents = [...columns[0].tableOfContents];
@@ -128,8 +161,11 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
         guest_views: 10,
         user_views: 10,
       });
-      console.log('values: ', values);
-      console.log('res: ', res);
+      await router.push('/feed');
+      toast({
+        description: res.message,
+        status: 'success',
+      });
     }
     ShareSection.onClose();
   };
@@ -162,7 +198,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
             >
               Create New Part
             </Button>
-            <Button onClick={handleOnSave}>Save</Button>
+            <Button onClick={() => handleOnSave()}>Save</Button>
             <Button
               onClick={() => {
                 ShareSection.onOpen();

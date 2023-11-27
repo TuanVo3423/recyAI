@@ -2,25 +2,28 @@ import { signIn } from '@/api/auth';
 import { PROJECT_AUTH_TOKEN } from '@/constants';
 import { LocalStorage } from '@/services/localStorage';
 import { useAuth } from '@/stores';
+import { InputField } from '@/ui-kit';
+import { VStack, useToast } from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-
+import { DefaultLoginValues, ILogin, schema_login } from '../data';
 export const SignIn = () => {
   const router = useRouter();
-  const [data, setData] = useState({
-    email: '',
-    password: '',
+  const toast = useToast();
+  const form = useForm<ILogin>({
+    resolver: yupResolver(schema_login),
+    defaultValues: DefaultLoginValues,
   });
+  const { handleSubmit } = form;
+
   const setProfile = useAuth((state) => state.setProfile);
 
   const { mutateAsync: handleLogin, isLoading } = useMutation(
-    async () => {
-      const res = await signIn({
-        email: 'tuanvanvo@gmail.com',
-        password: 'Tuan123!',
-      });
+    async (data: ILogin) => {
+      const res = await signIn(data);
       return res;
     },
     {
@@ -28,38 +31,19 @@ export const SignIn = () => {
         await LocalStorage.set(PROJECT_AUTH_TOKEN, data.user);
         await setProfile(data.user);
         await router.push('/feed');
+        toast({
+          description: data.message,
+          status: 'success',
+        });
+      },
+      onError: (error: any) => {
+        toast({
+          description: error.message,
+          status: 'error',
+        });
       },
     }
   );
-
-  // const handleLogin = async (e) => {
-  //   LocalStorage.set(PROJECT_AUTH_TOKEN, data);
-  //   setProfile(data);
-  // };
-
-  // const { mutateAsync: handleLoginSubmit, isLoading } = useMutation(
-  //   async (data: IUserLogin) => {
-  //     const rest = await signIn(data);
-  //    return rest;
-  //   },
-  //   {
-  //     onSuccess: async (data: any) => {
-  //       LocalStorage.set(PROJECT_AUTH_TOKEN, data);
-  //       setProfile(data);
-  //       router.push('/generate-document');
-  //       toast({
-  //         description: data.message,
-  //         status: 'success',
-  //       });
-  //     },
-  //     onError: (error: any) => {
-  //       toast({
-  //         description: error.message,
-  //         status: 'error',
-  //       });
-  //     },
-  //   }
-  // );
 
   return (
     <div className="flex items-center justify-center mt-[100px] mx-auto">
@@ -76,27 +60,29 @@ export const SignIn = () => {
           <div className="lg:block ml-[125px] mt-[50px] w-[300px] justify-center mb-16">
             <img src="https://links.papareact.com/ocw" alt="" />
           </div>
-          <div className="items-center">
-            <label htmlFor="signInPageEmail">
-              {''}
-              <input
-                className=" w-[400px] h-[50px] ml-[75px] rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none "
+          <VStack
+            spacing={6}
+            as="form"
+            onSubmit={handleSubmit((data) => handleLogin(data))}
+          >
+            <div className="w-[400px] h-[50px]  rounded-md bg-[#fafafa] text-sm">
+              <InputField
+                name="email"
+                placeholder="Enter your email..."
                 type="email"
-                id="signInPageEmail"
-                placeholder="Email address"
+                form={form}
               />
-            </label>
-            <label htmlFor="signInPagePassword">
-              {' '}
-              <input
-                className=" w-[400px] h-[50px] ml-[75px] rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none my-3"
+            </div>
+            <div className="w-[400px] h-[50px]  rounded-md bg-[#fafafa] text-sm">
+              <InputField
+                name="password"
+                placeholder="Enter your password..."
                 type="password"
-                id="signInPagePassword"
-                placeholder="Password"
+                form={form}
               />
-            </label>
+            </div>
             <button
-              onClick={() => handleLogin()}
+              type="submit"
               className="bg-blue-400 hover:bg-blue-700 text-white w-[400px] h-[45px] ml-[75px] rounded-xl shadow-lg text-lg font-bold mt-2"
             >
               Đăng Nhập
@@ -123,7 +109,7 @@ export const SignIn = () => {
                 Quên mật khẩu?
               </a>
             </div>
-          </div>
+          </VStack>
         </div>
         <div className="flex border items-center justify-center border-gray-300 mt-10 w-[550px] h-[90px] ">
           <p className="text-xl ">Ban chua co tai khoan u?</p>
