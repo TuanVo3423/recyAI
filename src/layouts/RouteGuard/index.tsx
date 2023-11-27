@@ -11,11 +11,11 @@ export const RouteGuard = ({ children }: { children: any }) => {
   const router = useRouter();
   const profile = LocalStorage.get(PROJECT_AUTH_TOKEN);
   const { checkAuthorization, authorized } = useAuthCheck();
-  const setProfile = useAuth((state) => state.setProfile);
+  // const setProfile = useAuth((state) => state.setProfile);
 
-  const { data } = useGetAuth({ enabled: !!profile });
-  setProfile(data);
-  
+  // const { data } = useGetAuth({ enabled: !!profile });
+  // setProfile(data);
+
   useEffect(() => {
     checkAuthorization(router.pathname);
 

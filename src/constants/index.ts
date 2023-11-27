@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 
-export const PROJECT_AUTH_TOKEN = 'SPARK_PLAN_AUTH_TOKEN';
+export const PROJECT_AUTH_TOKEN = 'RECYCLING_AI_TOKEN';
 export const FORMAT_DATE = 'DD/MM/YYYY';
 
 export const EMAIL_REG_EXP =

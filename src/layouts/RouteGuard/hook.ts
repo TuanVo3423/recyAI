@@ -11,23 +11,34 @@ export const useAuthCheck = () => {
   const router = useRouter();
   const { pathname } = router;
 
-  const profileStore = useAuth((state) => state.profile);
+  // const profileStore = useAuth((state) => state.profile);
   const profile = LocalStorage.get(PROJECT_AUTH_TOKEN);
 
   const checkAuthorization = useCallback(
     async (url: string) => {
       const path = url.split('?')[0];
       const isPublicPath = publicPaths.includes(path as Path);
+      console.log('!_isEmpty(profile): ', !_isEmpty(profile));
 
-      if (
-        (path === Path.LOGIN || path === Path.SIGN_UP) &&
-        !_isEmpty(profileStore)
-      ) {
-        redirectToHome();
-        return;
+      // if (path === Path.LOGIN || path === Path.SIGN_UP) {
+      //   setAuthorized(true);
+      //   return;
+      // }
+      // if (
+      //   (path === Path.LOGIN || path === Path.SIGN_UP || path === Path.FEED) &&
+      //   !_isEmpty(profile)
+      // ) {
+      //   redirectToFeed();
+      //   return;
+      // }
+
+      if (path === Path.LOGIN || path === Path.SIGN_UP) {
+        if (!_isEmpty(profile)) {
+          redirectToFeed();
+        }
+        setAuthorized(true);
       }
-
-      if (isPublicPath) {
+      if (path === Path.LOGIN || path === Path.SIGN_UP) {
         setAuthorized(true);
         return;
       }
@@ -37,25 +48,25 @@ export const useAuthCheck = () => {
         return;
       }
 
-      if (_isEmpty(profileStore)) {
-        setAuthorized(false);
-        return;
-      }
+      // if (_isEmpty(profileStore)) {
+      //   setAuthorized(false);
+      //   return;
+      // }
 
       setAuthorized(true);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile, profileStore, pathname]
+    [profile, pathname]
   );
 
   const redirectToLogin = () => {
     setAuthorized(false);
-    router.push('/sign-in');
+    router.push('/auth/sign-in');
   };
 
-  const redirectToHome = () => {
-    setAuthorized(false);
-    router.push('/');
+  const redirectToFeed = () => {
+    // setAuthorized(false);
+    router.push('/feed');
   };
 
   return { checkAuthorization, authorized };

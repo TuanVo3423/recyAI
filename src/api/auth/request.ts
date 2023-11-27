@@ -3,8 +3,12 @@ import { ISignIn, ISignUp } from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
-    url: `signup`,
+    url: `users/signup`,
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
     data,
   });
   return res;
@@ -12,8 +16,12 @@ export const signUp = async (data: ISignUp) => {
 
 export const signIn = async (data: ISignIn) => {
   const res = await request({
-    url: `login`,
+    url: `users/login`,
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
     data,
   });
   return res;
@@ -21,8 +29,12 @@ export const signIn = async (data: ISignIn) => {
 
 export const getAuth = async () => {
   const res = await request({
-    url: `auth`,
+    url: `users/me`,
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
   });
   return res;
 };

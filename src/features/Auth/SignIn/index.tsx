@@ -1,6 +1,66 @@
+import { signIn } from '@/api/auth';
+import { PROJECT_AUTH_TOKEN } from '@/constants';
+import { LocalStorage } from '@/services/localStorage';
+import { useAuth } from '@/stores';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
 
 export const SignIn = () => {
+  const router = useRouter();
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  });
+  const setProfile = useAuth((state) => state.setProfile);
+
+  const { mutateAsync: handleLogin, isLoading } = useMutation(
+    async () => {
+      const res = await signIn({
+        email: 'tuanvanvo@gmail.com',
+        password: 'Tuan123!',
+      });
+      return res;
+    },
+    {
+      onSuccess: async (data: any) => {
+        await LocalStorage.set(PROJECT_AUTH_TOKEN, data.user);
+        await setProfile(data.user);
+        await router.push('/feed');
+      },
+    }
+  );
+
+  // const handleLogin = async (e) => {
+  //   LocalStorage.set(PROJECT_AUTH_TOKEN, data);
+  //   setProfile(data);
+  // };
+
+  // const { mutateAsync: handleLoginSubmit, isLoading } = useMutation(
+  //   async (data: IUserLogin) => {
+  //     const rest = await signIn(data);
+  //    return rest;
+  //   },
+  //   {
+  //     onSuccess: async (data: any) => {
+  //       LocalStorage.set(PROJECT_AUTH_TOKEN, data);
+  //       setProfile(data);
+  //       router.push('/generate-document');
+  //       toast({
+  //         description: data.message,
+  //         status: 'success',
+  //       });
+  //     },
+  //     onError: (error: any) => {
+  //       toast({
+  //         description: error.message,
+  //         status: 'error',
+  //       });
+  //     },
+  //   }
+  // );
+
   return (
     <div className="flex items-center justify-center mt-[100px] mx-auto">
       <div className="mr-10 mt-8 hidden lg:block">
@@ -35,7 +95,10 @@ export const SignIn = () => {
                 placeholder="Password"
               />
             </label>
-            <button className="bg-blue-400 hover:bg-blue-700 text-white w-[400px] h-[45px] ml-[75px] rounded-xl shadow-lg text-lg font-bold mt-2">
+            <button
+              onClick={() => handleLogin()}
+              className="bg-blue-400 hover:bg-blue-700 text-white w-[400px] h-[45px] ml-[75px] rounded-xl shadow-lg text-lg font-bold mt-2"
+            >
               Đăng Nhập
             </button>
             <div className="flex items-center my-6">

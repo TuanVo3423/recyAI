@@ -1,5 +1,4 @@
-import React from 'react';
-import { MyFeed, UserInfo, AdditionFeed } from './components';
+import { AdditionFeed, MyFeed, UserInfo } from './components';
 
 type Props = {};
 

@@ -29,7 +29,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <QueryClientProvider client={queryClient}>
         {getLayout(
           // @ts-ignore
-          <Component {...pageProps} />
+          <RouteGuard>
+            <Component {...pageProps} />
+          </RouteGuard>
         )}
         {/* <RouteGuard>
           <Fonts />

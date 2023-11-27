@@ -90,7 +90,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
     async function ChainRequest() {
       const res = await StepChain.call({});
     }
-    // ChainRequest();
+    ChainRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -111,20 +111,26 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
   };
 
   const onSubmitShare = async (values) => {
-    const { content, is_public } = values;
-    const res = await createTweet({
-      content,
-      audience: is_public,
-      type: 0,
-      parent_id: null,
-      hashtags: ['#recycling'],
-      mentions: ['@tuanvo'],
-      medias: 1,
-      guest_views: 10,
-      user_views: 10,
+    const instruction = await createInstruction({
+      steps: columns[0].tableOfContents,
     });
-    console.log('values: ', values);
-    console.log('res: ', res);
+    if (instruction) {
+      const { content, is_public } = values;
+      const res = await createTweet({
+        instruction_id: instruction.instruction_id,
+        content,
+        audience: is_public,
+        type: 0,
+        parent_id: null,
+        hashtags: ['#recycling'],
+        mentions: ['@tuanvo'],
+        medias: 1,
+        guest_views: 10,
+        user_views: 10,
+      });
+      console.log('values: ', values);
+      console.log('res: ', res);
+    }
     ShareSection.onClose();
   };
 

@@ -2,6 +2,7 @@ import { PROJECT_AUTH_TOKEN } from '@/constants';
 import { LocalStorage } from '@/services/localStorage';
 import { ERROR } from '@/types';
 import axios, { AxiosResponse } from 'axios';
+import { getCookie } from 'cookies-next';
 
 export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -12,14 +13,15 @@ declare module 'axios' {
 const TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 // let isFetchingNewToken = false;
-let waitForLogout = false;
+// let waitForLogout = false;
 
 const clearLocalStorageAndGotoLogin = () => {
-  waitForLogout = true;
+  // waitForLogout = true;
   localStorage.clear();
-  setTimeout(() => {
-    window.location.replace('/auth/sign-in');
-  }, 3000);
+  window.location.replace('/auth/sign-in');
+  // setTimeout(() => {
+  //   window.location.replace('/auth/sign-in');
+  // }, 3000);
 };
 
 // const getToken = () => {
@@ -91,9 +93,11 @@ request.interceptors.request.use(async (request) => {
   //     token = await handleRefreshToken();
   //   }
   // }
+  const token = getCookie('Authorization');
   // @ts-ignore
   request.headers = {
     ...request.headers,
+    Authorization: token ? `Bearer ${token}` : '',
     // Authorization: ``,
   };
 
@@ -113,12 +117,12 @@ request.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    if (waitForLogout) return;
+    // if (waitForLogout) return;
 
     const { status, data, config } = error?.response || {};
     switch (status) {
       case ERROR.UNAUTHORIZED: {
-        if (!LocalStorage.get(PROJECT_AUTH_TOKEN)) {
+        if (LocalStorage.get(PROJECT_AUTH_TOKEN)) {
           // if (data?.message) {
           //   toast({
           //     description: data?.message,
@@ -128,22 +132,19 @@ request.interceptors.response.use(
           clearLocalStorageAndGotoLogin();
           return;
         }
-
-        let token;
-
+        // let token;
         // if (isFetchingNewToken) {
         //   token = await waitForGetNewToken();
         // } else {
         //   token = await handleRefreshToken();
         // }
-
-        return request({
-          ...config,
-          headers: {
-            ...config.headers,
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // return request({
+        //   ...config,
+        //   headers: {
+        //     ...config.headers,
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
       }
       case ERROR.FORBIDDEN: {
         // if (data?.message) {
@@ -152,7 +153,7 @@ request.interceptors.response.use(
         //     status: "error",
         //   });
         // }
-        clearLocalStorageAndGotoLogin();
+        // clearLocalStorageAndGotoLogin();
         return;
       }
     }

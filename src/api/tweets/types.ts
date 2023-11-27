@@ -1,4 +1,5 @@
 export interface ITweet {
+  instruction_id: String;
   type: Number;
   audience: Number;
   content: String;

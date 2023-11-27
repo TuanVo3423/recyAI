@@ -9,30 +9,36 @@ import {
 import { useGetTweets } from '@/api/tweets';
 
 export const Posts = () => {
-  const { data, isLoading } = useGetTweets();
-  if (isLoading) return <div>Loading...</div>;
-  else
-    return (
-      <div>
-        {data.tweets.map((post) => (
-          <Post
-            key={post._id}
-            id={post._id}
-            username={'Tuan Vo'}
-            userImg={
-              'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
-            }
-            img={
-              'https://images.pexels.com/photos/409696/pexels-photo-409696.jpeg?cs=srgb&dl=pexels-karol-d-409696.jpg&fm=jpg'
-            }
-            caption={post.content}
-          />
-        ))}
-      </div>
-    );
+  const { data, isLoading, isError } = useGetTweets();
+
+  return (
+    <>
+      {!isLoading && (
+        <div>
+          {data?.tweets.map((post) => (
+            <div key={post._id}>
+              <Post
+                id={post._id}
+                username={'Tuan Vo'}
+                userImg={
+                  'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
+                }
+                img={
+                  'https://images.pexels.com/photos/409696/pexels-photo-409696.jpeg?cs=srgb&dl=pexels-karol-d-409696.jpg&fm=jpg'
+                }
+                caption={post.content}
+                instruction={post.instruction}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
 };
 
-function Post({ id, username, userImg, img, caption }) {
+function Post({ id, username, userImg, img, caption, instruction }) {
+  console.log('instruction: ', instruction);
   return (
     <div className="bg-white my-7 border rounded-lg">
       <div className="flex items-center p-5 shadow-lg rounded-lg">
@@ -58,6 +64,12 @@ function Post({ id, username, userImg, img, caption }) {
         <span className="font-bold mr-1 text-lg">{username} </span>
         {caption}
       </p>
+
+      {instruction.steps.map((item, idx) => (
+        <p key={idx} className="p-5 truncate text-lg">
+          {item.content}
+        </p>
+      ))}
 
       <form className="flex items-center p-6">
         <EmojiHappyIcon className="h-8" />
