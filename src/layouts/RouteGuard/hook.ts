@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { Path, publicPaths } from './data';
 import _isEmpty from 'lodash/isEmpty';
-import { useAuth } from '@/store';
+import { useAuth } from '@/stores';
 
 export const useAuthCheck = () => {
   const [authorized, setAuthorized] = useState(false);
@@ -18,34 +18,45 @@ export const useAuthCheck = () => {
     async (url: string) => {
       const path = url.split('?')[0];
       const isPublicPath = publicPaths.includes(path as Path);
+      console.log('!_isEmpty(profile): ', !_isEmpty(profile));
 
-      // if (
-      //   (path === Path.LOGIN || path === Path.SIGN_UP) &&
-      //   !_isEmpty(profileStore)
-      // ) {
-      //   redirectToHome();
-      //   return;
-      // }
-
-      // if (isPublicPath) {
+      // if (path === Path.LOGIN || path === Path.SIGN_UP) {
       //   setAuthorized(true);
       //   return;
       // }
-
-      // if (_isEmpty(profile)) {
-      //   redirectToLogin();
+      // if (
+      //   (path === Path.LOGIN || path === Path.SIGN_UP || path === Path.FEED) &&
+      //   !_isEmpty(profile)
+      // ) {
+      //   redirectToFeed();
       //   return;
       // }
 
-      // if (_isEmpty(profileStore)) {
-      //   setAuthorized(false);
-      //   return;
-      // }
+      if (path === Path.LOGIN || path === Path.SIGN_UP) {
+        if (!_isEmpty(profile)) {
+          redirectToProfile();
+        }
+        setAuthorized(true);
+      }
+      if (path === Path.LOGIN || path === Path.SIGN_UP) {
+        setAuthorized(true);
+        return;
+      }
 
-      // setAuthorized(true);
+      if (_isEmpty(profile)) {
+        redirectToLogin();
+        return;
+      }
+
+      if (_isEmpty(profileStore)) {
+        setAuthorized(false);
+        return;
+      }
+
+      setAuthorized(true);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile, profileStore, pathname]
+    [profile, pathname]
   );
 
   const redirectToLogin = () => {
@@ -53,9 +64,9 @@ export const useAuthCheck = () => {
     router.push('/auth/sign-in');
   };
 
-  const redirectToHome = () => {
-    setAuthorized(false);
-    router.push('/');
+  const redirectToProfile = () => {
+    // setAuthorized(false);
+    router.push('/profile');
   };
 
   return { checkAuthorization, authorized };

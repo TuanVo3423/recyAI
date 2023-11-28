@@ -5,6 +5,7 @@ import { appWithTranslation } from 'next-i18next';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import '../styles/global.css';
+import { RouteGuard } from '@/layouts';
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -28,7 +29,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <QueryClientProvider client={queryClient}>
         {getLayout(
           // @ts-ignore
-          <Component {...pageProps} />
+          // <Component {...pageProps} />
+          <RouteGuard>
+            <Component {...pageProps} />
+          </RouteGuard>
         )}
         {/* <RouteGuard>
           <Fonts />

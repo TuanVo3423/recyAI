@@ -6,7 +6,6 @@ export const useGetAuth = (options?: any) =>
     ['getAuth'],
     async () => {
       const data = await getAuth();
-
       return data;
     },
     { ...options }

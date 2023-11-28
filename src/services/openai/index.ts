@@ -19,7 +19,7 @@ export const OpenAIRequest = ({
   OpenAIParams,
 }: IOpenAIRequest) => {
   const model = new OpenAI({
-    openAIApiKey: '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',
+    openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
     temperature: 0.3,
     streaming: true,
     modelName: 'gpt-3.5-turbo',

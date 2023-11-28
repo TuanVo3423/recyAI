@@ -5,7 +5,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Path, publicPaths } from './data';
 import { useAuthCheck } from './hook';
 import { useGetAuth } from '@/api/auth';
-import { useAuth } from '@/store';
+import { useAuth } from '@/stores';
 
 export const RouteGuard = ({ children }: { children: any }) => {
   const router = useRouter();
@@ -15,7 +15,7 @@ export const RouteGuard = ({ children }: { children: any }) => {
 
   const { data } = useGetAuth({ enabled: !!profile });
   setProfile(data);
-  
+
   useEffect(() => {
     checkAuthorization(router.pathname);
 
