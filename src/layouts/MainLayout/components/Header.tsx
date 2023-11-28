@@ -4,7 +4,7 @@ import {
   PaperAirplaneIcon,
   PlusCircleIcon,
   SearchIcon,
-  UserGroupIcon,
+  UserGroupIcon, LogoutIcon, DocumentAddIcon
 } from '@heroicons/react/outline';
 import { HomeIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
@@ -46,16 +46,16 @@ export const Header = () => {
         <div className="flex items-center justify-end space-x-4 ">
           <HomeIcon className="navBtn h-8 w-8" />
           <MenuIcon className="h-6 md:hidden cursor-pointer" />
-          <div className="relative navBtn -top-[10px]">
+          {/* <div className="relative navBtn -top-[10px]">
             <PaperAirplaneIcon className="navBtn h-8 w-8 rotate-45" />
             <div className="absolute -top-1 -right-2 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white animate-pulse">
               3
             </div>
-          </div>
+          </div> */}
 
-          <PlusCircleIcon className="navBtn h-8 w-8" />
-          <UserGroupIcon className="navBtn h-8 w-8" />
-          <HeartIcon className="navBtn h-8 w-8" />
+          {/* <PlusCircleIcon className="navBtn h-8 w-8" /> */}
+          <DocumentAddIcon className="navBtn h-8 w-8" />
+          <LogoutIcon className="navBtn h-8 w-8" />
 
           <img
             src="https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg"
