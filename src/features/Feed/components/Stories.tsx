@@ -17,7 +17,7 @@ export const Stories = () => {
   }, []);
 
   return (
-    <div className="flex space-x-10 h-[150px] w-[766px] p-6 bg-transparent mt-2 border-none rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
+    <div className="flex space-x-10 h-[150px] w-[980px] -ml-[80px] p-6 bg-transparent mt-2 border-none rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
       {suggestions.map((profile) => (
         <Story
           key={profile.id}
