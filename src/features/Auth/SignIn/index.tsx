@@ -46,18 +46,18 @@ export const SignIn = () => {
   );
 
   return (
-    <div className="flex items-center justify-center mt-[100px] mx-auto">
+    <div className="flex items-center justify-center mt-[40px] mx-auto">
       <div className="mr-10 mt-8 hidden lg:block">
         <Image
           src="https://blog.hootsuite.com/wp-content/uploads/2022/01/Instagram-statistics.png"
           alt="Facebook logo"
-          width={805}
-          height={305}
+          width={605}
+          height={205}
         />
       </div>
       <div>
-        <div className="border border-gray-300 mt-10 w-[550px] h-[600px] ">
-          <div className="lg:block ml-[125px] mt-[50px] w-[300px] justify-center mb-16">
+        <div className="border border-gray-300 mt-10 w-[350px] h-[400px] ">
+          <div className="lg:block ml-[95px] mt-[30px] w-[160px] justify-center mb-6">
             <img src="https://links.papareact.com/ocw" alt="" />
           </div>
           <VStack
@@ -65,7 +65,7 @@ export const SignIn = () => {
             as="form"
             onSubmit={handleSubmit((data) => handleLogin(data))}
           >
-            <div className="w-[400px] h-[50px]  rounded-md bg-[#fafafa] text-sm">
+            <div className="w-[290px] h-[35px] -mb-3 rounded-md bg-[#fafafa] text-xs">
               <InputField
                 name="email"
                 placeholder="Enter your email..."
@@ -73,7 +73,7 @@ export const SignIn = () => {
                 form={form}
               />
             </div>
-            <div className="w-[400px] h-[50px]  rounded-md bg-[#fafafa] text-sm">
+            <div className="w-[290px] h-[35px]  rounded-md bg-[#fafafa] text-xs">
               <InputField
                 name="password"
                 placeholder="Enter your password..."
@@ -83,37 +83,35 @@ export const SignIn = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-400 hover:bg-blue-700 text-white w-[400px] h-[45px] ml-[75px] rounded-xl shadow-lg text-lg font-bold mt-2"
+              className="-mb-6 bg-blue-400 hover:bg-blue-700 text-white w-[200px] h-[30px] ml-[75px] rounded-xl shadow-lg text-xs font-bold mt-2"
             >
               Đăng Nhập
             </button>
-            <div className="flex items-center my-6">
-              <hr className="ml-8 flex-grow border-gray-300" />
-              <span className="px-2 text-gray-500 mx-5 font-bold">OR</span>
-              <hr className="mr-8 flex-grow border-gray-300" />
+            <div className='font-bold -mt-4 text-gray-500'>
+              OR
             </div>
-            <div className="flex flex-col items-center justify-center py-2">
-              <button className="flex items-center space-x-2 text-blue-800 hover:text-blue-950 text-lg font-semibold py-2 px-4 rounded ">
+            <div className="flex flex-col items-center justify-center ">
+              <button className="flex items-center space-x-2 text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
                 <Image
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
                   alt="Facebook logo"
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                 />
-                <span>Đăng nhập bằng Facebook</span>
+                <span className='text-sm'>Đăng nhập bằng Facebook</span>
               </button>
               <a
                 href="/forgot-password"
-                className="text-blue-600 hover:text-blue-800 mt-5"
+                className="text-blue-600 text-xs hover:text-blue-800 mt-3"
               >
                 Quên mật khẩu?
               </a>
             </div>
           </VStack>
         </div>
-        <div className="flex border items-center justify-center border-gray-300 mt-10 w-[550px] h-[90px] ">
-          <p className="text-xl ">Ban chua co tai khoan u?</p>
-          <p className="text-xl font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer">
+        <div className="flex border items-center justify-center border-gray-300 mt-5 w-[350px] h-[60px] ">
+          <p className="text-sm ">Ban chua co tai khoan u?</p>
+          <p className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer">
             Dang Ki
           </p>
         </div>

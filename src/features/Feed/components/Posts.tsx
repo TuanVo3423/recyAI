@@ -41,18 +41,18 @@ function Post({ id, username, userImg, caption, instruction }) {
   console.log('instruction: ', instruction);
   return (
     <div className="bg-white my-7 border rounded-lg">
-      <div className="flex items-center p-5 shadow-lg rounded-lg">
+      <div className="flex items-center py-3 shadow-lg rounded-lg">
         <img
           src={userImg}
-          className="rounded-full h-14 w-14 object-contain border p-1 mr-3"
+          className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
           alt=""
         />
         <div className='flex-1 flex'>
-          <p className="font-bold text-lg mr-9">{username}</p> 
-          <p className='font-bold'>{caption}</p>
+          <p className="font-bold text-md mr-9">{username}</p> 
+          <p className='font-semibold text-sm'>{caption}</p>
         </div>
         
-        <DotsHorizontalIcon className="h-8" />
+        <DotsHorizontalIcon className="h-5 mr-6" />
       </div>
       {/* <img src={img} className="object-cover w-full shadow-sm" alt="" /> */}
       
@@ -63,26 +63,26 @@ function Post({ id, username, userImg, caption, instruction }) {
       </p> */}
 
       {instruction.steps.map((item, idx) => (
-        <p key={idx} className="p-5 truncate text-lg">
+        <p key={idx} className="p-5 truncate text-md">
           {item.content}
         </p>
       ))}
       <div className="flex justify-between px-4 pt-4">
         <div className="flex space-x-4 ">
-          <HeartIcon className="btn" />
-          <ChatIcon className="btn" />
-          <PaperAirplaneIcon className="btn" />
+          <HeartIcon className="h-5" />
+          <ChatIcon className="h-5" />
+          <PaperAirplaneIcon className="h-5" />
         </div>
-        <BookmarkIcon className="btn" />
+        <BookmarkIcon className="h-5" />
       </div>
       <form className="flex items-center p-6">
-        <EmojiHappyIcon className="h-8" />
+        <EmojiHappyIcon className="h-5" />
         <input
           type="text"
           placeholder="Add a comment ..."
-          className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-3"
+          className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-2"
         />
-        <button className="fonrt-semibold text-blue-400 text-lg">Post</button>
+        <button className="fonrt-semibold text-blue-400 text-md">Post</button>
       </form>
     </div>
   );

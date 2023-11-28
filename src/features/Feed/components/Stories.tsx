@@ -17,7 +17,7 @@ export const Stories = () => {
   }, []);
 
   return (
-    <div className="flex space-x-10 h-[150px] w-[980px] -ml-[80px] p-6 bg-transparent mt-2 border-none rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
+    <div className="flex space-x-6 h-[150px] w-[660px] -ml-[80px] p-6 bg-transparent mt-2 border-none rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
       {suggestions.map((profile) => (
         <Story
           key={profile.id}
@@ -33,11 +33,11 @@ export const Story = function Story({ img, username }) {
   return (
     <div>
       <img
-        className="h-20 w-20 rounded-full p-[1.5px] border-red-500 border-2 object-contain cursor-pointer hover:scale-110 transition transform duration-200 ease-out"
+        className="h-14 w-14 rounded-full p-[1.5px] border-red-500 border-2 object-contain cursor-pointer hover:scale-110 transition transform duration-200 ease-out"
         src={img}
         alt=""
       />
-      <p className="text-lg w-20 truncate text-center ">{username}</p>
+      <p className="text-md w-14 truncate text-center ">{username}</p>
     </div>
   );
 };

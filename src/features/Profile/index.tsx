@@ -7,7 +7,7 @@ export const Profile = (props: Props) => {
     <div className='ml-44'>
       <UserInfo />
       <AdditionFeed />
-      <hr className="mx-[500px] border-gray-600"></hr>
+      <hr className="mx-[300px] border-gray-600"></hr>
       <MyFeed />
     </div>
   );

@@ -18,8 +18,8 @@ export const Suggestions = () => {
   return (
     <div className="mt-4 ml-10">
       <div className="flex justify-between text-sm mb-5">
-        <h3 className="text-lg font-bold text-gray-400">Suggestions for you</h3>
-        <button className="text-gray-600 font-semibold text-lg">See All</button>
+        <h3 className="text-md font-bold text-gray-400">Suggestions for you</h3>
+        <button className="text-gray-600 font-semibold text-md">See All</button>
       </div>
 
       {suggestions.map((profile) => (
@@ -28,17 +28,17 @@ export const Suggestions = () => {
           className="flex items-center justify-between mt-3"
         >
           <img
-            className="w-16 h-16 rounded-full border p-[2px]"
+            className="w-10 h-10 rounded-full border p-[2px]"
             src={profile.avatar}
             alt=""
           />
           <div className="flex-1 ml-4">
-            <h2 className="font-semibold text-lg ">{profile.username}</h2>
-            <h3 className="text-md text-gray-400">
+            <h2 className="font-semibold text-sm ">{profile.username}</h2>
+            <h3 className="text-sm text-gray-400">
               Works at {profile.company}
             </h3>
           </div>
-          <button className="text-blue-400 text-md font-bold">Follow</button>
+          <button className="text-blue-400 text-xs font-bold">Follow</button>
         </div>
       ))}
     </div>
