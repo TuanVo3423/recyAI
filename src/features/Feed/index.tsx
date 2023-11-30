@@ -1,9 +1,11 @@
-import React from 'react';
-import { Stories, Posts, MiniProfile, Suggestions } from './components';
+import { useState } from 'react';
+import { MiniProfile, Posts, Stories, Suggestions } from './components';
 
 type Props = {};
 
 export const Feed = (props: Props) => {
+  // current id comment
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 md:max-w-3xl xl:grid-cols-3 xl:max-w-3xl mx-auto ml-[430px]">
       <section className="col-span-2 ">
