@@ -1,19 +1,19 @@
+import { IInstructionResponse } from '@/api/instructions';
+import { useGetTweets } from '@/api/tweets';
+import { Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  EmojiHappyIcon,
   HeartIcon,
-  PaperAirplaneIcon,
+  PaperAirplaneIcon
 } from '@heroicons/react/outline';
-import { useGetTweets } from '@/api/tweets';
-import { CommentModal } from './CommentModal';
 import { useState } from 'react';
-import { useDisclosure } from '@chakra-ui/react';
+import { CommentModal } from './CommentModal';
 
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
-  const { data, isLoading, isError } = useGetTweets();
+  const { data, isLoading, isError, refetch } = useGetTweets();
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -33,6 +33,7 @@ export const Posts = ({}: TPostsProps) => {
                 // img={
                 //   'https://images.pexels.com/photos/409696/pexels-photo-409696.jpeg?cs=srgb&dl=pexels-karol-d-409696.jpg&fm=jpg'
                 // }
+                comment_count={post.comment_count}
                 caption={post.content}
                 instruction={post.instruction}
                 isOpen={isOpen}
@@ -48,23 +49,36 @@ export const Posts = ({}: TPostsProps) => {
         onOpen={onOpen}
         onClose={onClose}
         tweetId={tweetId}
+        refresh={refetch}
       />
     </>
   );
 };
 
+export type PostProps = {
+  id: string;
+  username: string;
+  userImg: string;
+  caption: string;
+  comment_count: number;
+  instruction: IInstructionResponse[];
+  setTweetId: (id: string) => void;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+};
 function Post({
   id,
   username,
   userImg,
   caption,
   instruction,
+  comment_count,
   setTweetId,
   isOpen,
   onOpen,
   onClose,
-}) {
-  console.log('instruction: ', instruction);
+}: PostProps) {
   return (
     <div className="bg-white my-7 border rounded-lg">
       <div className="flex items-center py-3 shadow-lg rounded-lg">
@@ -87,11 +101,10 @@ function Post({
         {caption}
       </p> */}
 
-      {instruction.steps.map((item, idx) => (
-        <p key={idx} className="p-5 truncate text-md">
-          {item.content}
-        </p>
-      ))}
+      {instruction.map((item, idx) =>
+        item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
+      )}
+
       <div className="flex justify-between px-4 pt-4">
         <div className="flex space-x-4 ">
           <HeartIcon className="h-5" />
@@ -100,7 +113,13 @@ function Post({
         </div>
         <BookmarkIcon className="h-5" />
       </div>
-      <form className="flex items-center p-6">
+      <Text
+        onClick={() => {
+          setTweetId(id);
+          onOpen();
+        }}
+      >{`Xem tất cả ${comment_count}`}</Text>
+      {/* <form className="flex items-center p-6">
         <EmojiHappyIcon className="h-5" />
         <input
           type="text"
@@ -110,14 +129,12 @@ function Post({
         <button
           onClick={(e) => {
             e.preventDefault();
-            setTweetId(id);
-            onOpen();
           }}
           className="fonrt-semibold text-blue-400 text-md"
         >
           Post
         </button>
-      </form>
+      </form> */}
     </div>
   );
 }

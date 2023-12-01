@@ -26,6 +26,14 @@ export const createTweet = async (data: ITweet) => {
 //   return res;
 // };
 
+export const getTweet = async (tweetId: string) => {
+  const res = await request({
+    url: `tweets/${tweetId}`,
+    method: 'GET',
+  });
+  return res;
+};
+
 export const getTweets = async () => {
   const res = await request({
     url: `tweets`,

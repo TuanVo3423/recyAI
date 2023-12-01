@@ -32,6 +32,7 @@ import {
 import { createTweet } from '@/api/tweets';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
+import { TweetWithInstruction } from '@/utils/classifyTweetType';
 
 const fake = {
   type: 0,
@@ -149,17 +150,9 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
     });
     if (instruction) {
       const { content, is_public } = values;
-      const res = await createTweet({
+      const res = await TweetWithInstruction({
         instruction_id: instruction.instruction_id,
         content,
-        audience: is_public,
-        type: 0,
-        parent_id: null,
-        hashtags: ['#recycling'],
-        mentions: ['@tuanvo'],
-        medias: 1,
-        guest_views: 10,
-        user_views: 10,
       });
       await router.push('/feed');
       toast({

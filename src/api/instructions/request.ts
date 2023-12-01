@@ -34,9 +34,9 @@ export const getInstruction = async (InstrcutionID: number | string) => {
   return res;
 };
 
-export const getMyInstructions = async (UserID: number | string) => {
+export const getMyInstructions = async () => {
   const res = await request({
-    url: `instructions/me/${UserID}`,
+    url: `instructions/me`,
     method: 'GET',
   });
   return res;

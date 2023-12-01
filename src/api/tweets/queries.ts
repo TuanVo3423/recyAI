@@ -1,19 +1,20 @@
 import { useQuery } from 'react-query';
-import { getTweets } from './request';
+import { getTweet, getTweets } from './request';
+import { ITweetResponse, ITweetsResponse } from './types';
 // import { getDocument } from './request';
 
-export const useGetDocument = (selectionId: number, options?: any) =>
-  useQuery(
-    ['getDocument'],
+export const useGetTweet = (tweetId: string, options?: any) =>
+  useQuery<ITweetResponse>(
+    ['getTweet', tweetId],
     async () => {
-      // const data = await getDocument(selectionId);
-      // return data;
+      const data = await getTweet(tweetId);
+      return data;
     },
     { ...options }
   );
 
 export const useGetTweets = (options?: any) =>
-  useQuery(
+  useQuery<ITweetsResponse>(
     ['getTweets'],
     async () => {
       const data = await getTweets();
