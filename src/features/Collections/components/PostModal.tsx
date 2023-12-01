@@ -1,3 +1,6 @@
+import Form from '@/theme/components/form';
+import { useForm } from 'react-hook-form';
+import { InputField } from '@/ui-kit';
 import {
   Modal,
   ModalBody,
@@ -13,6 +16,7 @@ import {
   EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
+  ArrowDownIcon
 } from '@heroicons/react/outline';
 import { useQueryClient } from 'react-query';
 interface TPostModalProps extends UseDisclosureProps {
@@ -33,83 +37,57 @@ export const PostModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent overflow="hidden" w="70vw" maxW="none">
+      <ModalContent overflow="hidden" w="60vw" maxW="none">
         <ModalBody p={0} w="full">
-          <div className="flex justify-center gap-4">
-            <div className="bg-gray-200  w-[50%] py-[12px] px-[24px]">
+          <div className="flex justify-center ">
+            <div className="bg-white border-r-[1px]  w-[60%] py-[62px] px-[30px]">
               {currentInstruction &&
                 currentInstruction.steps.map((step: any, idx: number) => (
                   <Text>{step.content}</Text>
                 ))}
             </div>
-            <div className="bg-white w-[50%]">
+            <div className="bg-white w-[40%]">
               <div>
                 <div className="flex items-center py-3 border-b-[1px]">
                   <img
                     src={
-                      'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
+                      'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
                     }
-                    className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
+                    className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-2"
                     alt=""
                   />
                   <div className="flex-1 flex">
-                    <p className="font-bold text-sm mr-9">Papa</p>
-                    <p className="font-semibold text-sm">cap</p>
+                    <p className="font-semibold text-sm mr-9">Papa</p>
+
                   </div>
 
-                  <DotsHorizontalIcon className="h-5 mr-6" />
+                  <p className="font-semibold text-blue-400 cursor-pointer hover:text-blue-950 text-sm mr-9">Chia se</p>
                 </div>
               </div>
-              <div className="h-[460px]">
-                <div className="flex items-center py-3">
-                  <img
-                    src={
-                      'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
-                    }
-                    className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
-                    alt=""
-                  />
-                  <div className="flex-1">
-                    <div className="flex">
-                      <p className="font-bold text-sm mr-2">Pupu</p>
-                      <p className="text-sm mr-5">comment ne`</p>
-                    </div>
-                    <div className="flex space-x-4">
-                      <p className="text-xs font-medium text-gray-400">
-                        4 hours
-                      </p>
-                      <p className="text-xs font-medium text-gray-400">
-                        5 Likes
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex space-x-2 mr-6">
-                    <HeartIcon className="h-4 w-4 cursor-pointer" />
-                    <DotsHorizontalIcon className="h-4 w-4 cursor-pointer" />
-                  </div>
-                </div>
+              <div className='h-[260px] mt-5 '>
+
+                <input type="text" placeholder='Viet gi do . . .' className='w-[335px] rounded-3xl focus:ring-0 h-auto border-none ' />
+
               </div>
-              <div className="border-t-[1px]">
-                <div className="flex justify-between px-4 pt-4">
-                  <div className="flex space-x-4 ">
-                    <HeartIcon className="h-5" />
-                    <ChatIcon className="h-5" />
-                    <PaperAirplaneIcon className="h-5" />
-                  </div>
-                  <BookmarkIcon className="h-5" />
-                </div>
-                <form className="flex items-center p-6">
-                  <EmojiHappyIcon className="h-5" />
-                  <input
-                    type="text"
-                    placeholder="Add a comment ..."
-                    className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-2"
-                  />
-                  <button className="fonrt-semibold text-blue-400 text-md">
-                    Post
-                  </button>
-                </form>
+              <div className='flex items-center space-x-64 border-b-[1px] pb-2'>
+                    <EmojiHappyIcon className='h-6 cursor-pointer w-6 ml-4 text-gray-400'/>
+                    <p className='text-xs text-gray-400'>0/2.200</p>
               </div>
+              <div className='pb-8'>
+              <div className='h-12 items-center justify-center flex border-b-[1px]'>
+              <input type="text" placeholder='Them vi tri' className=' flex-1 rounded-3xl focus:ring-0 h-auto border-none ' />
+                    <ArrowDownIcon className='w-5 h-5 mr-4'/>
+              </div>
+              <div className='h-12 items-center justify-center flex border-b-[1px] cursor-pointer'>
+              <p className='flex-1 ml-4'>Tro nang</p>
+                    <ArrowDownIcon className='w-5 h-5 mr-4'/>
+              </div>
+              <div className='h-12 items-center justify-center flex border-b-[1px] cursor-pointer'>
+              <p className='flex-1 ml-4'>Cai dat</p>
+                    <ArrowDownIcon className='w-5 h-5 mr-4'/>
+              </div>
+              </div>
+              
             </div>
           </div>
         </ModalBody>

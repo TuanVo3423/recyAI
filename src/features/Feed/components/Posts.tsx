@@ -28,7 +28,7 @@ export const Posts = ({}: TPostsProps) => {
                 setTweetId={setTweetId}
                 username={'Tuan Vo'}
                 userImg={
-                  'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt100d13bfa8286a3d/5eb7cdc11ea0c32e33b95fa2/V_AGENTS_587x900_Breach.png'
+                  'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
                 }
                 // img={
                 //   'https://images.pexels.com/photos/409696/pexels-photo-409696.jpeg?cs=srgb&dl=pexels-karol-d-409696.jpg&fm=jpg'
@@ -80,19 +80,20 @@ function Post({
   onClose,
 }: PostProps) {
   return (
-    <div className="bg-white my-7 border rounded-lg">
-      <div className="flex items-center py-3 shadow-lg rounded-lg">
+    <div className="bg-white my-7 border-none ">
+      <div className="flex items-center py-3 ">
         <img
           src={userImg}
-          className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
+          className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-1 cursor-pointer"
           alt=""
         />
-        <div className="flex-1 flex">
-          <p className="font-bold text-md mr-9">{username}</p>
-          <p className="font-semibold text-sm">{caption}</p>
+        <div className="flex-1 flex items-center">
+          <p className="font-semibold text-sm mr-2 cursor-pointer">{username} </p> 
+          <p className='mx-2'>•</p>
+          <p className="text-sm">{caption}</p>
         </div>
 
-        <DotsHorizontalIcon className="h-5 mr-6" />
+        <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
       </div>
       {/* <img src={img} className="object-cover w-full shadow-sm" alt="" /> */}
 
@@ -100,25 +101,28 @@ function Post({
         <span className="font-bold mr-1 text-lg">{username} </span>
         {caption}
       </p> */}
-
+      <div className='px-[20px] py-[20px] border-[1px] rounded-lg shadow-sm'>
       {instruction.map((item, idx) =>
         item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
       )}
+      </div>
+      
 
-      <div className="flex justify-between px-4 pt-4">
+      <div className="flex justify-between px-1 pt-4">
         <div className="flex space-x-4 ">
-          <HeartIcon className="h-5" />
-          <ChatIcon className="h-5" />
-          <PaperAirplaneIcon className="h-5" />
+          <HeartIcon className="h-6 cursor-pointer" />
+          <ChatIcon className="h-6 cursor-pointer" />
+          <PaperAirplaneIcon className="h-6 cursor-pointer" />
         </div>
-        <BookmarkIcon className="h-5" />
+        <BookmarkIcon className="h-6 cursor-pointer" />
       </div>
       <Text
         onClick={() => {
           setTweetId(id);
           onOpen();
-        }}
-      >{`Xem tất cả ${comment_count}`}</Text>
+        }} 
+        className='text-[14px] text-gray-500 cursor-pointer ml-2 mt-2 pb-5 border-b-[1px]'
+      >{`Xem tất cả ${comment_count} binh luan`}</Text>
       {/* <form className="flex items-center p-6">
         <EmojiHappyIcon className="h-5" />
         <input
