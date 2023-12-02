@@ -12,12 +12,12 @@ interface LayoutCreateProjectProps extends FlexProps {
 
 const IconMapping = {
   Home: HomeIcon,
-  'Create project': AddIcon,
+  'Create instructions': AddIcon,
 };
 
 const PathMapping = {
   Home: '/',
-  'Create project': 'create-project',
+  'Create instructions': 'create-instructions',
 };
 
 export const LayoutCreateProject = ({

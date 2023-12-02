@@ -14,11 +14,11 @@ type THeartLikeProps = {
 // 2 type, like and unlike
 // tweet_id
 const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
-  const [like, setLike] = useState(false);
   const profileStore = useAuth((state) => state.profile);
-  const isLiked = likes?.find(
-    (like: any) => like._id === profileStore.result._id
+  const [like, setLike] = useState(
+    likes?.find((like: any) => like._id === profileStore.result._id)
   );
+
   const toast = useToast();
 
   const { mutateAsync: handleLike } = useMutation(
@@ -46,7 +46,6 @@ const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
 
   const { mutateAsync: handleUnLike } = useMutation(
     async () => {
-      // get like_id and delete it
       const res = await unLike({ tweet_id });
       return res;
     },
@@ -69,7 +68,7 @@ const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
   );
   return (
     <Box>
-      {!isLiked && like ? (
+      {like ? (
         <HeartIcon
           className="w-6 h-6 cursor-pointer text-red-500"
           onClick={() => handleUnLike()}

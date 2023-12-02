@@ -67,6 +67,7 @@ export type PostProps = ITweet & {
 function Post({
   _id,
   user_info,
+  likes,
   content,
   like_count,
   instruction,
@@ -105,7 +106,7 @@ function Post({
 
       <div className="flex justify-between px-1 pt-4">
         <div className="flex space-x-4 ">
-          <HeartLike setLikeCount={setLikeCount} tweet_id={_id} />
+          <HeartLike likes={likes} setLikeCount={setLikeCount} tweet_id={_id} />
           <ChatIcon className="h-6 cursor-pointer" />
           <PaperAirplaneIcon className="h-6 cursor-pointer" />
         </div>
