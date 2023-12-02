@@ -9,7 +9,6 @@ export const schema_create_section = Yup.object({
 
 export const schema_share = Yup.object({
   content: schema_string_no_length_required,
-  is_public: schema_number,
 });
 
 export interface IDefaultValue {

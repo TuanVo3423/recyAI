@@ -1,5 +1,5 @@
 import { IInstructionResponse } from '@/api/instructions';
-import { ITweet, useGetTweets } from '@/api/tweets';
+import { ITweet, useGetMyTweets, useGetTweets } from '@/api/tweets';
 import { Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
@@ -9,13 +9,13 @@ import {
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
 import { useState } from 'react';
-import { CommentModal } from './CommentModal';
-import HeartLike from './Like';
+import { CommentModal } from '@/features/Feed/components';
+import HeartLike from '@/features/Feed/components/Like';
 import { IUserResponse } from '@/api/auth';
 
-export type TPostsProps = {};
-export const Posts = ({}: TPostsProps) => {
-  const { data, isLoading, isError, refetch } = useGetTweets();
+export type TProfilePostsProps = {};
+export const ProfilePosts = ({}: TProfilePostsProps) => {
+  const { data, isLoading, isError, refetch } = useGetMyTweets();
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -71,6 +71,7 @@ function Post({
   like_count,
   instruction,
   comment_count,
+  likes,
   onOpen,
   setTweetId,
 }: PostProps) {
@@ -105,7 +106,7 @@ function Post({
 
       <div className="flex justify-between px-1 pt-4">
         <div className="flex space-x-4 ">
-          <HeartLike setLikeCount={setLikeCount} tweet_id={_id} />
+          <HeartLike likes={likes} setLikeCount={setLikeCount} tweet_id={_id} />
           <ChatIcon className="h-6 cursor-pointer" />
           <PaperAirplaneIcon className="h-6 cursor-pointer" />
         </div>

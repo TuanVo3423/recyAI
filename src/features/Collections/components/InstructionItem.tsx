@@ -5,6 +5,7 @@ import {
   Stack,
   Text,
   Divider,
+  UseDisclosureProps,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useQueryClient } from 'react-query';
@@ -12,13 +13,13 @@ import { useQueryClient } from 'react-query';
 type TInstructionItemProps = {
   setInstructionId: (id: string) => void;
   instruction: any;
-  onOpen: () => void;
+  PostModalStatus: UseDisclosureProps;
 };
 
 export const InstructionItem = ({
   setInstructionId,
   instruction,
-  onOpen,
+  PostModalStatus,
 }: TInstructionItemProps) => {
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData('getMyCollections');
@@ -27,13 +28,12 @@ export const InstructionItem = ({
       cursor="pointer"
       onClick={() => {
         setInstructionId(instruction._id);
-        onOpen();
+        PostModalStatus.onOpen();
       }}
       maxW="sm"
     >
       <CardBody>
-        <Stack mt="6" spacing="3">
-          <Heading size="md">Living room Sofa</Heading>
+        <Stack height="200px" overflow="hidden" mt="6" spacing="3">
           {instruction.steps.map((step, idx) => (
             <Text>{step.content}</Text>
           ))}

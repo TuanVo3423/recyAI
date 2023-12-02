@@ -69,7 +69,7 @@ export const CommentModal = ({
       <ModalOverlay />
       <ModalContent overflow="hidden" w="70vw" maxW="none">
         <ModalBody p={0} w="full">
-          {isLoading ? (
+          {isLoading || !data ? (
             <Quadrilateral p="24px" w="full" h="70vh" isLoading={isLoading} />
           ) : (
             <div className="flex justify-center">
@@ -93,9 +93,11 @@ export const CommentModal = ({
                       alt=""
                     />
                     <div className="flex-1 flex items-center">
-                      <p className="font-semibold text-sm mr-2 cursor-pointer">Papa</p>
-                      <p className='mx-2'>•</p>
-                      <p className="text-sm">caption</p>
+                      <p className="font-semibold text-sm mr-2 cursor-pointer">
+                        {data && data.tweet[0].user_info[0].name}
+                      </p>
+                      <p className="mx-2">•</p>
+                      <p className="text-sm">{data.tweet[0].content}</p>
                     </div>
 
                     <DotsHorizontalIcon className="h-5 mr-6" />
@@ -116,7 +118,14 @@ export const CommentModal = ({
                         />
                         <div className="flex-1">
                           <div className="flex">
-                            <p className="font-semibold text-sm mr-2">Pupu</p>
+                            <p className="font-semibold text-sm mr-2">
+                              {
+                                data.tweet[0].comments_users.find(
+                                  (comment_and_user_info) =>
+                                    cmt.user_id === comment_and_user_info._id
+                                ).name
+                              }
+                            </p>
                             <p className="text-sm mr-5">{cmt.content}</p>
                           </div>
                           <div className="flex space-x-4">
@@ -145,9 +154,11 @@ export const CommentModal = ({
                     </div>
                     <BookmarkIcon className="h-6 cursor-pointer" />
                   </div>
-                  <div className='mt-2 pb-3 border-b-[1px]'>
-                    <p className='font-semibold text-sm ml-5'>100 Like</p>
-                    <p className='text-xs text-gray-500 ml-5'>4 hours</p>
+                  <div className="mt-2 pb-3 border-b-[1px]">
+                    <p className="font-semibold text-sm ml-5">
+                      {`${data.tweet[0].like_count} lượt thích`}
+                    </p>
+                    <p className="text-xs text-gray-500 ml-5">4 hours</p>
                   </div>
                   <form className="flex items-center px-4 pt-4 pb-4 ">
                     <EmojiHappyIcon className="h-6 cursor-pointer" />

@@ -23,7 +23,6 @@ type Props = {
 
 const ModalShareInstruction = ({ ModalShareStatus, form, onSubmit }: Props) => {
   const { handleSubmit, setValue, watch, reset } = form;
-  // const listSubsection = watch("subsection");
 
   return (
     <Modal

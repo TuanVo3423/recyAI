@@ -3,6 +3,7 @@ import { IInstructionResponse } from '../instructions';
 
 export interface ITweet {
   instruction_id: String | null;
+  user_id: String;
   type: Number;
   audience: Number;
   content: string;
@@ -24,13 +25,16 @@ export type ITweetsResponse = {
       instruction: Array<IInstructionResponse>;
       comments: Array<ITweet>;
       comment_count: number;
+      user_info: Array<IUserResponse>;
+      like_count: Number;
+      likes: Array<IUserResponse>;
     }
   >;
 };
 
 export type ITweetResponse = {
   tweet: Array<
-    ITweetsResponse & {
+    ITweet & {
       _id: string;
       user_id: string;
       created_at: string;
@@ -38,7 +42,10 @@ export type ITweetResponse = {
       instruction: Array<IInstructionResponse>;
       comments: Array<ITweet>;
       comment_count: number;
-      user_info: IUserResponse;
+      user_info: Array<IUserResponse>;
+      like_count: Number;
+      likes: Array<IUserResponse>;
+      comments_users: Array<IUserResponse>;
     }
   >;
 };

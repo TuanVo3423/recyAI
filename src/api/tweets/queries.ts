@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getTweet, getTweets } from './request';
+import { getMyTweets, getTweet, getTweets } from './request';
 import { ITweetResponse, ITweetsResponse } from './types';
 // import { getDocument } from './request';
 
@@ -18,6 +18,16 @@ export const useGetTweets = (options?: any) =>
     ['getTweets'],
     async () => {
       const data = await getTweets();
+      return data;
+    },
+    { ...options }
+  );
+
+export const useGetMyTweets = (options?: any) =>
+  useQuery<ITweetsResponse>(
+    ['getMyTweets'],
+    async () => {
+      const data = await getMyTweets();
       return data;
     },
     { ...options }

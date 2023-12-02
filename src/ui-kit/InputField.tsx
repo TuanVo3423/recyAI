@@ -5,6 +5,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  Textarea,
 } from '@chakra-ui/react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -85,6 +86,35 @@ export const InputFieldWithoutLabel = ({
       <FormErrorMessage>
         {(isErrors !== undefined ? isErrors[_idx]?.message : '') as string}
       </FormErrorMessage>
+    </FormControl>
+  );
+};
+
+export const TextAreaInputFieldWithoutLabel = ({
+  name,
+  label,
+  placeholder,
+  // type,
+  form,
+}: InputFieldProps) => {
+  const {
+    register,
+    formState: { errors },
+  } = form;
+
+  const isErrors = errors?.[name];
+  return (
+    <FormControl height="full" isInvalid={!!isErrors?.message}>
+      <InputGroup h="full" w="full">
+        <Textarea
+          w="full"
+          h="full"
+          placeholder={placeholder}
+          // type={type}
+          {...register(name)}
+        />
+      </InputGroup>
+      <FormErrorMessage>{(isErrors?.message || '') as string}</FormErrorMessage>
     </FormControl>
   );
 };

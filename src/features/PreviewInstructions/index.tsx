@@ -2,6 +2,7 @@ import { createInstruction } from '@/api/instructions';
 import { OpenAIRequest } from '@/services/openai';
 import { useGenerateStepsPrompt } from '@/services/openai/prompt';
 import { useCreateProject } from '@/stores';
+import { TweetWithInstruction } from '@/utils/classifyTweetType';
 import {
   Box,
   BoxProps,
@@ -14,12 +15,14 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { CardTableContent, ModalAddSection } from './components';
-import ModalShareInstruction from './components/ModalShareInstruction';
+import { ShareModal } from './components/ModalShare';
 import {
   TColumn,
   defaultValueShare,
@@ -29,10 +32,6 @@ import {
   schema_create_section,
   schema_share,
 } from './data';
-import { createTweet } from '@/api/tweets';
-import { useMutation } from 'react-query';
-import { useRouter } from 'next/router';
-import { TweetWithInstruction } from '@/utils/classifyTweetType';
 
 const fake = {
   type: 0,
@@ -51,6 +50,7 @@ interface TPreviewInstructionsProps extends BoxProps {}
 export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
   const [columns, setColumns] = useState<TColumn[]>([]);
   const [stepToken, setStepToken] = useState('');
+  const [isFinish, setIsFinish] = useState(false);
 
   const router = useRouter();
   const toast = useToast();
@@ -79,7 +79,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
         // console.log(token);
       },
       handleStreamEnd(token) {
-        console.log(token);
+        setIsFinish(true);
       },
     });
 
@@ -149,7 +149,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
       steps: columns[0].tableOfContents,
     });
     if (instruction) {
-      const { content, is_public } = values;
+      const { content } = values;
       const res = await TweetWithInstruction({
         instruction_id: instruction.instruction_id,
         content,
@@ -201,7 +201,6 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
               Share
             </Button>
           </HStack>
-          {/* {createSectionButton} */}
         </HStack>
 
         <DragDropContext
@@ -256,11 +255,19 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
           form={form}
           ModalStatus={CreateNewSection}
         />
-        <ModalShareInstruction
+        {/* <ModalShareInstruction
           onSubmit={onSubmitShare}
           form={form_share}
           ModalShareStatus={ShareSection}
-        />
+        /> */}
+        {isFinish && (
+          <ShareModal
+            currentInstruction={columns[0].tableOfContents}
+            form={form_share}
+            onSubmit={onSubmitShare}
+            ModalShareStatus={ShareSection}
+          />
+        )}
       </Box>
     </Flex>
   );
