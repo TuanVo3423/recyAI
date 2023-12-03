@@ -1,5 +1,5 @@
-import { Collections, CreateInstructions } from '@/features';
-import { LayoutInstructions, MainLayout } from '@/layouts';
+import { Collections } from '@/features';
+import { MainLayout } from '@/layouts';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';

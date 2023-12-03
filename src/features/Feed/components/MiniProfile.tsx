@@ -1,4 +1,37 @@
+import { Logout } from '@/api/auth';
+import { LocalStorage } from '@/services/localStorage';
+import { useToast } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 export const MiniProfile = () => {
+  const toast = useToast();
+  const router = useRouter();
+  const { mutateAsync: handleLogout } = useMutation(
+    async () => {
+      const res = await Logout({
+        refresh_token: LocalStorage.get('REFRESH_TOKEN'),
+      });
+      return res;
+    },
+    {
+      onSuccess: (data) => {
+        localStorage.clear();
+        deleteCookie('Authorization');
+        router.reload();
+        toast({
+          description: data.message,
+          status: 'success',
+        });
+      },
+      onError: (err: any) => {
+        toast({
+          description: err.message,
+          status: 'error',
+        });
+      },
+    }
+  );
   return (
     <div className="flex items-center justify-between mt-14 ml-10">
       <img
@@ -11,7 +44,10 @@ export const MiniProfile = () => {
         <h3 className="text-md text-gray-400">Welcome to instagram</h3>
       </div>
 
-      <button className="text-blue-400 text-md ml-2 font-semibold">
+      <button
+        onClick={() => handleLogout()}
+        className="text-blue-400 text-md ml-2 font-semibold"
+      >
         Sign out
       </button>
     </div>

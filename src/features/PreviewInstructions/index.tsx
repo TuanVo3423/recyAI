@@ -21,8 +21,11 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
-import { CardTableContent, ModalAddSection } from './components';
-import { ShareModal } from './components/ModalShare';
+import {
+  CardTableContent,
+  ModalAddSection,
+  ShareInstructionModal,
+} from './components';
 import {
   TColumn,
   defaultValueShare,
@@ -32,18 +35,6 @@ import {
   schema_create_section,
   schema_share,
 } from './data';
-
-const fake = {
-  type: 0,
-  audience: 0,
-  content: 'good job',
-  parent_id: null,
-  hashtags: ['#recycling'],
-  mentions: ['@tuanvo'],
-  medias: 1,
-  guest_views: 10,
-  user_views: 10,
-};
 
 interface TPreviewInstructionsProps extends BoxProps {}
 
@@ -127,11 +118,6 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
       },
     }
   );
-
-  // const handleOnSave = async () => {
-  //   const res = await createInstruction({ steps: columns[0].tableOfContents });
-  //   console.log(res);
-  // };
 
   const onSubmit = async (values) => {
     const newtableOfContents = [...columns[0].tableOfContents];
@@ -261,11 +247,11 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
           ModalShareStatus={ShareSection}
         /> */}
         {isFinish && (
-          <ShareModal
+          <ShareInstructionModal
             currentInstruction={columns[0].tableOfContents}
             form={form_share}
             onSubmit={onSubmitShare}
-            ModalShareStatus={ShareSection}
+            shareInstructionModalStatus={ShareSection}
           />
         )}
       </Box>

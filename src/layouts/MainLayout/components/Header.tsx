@@ -1,8 +1,7 @@
 import {
   ArchiveIcon,
   DocumentAddIcon,
-  LogoutIcon,
-  MenuIcon,
+  MenuIcon
 } from '@heroicons/react/outline';
 import { HomeIcon } from '@heroicons/react/solid';
 import Image from 'next/image';

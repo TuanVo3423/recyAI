@@ -5,18 +5,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { InstructionItem } from './components/InstructionItem';
-import { PostModal } from './components/PostModal';
+import { InstructionItem, PostCollectionModal } from './components';
 import { defaultValueShare, schema_share_my_collection } from './data';
 
 type Props = {};
 
 export const Collections = (props: Props) => {
-  const PostModalStatus = useDisclosure();
+  const PostCollectionModalStatus = useDisclosure();
   const router = useRouter();
   const toast = useToast();
   const [instructionId, setInstructionId] = useState<string | null>(null);
-  const { data, isLoading, isError } = useGetMyCollections();
+  const { data, isLoading } = useGetMyCollections();
   const form_share_my_collection = useForm<any>({
     resolver: yupResolver(schema_share_my_collection),
     defaultValues: defaultValueShare,
@@ -34,23 +33,24 @@ export const Collections = (props: Props) => {
     });
   };
   return (
-    <Grid p={10} templateColumns="repeat(3, 1fr)" gap={6} marginLeft="300px">
+    <Grid p={10} templateColumns="repeat(3, 1fr)" gap={6}>
       {isLoading && <div>Loading...</div>}
       {!isLoading &&
         data &&
-        data.instructions.map((instruction, idx) => (
+        data.instructions.map((instruction, idx: number) => (
           <InstructionItem
-            PostModalStatus={PostModalStatus}
+            key={idx}
+            PostCollectionModalStatus={PostCollectionModalStatus}
             instruction={instruction}
             setInstructionId={setInstructionId}
           />
         ))}
 
-      <PostModal
+      <PostCollectionModal
         form={form_share_my_collection}
         onSubmit={onSubmitShareMyCollection}
         instructionId={instructionId}
-        PostModalStatus={PostModalStatus}
+        PostCollectionModalStatus={PostCollectionModalStatus}
       />
     </Grid>
   );

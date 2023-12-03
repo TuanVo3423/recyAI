@@ -1,5 +1,5 @@
 import { request } from '../axios';
-import { ISignIn, ISignUp } from './types';
+import { ILogout, ISignIn, ISignUp } from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
@@ -17,6 +17,19 @@ export const signUp = async (data: ISignUp) => {
 export const signIn = async (data: ISignIn) => {
   const res = await request({
     url: `users/login`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+    data,
+  });
+  return res;
+};
+
+export const Logout = async (data: ILogout) => {
+  const res = await request({
+    url: `users/logout`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

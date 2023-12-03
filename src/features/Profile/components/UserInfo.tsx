@@ -4,7 +4,6 @@ type Props = {};
 
 export const UserInfo = (props: Props) => {
   const { data, isLoading } = useGetAuth();
-  console.log('data: ', data);
   return (
     <>
       {!isLoading && (

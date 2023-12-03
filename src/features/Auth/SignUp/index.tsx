@@ -1,7 +1,7 @@
 import { signUp } from '@/api/auth';
 import { useAuth } from '@/stores';
 import { InputField } from '@/ui-kit';
-import { VStack, useToast } from '@chakra-ui/react';
+import { Button, VStack, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -18,11 +18,6 @@ export const SignUp = () => {
 
   const toast = useToast();
   const router = useRouter();
-  const setProfile = useAuth((state) => state.setProfile);
-
-  // const onSubmit = (data: ISignup) => {
-  //   console.log(data);
-  // };
 
   const { mutateAsync: handleSignUp, isLoading } = useMutation(
     async (data: ISignup) => {
@@ -68,13 +63,13 @@ export const SignUp = () => {
                   width={25}
                   height={25}
                 />
-                <span className='text-sm'>Đăng nhập bằng Facebook</span>
+                <span className="text-sm">Đăng nhập bằng Facebook</span>
               </button>
             </div>
           </div>
-          <div className='font-bold my-4 flex justify-center items-center text-center text-gray-500'>
-              OR
-            </div>
+          <div className="font-bold my-4 flex justify-center items-center text-center text-gray-500">
+            OR
+          </div>
           <VStack
             as="form"
             onSubmit={handleSubmit((data) => handleSignUp(data))}
@@ -124,7 +119,7 @@ export const SignUp = () => {
                 form={form}
                 name="confirm_password"
                 placeholder="Enter confirm password..."
-                type="text"
+                type="password"
               />
             </div>
             <div className="w-[290px] h-[35px]  rounded-md  bg-[#fafafa] text-sm">
@@ -140,56 +135,32 @@ export const SignUp = () => {
               />
             </div>
 
-            {/* <label htmlFor="signInPageEmail">
-              {''}
-              <input
-                className="w-[400px] h-[50px]  rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none my-3"
-                type="text"
-                id="sdt"
-                placeholder="Email address"
-              />
-            </label>
-            <label htmlFor="signInPagePassword">
-              {' '}
-              <input
-                className=" w-[400px] h-[50px] ml-[50px] rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none my-3"
-                type="text"
-                id="signInPagePassword"
-                placeholder="Name"
-              />
-            </label>
-            <label htmlFor="signInPagePassword">
-              {' '}
-              <input
-                className=" w-[400px] h-[50px] ml-[50px] rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none my-3"
-                type="text"
-                id="signInPagePassword"
-                placeholder="username"
-              />
-            </label>
-            <label htmlFor="signInPagePassword">
-              {' '}
-              <input
-                className=" w-[400px] h-[50px] ml-[50px] rounded-md py-5 border border-stone-300 bg-[#fafafa] px-2  text-sm focus:outline-none my-3"
-                type="password"
-                id="signInPagePassword"
-                placeholder="Password"
-              />
-            </label> */}
-            <div className='mt-10'>
-            <button
-              type="submit"
-              className="bg-blue-400 hover:bg-blue-700 text-white w-[290px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
-            >
-              Đăng Ky
-            </button>
+            <div className="mt-10">
+              {isLoading ? (
+                <Button
+                  h="34px"
+                  rounded="xl"
+                  className="w-[290px]"
+                  isLoading
+                  bg="gray.400"
+                ></Button>
+              ) : (
+                <button
+                  type="submit"
+                  className="bg-blue-400 hover:bg-blue-700 text-white w-[290px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+                >
+                  Đăng Ky
+                </button>
+              )}
             </div>
-            
           </VStack>
         </div>
         <div className="flex border items-center justify-center border-gray-300 mt-10 w-[350px] h-[55px] ">
           <p className="text-sm ">Ban da co tai khoan</p>
-          <p className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer">
+          <p
+            onClick={() => router.push('/auth/sign-in')}
+            className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer"
+          >
             Dang Nhap
           </p>
         </div>

@@ -13,6 +13,8 @@ export interface ITweet {
   medias: Number;
   guest_views: Number;
   user_views: Number;
+  created_at: string;
+  updated_at: string;
 }
 
 export type ITweetsResponse = {

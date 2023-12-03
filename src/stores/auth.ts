@@ -1,4 +1,3 @@
-import { ResponseWithPagination } from './../api/commonTypes';
 import { create } from 'zustand';
 
 type TData = {

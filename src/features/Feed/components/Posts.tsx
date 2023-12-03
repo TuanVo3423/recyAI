@@ -1,3 +1,4 @@
+import { IUserResponse } from '@/api/auth';
 import { IInstructionResponse } from '@/api/instructions';
 import { ITweet, useGetTweets } from '@/api/tweets';
 import { Text, useDisclosure } from '@chakra-ui/react';
@@ -5,13 +6,11 @@ import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  HeartIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
 import { useState } from 'react';
 import { CommentModal } from './CommentModal';
 import HeartLike from './Like';
-import { IUserResponse } from '@/api/auth';
 
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {

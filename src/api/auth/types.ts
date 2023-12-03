@@ -12,6 +12,10 @@ export interface ISignIn {
   password: string;
 }
 
+export interface ILogout {
+  refresh_token: string;
+}
+
 export interface IUserResponse {
   _id: string;
   name: string;

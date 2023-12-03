@@ -17,6 +17,7 @@ import {
   HeartIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
+import { formatDistance } from 'date-fns';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 interface TCommentModalProps extends UseDisclosureProps {
@@ -108,7 +109,7 @@ export const CommentModal = ({
                     <>No cmt here</>
                   ) : (
                     data.tweet[0].comments.map((cmt, idx) => (
-                      <div className="flex items-center py-3">
+                      <div key={idx} className="flex items-center py-3">
                         <img
                           src={
                             'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
@@ -130,7 +131,13 @@ export const CommentModal = ({
                           </div>
                           <div className="flex space-x-4">
                             <p className="text-xs font-medium text-gray-400">
-                              4 hours
+                              {formatDistance(
+                                new Date(cmt.created_at),
+                                new Date(),
+                                {
+                                  addSuffix: true,
+                                }
+                              )}
                             </p>
                             <p className="text-xs font-medium text-gray-400">
                               5 Likes
@@ -158,7 +165,16 @@ export const CommentModal = ({
                     <p className="font-semibold text-sm ml-5">
                       {`${data.tweet[0].like_count} lượt thích`}
                     </p>
-                    <p className="text-xs text-gray-500 ml-5">4 hours</p>
+                    <p className="text-xs text-gray-500 ml-5">
+                      {' '}
+                      {formatDistance(
+                        new Date(data.tweet[0].created_at),
+                        new Date(),
+                        {
+                          addSuffix: true,
+                        }
+                      )}
+                    </p>
                   </div>
                   <form className="flex items-center px-4 pt-4 pb-4 ">
                     <EmojiHappyIcon className="h-6 cursor-pointer" />

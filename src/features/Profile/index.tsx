@@ -7,7 +7,7 @@ type Props = {};
 export const Profile = (props: Props) => {
   const { onClose } = useDisclosure();
   return (
-    <div className="ml-44">
+    <div>
       <UserInfo />
       <AdditionFeed />
       <hr className="mx-[300px] border-gray-600"></hr>

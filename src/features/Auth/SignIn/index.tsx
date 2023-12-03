@@ -3,7 +3,7 @@ import { PROJECT_AUTH_TOKEN } from '@/constants';
 import { LocalStorage } from '@/services/localStorage';
 import { useAuth } from '@/stores';
 import { InputField } from '@/ui-kit';
-import { VStack, useToast } from '@chakra-ui/react';
+import { Button, VStack, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -29,6 +29,7 @@ export const SignIn = () => {
     {
       onSuccess: async (data: any) => {
         await LocalStorage.set(PROJECT_AUTH_TOKEN, data.user);
+        await LocalStorage.set('REFRESH_TOKEN', data.result.refresh_token);
         await setProfile(data.user);
         await router.push('/feed');
         toast({
@@ -81,15 +82,23 @@ export const SignIn = () => {
                 form={form}
               />
             </div>
-            <button
-              type="submit"
-              className="-mb-6 bg-blue-400 hover:bg-blue-700 text-white w-[200px] h-[30px] ml-[75px] rounded-xl shadow-lg text-xs font-bold mt-2"
-            >
-              Đăng Nhập
-            </button>
-            <div className='font-bold -mt-4 text-gray-500'>
-              OR
-            </div>
+            {isLoading ? (
+              <Button
+                h="30px"
+                rounded="xl"
+                className="w-[200px]  ml-[75px]"
+                isLoading
+              ></Button>
+            ) : (
+              <button
+                type="submit"
+                className="-mb-6 bg-blue-400 hover:bg-blue-700 text-white w-[200px] h-[30px] ml-[75px] rounded-xl shadow-lg text-xs font-bold mt-2"
+              >
+                Đăng Nhập
+              </button>
+            )}
+
+            <div className="font-bold -mt-4 text-gray-500">OR</div>
             <div className="flex flex-col items-center justify-center ">
               <button className="flex items-center space-x-2 text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
                 <Image
@@ -98,7 +107,7 @@ export const SignIn = () => {
                   width={20}
                   height={20}
                 />
-                <span className='text-sm'>Đăng nhập bằng Facebook</span>
+                <span className="text-sm">Đăng nhập bằng Facebook</span>
               </button>
               <a
                 href="/forgot-password"
@@ -111,7 +120,10 @@ export const SignIn = () => {
         </div>
         <div className="flex border items-center justify-center border-gray-300 mt-5 w-[350px] h-[60px] ">
           <p className="text-sm ">Ban chua co tai khoan u?</p>
-          <p className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer">
+          <p
+            onClick={() => router.push('/auth/sign-up')}
+            className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer"
+          >
             Dang Ki
           </p>
         </div>

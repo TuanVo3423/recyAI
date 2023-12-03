@@ -18,7 +18,6 @@ export const useAuthCheck = () => {
     async (url: string) => {
       const path = url.split('?')[0];
       const isPublicPath = publicPaths.includes(path as Path);
-      console.log('!_isEmpty(profile): ', !_isEmpty(profile));
 
       // if (path === Path.LOGIN || path === Path.SIGN_UP) {
       //   setAuthorized(true);
@@ -34,7 +33,7 @@ export const useAuthCheck = () => {
 
       if (path === Path.LOGIN || path === Path.SIGN_UP) {
         if (!_isEmpty(profile)) {
-          redirectToProfile();
+          redirectToFeed();
         }
         setAuthorized(true);
       }
@@ -64,9 +63,9 @@ export const useAuthCheck = () => {
     router.push('/auth/sign-in');
   };
 
-  const redirectToProfile = () => {
+  const redirectToFeed = () => {
     // setAuthorized(false);
-    router.push('/profile');
+    router.push('/feed');
   };
 
   return { checkAuthorization, authorized };
