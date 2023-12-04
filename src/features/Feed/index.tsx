@@ -11,10 +11,11 @@ export const Feed = (props: Props) => {
       <section className="col-span-2 ">
         <Stories />
         <Posts />
+        
       </section>
 
       <section className="hidden xl:inline-grid md:col-span-1">
-        <div className="fixed -top-4 right-[110px]">
+        <div className="fixed -top-4 right-[90px]">
           <MiniProfile />
           <Suggestions />
         </div>
