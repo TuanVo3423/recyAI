@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Slide,
   UseDisclosureProps,
   useToast,
 } from '@chakra-ui/react';
@@ -20,6 +21,9 @@ import {
 import { formatDistance } from 'date-fns';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css'
 interface TCommentModalProps extends UseDisclosureProps {
   tweetId: string;
   refresh: () => void;
@@ -64,7 +68,13 @@ export const CommentModal = ({
       },
     }
   );
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
@@ -73,16 +83,30 @@ export const CommentModal = ({
           {isLoading || !data ? (
             <Quadrilateral p="24px" w="full" h="70vh" isLoading={isLoading} />
           ) : (
-            <div className="flex justify-center">
-              <div className="bg-white border-r-[1px]  w-[50%] py-[80px] px-[30px]">
-                {!data ? (
-                  <></>
-                ) : (
-                  data.tweet[0].instruction[0].steps.map((step, idx) => (
-                    <p key={idx}>{step.content}</p>
-                  ))
-                )}
+            <div className="flex justify-center items-center">
+
+              <div className="bg-white border-r-[1px]  w-[50%] px-[30px] ">
+                <Slider {...settings}>
+                  <div className='card'>{!data ? (
+                    <></>
+                  ) : (
+                    data.tweet[0].instruction[0].steps.map((step, idx) => (
+                      <p key={idx}>{step.content}</p>
+                    ))
+                  )}</div>
+                  <div className='card'>
+                    <img
+                      src={
+
+                        'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+                      }
+                      className=" object-contain w-[500px] h-[280px] border cursor-pointer"
+                      alt=""
+                    />
+                  </div>
+                </Slider>
               </div>
+
               <div className="bg-white w-[50%]">
                 <div>
                   <div className="flex items-center py-3 border-b-[1px]">

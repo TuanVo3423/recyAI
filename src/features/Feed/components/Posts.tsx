@@ -11,7 +11,9 @@ import {
 import { useState } from 'react';
 import { CommentModal } from './CommentModal';
 import HeartLike from './Like';
-
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css'
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { data, isLoading, isError, refetch } = useGetTweets();
@@ -75,6 +77,13 @@ function Post({
   setTweetId,
 }: PostProps) {
   const [likeCount, setLikeCount] = useState(like_count);
+  const settings = {
+    dots:true,
+    infinite: true,
+    speed:500,
+    slidesToShow:1,
+    slidesToScroll:1
+  };
   return (
     <div className="bg-white my-7 border-none ">
       <div className="flex items-center py-3 ">
@@ -97,11 +106,43 @@ function Post({
 
         <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
       </div>
-      <div className="px-[20px] py-[20px] border-[1px] rounded-lg shadow-sm">
+      {/* <div className=''>
+      <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm">
         {instruction.map((item, idx) =>
           item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
         )}
+        <img
+          src={
+            
+          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+          }
+          className="absolute object-contain w-[200px] h-[200px] border cursor-pointer"
+          alt=""
+        />
       </div>
+      </div> */}
+      <div>
+        
+        <Slider {...settings}>
+        <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm card">
+        {instruction.map((item, idx) =>
+          item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
+        )}
+        </div>
+          <div className='card items-center justify-center'>
+          <img
+          src={
+            
+          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+          }
+          className=" object-contain w-[500px] h-[280px] border cursor-pointer"
+          alt=""
+        />
+          </div>
+          
+        </Slider>
+      </div>
+      
 
       <div className="flex justify-between px-1 pt-4">
         <div className="flex space-x-4 ">
