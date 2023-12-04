@@ -14,6 +14,7 @@ import HeartLike from './Like';
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css'
+import { time } from 'console';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { data, isLoading, isError, refetch } = useGetTweets();
@@ -100,8 +101,8 @@ function Post({
           <p className="font-semibold text-sm mr-2 cursor-pointer">
             {user_info[0].name}{' '}
           </p>
-          <p className="mx-2">•</p>
-          <p className="text-sm">{content}</p>
+          <p className="mx-2 text-gray-500">•</p>
+          <p className="text-sm text-gray-500">6 hours</p>
         </div>
 
         <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
@@ -152,9 +153,15 @@ function Post({
         </div>
         <BookmarkIcon className="h-6 cursor-pointer" />
       </div>
-      <Text color="#000" fontSize="14px" ml="8px" mt="2px" fontWeight="bold">
+      <Text color="#000" fontSize="14px" ml="8px" mt="2px" fontWeight="semibold">
         {`${likeCount} lượt thích`}
       </Text>
+      <div className='flex my-1 items-center ml-2'>
+      <p className="font-semibold text-sm mr-2 cursor-pointer">
+            {user_info[0].name}{' '}
+          </p>
+          <p className='text-sm'>{content}</p>
+      </div>
       <Text
         onClick={() => {
           setTweetId(_id);

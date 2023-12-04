@@ -7,6 +7,7 @@ import {
   ModalContent,
   ModalOverlay,
   Slide,
+  Textarea,
   UseDisclosureProps,
   useToast,
 } from '@chakra-ui/react';
@@ -85,15 +86,15 @@ export const CommentModal = ({
           ) : (
             <div className="flex justify-center items-center">
 
-              <div className="bg-white border-r-[1px]  w-[50%] px-[30px] ">
+              <div className="bg-white border-r-[1px] -mt-16 pb-10 w-[50%] px-[25px] ">
                 <Slider {...settings}>
                   <div className='card'>{!data ? (
                     <></>
                   ) : (
                     data.tweet[0].instruction[0].steps.map((step, idx) => (
-                      <p key={idx}>{step.content}</p>
+                      <textarea className='border-none w-[489px] scrollbar-none h-[60px]' key={idx}>{step.content}</textarea>
                     ))
-                  )}</div>
+                  )}</div> 
                   <div className='card'>
                     <img
                       src={
