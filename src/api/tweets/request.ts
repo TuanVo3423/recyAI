@@ -42,3 +42,20 @@ export const getMyInstructions = async (UserID: number | string) => {
   return res;
 };
 
+export interface UploadImagesBody {
+  images: Array<Image>;
+}
+
+export interface Image {
+  src: string;
+  height: number;
+  width: number;
+}
+
+export const uploadImage = async (UserID: number | string) => {
+  const res = await request({
+    url: `instructions/me/${UserID}`,
+    method: 'GET',
+  });
+  return res;
+};

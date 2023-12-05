@@ -1,20 +1,27 @@
 import { IUserResponse } from '../auth';
 import { IInstructionResponse } from '../instructions';
-
+interface Media {
+  url: string;
+  type: MediaType; // video, image
+}
+enum MediaType {
+  Image,
+  Video,
+}
 export interface ITweet {
   instruction_id: String | null;
-  user_id: String;
+  user_id?: String;
   type: Number;
   audience: Number;
   content: string;
   parent_id: string | null;
   hashtags: Array<String>;
   mentions: Array<String>;
-  medias: Number;
+  medias: Media[];
   guest_views: Number;
   user_views: Number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ITweetUpdate extends Partial<ITweet> {

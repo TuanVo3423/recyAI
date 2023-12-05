@@ -1,5 +1,8 @@
 import { useGetMyCollections } from '@/api/instructions';
-import { TweetWithInstruction } from '@/utils/classifyTweetType';
+import {
+  TweetWithImages,
+  TweetWithInstruction,
+} from '@/utils/classifyTweetType';
 import { Grid, useDisclosure, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -15,22 +18,36 @@ export const Collections = (props: Props) => {
   const router = useRouter();
   const toast = useToast();
   const [instructionId, setInstructionId] = useState<string | null>(null);
+  const [files, setFiles] = useState<any[]>([]);
   const { data, isLoading } = useGetMyCollections();
   const form_share_my_collection = useForm<any>({
     resolver: yupResolver(schema_share_my_collection),
     defaultValues: defaultValueShare,
   });
+
   const onSubmitShareMyCollection = async (values) => {
     const { content } = values;
-    const res = await TweetWithInstruction({
-      instruction_id: instructionId,
-      content,
-    });
-    await router.push('/feed');
-    toast({
-      description: res.message,
-      status: 'success',
-    });
+    if (files.length === 0) {
+      const res = await TweetWithInstruction({
+        instruction_id: instructionId,
+        content,
+      });
+      toast({
+        description: res.message,
+        status: 'success',
+      });
+    } else {
+      const res = await TweetWithImages({
+        instruction_id: instructionId,
+        content,
+        images: files,
+      });
+      toast({
+        description: res.message,
+        status: 'success',
+      });
+    }
+    // await router.push('/feed');
   };
   return (
     <Grid p={10} templateColumns="repeat(3, 1fr)" gap={6}>
@@ -47,6 +64,8 @@ export const Collections = (props: Props) => {
         ))}
 
       <PostCollectionModal
+        files={files}
+        setFiles={setFiles}
         form={form_share_my_collection}
         onSubmit={onSubmitShareMyCollection}
         instructionId={instructionId}

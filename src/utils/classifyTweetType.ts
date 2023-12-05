@@ -5,6 +5,15 @@ enum TweetType {
   Comment,
   QuoteTweet,
 }
+
+interface Media {
+  url: string;
+  type: MediaType; // video, image
+}
+enum MediaType {
+  Image,
+  Video,
+}
 export const TweetWithInstruction = async ({
   instruction_id,
   content,
@@ -18,9 +27,33 @@ export const TweetWithInstruction = async ({
     audience: 1,
     type: TweetType.Tweet,
     parent_id: null,
-    hashtags: ['#recycling'],
-    mentions: ['@tuanvo'],
-    medias: 1,
+    hashtags: [],
+    mentions: [],
+    medias: [],
+    guest_views: 10,
+    user_views: 10,
+  });
+  return res;
+};
+
+export const TweetWithImages = async ({
+  instruction_id,
+  content,
+  images,
+}: {
+  instruction_id: string;
+  content: string;
+  images: Media[];
+}) => {
+  const res = await createTweet({
+    instruction_id: instruction_id,
+    content,
+    audience: 1,
+    type: TweetType.Tweet,
+    parent_id: null,
+    hashtags: [],
+    mentions: [],
+    medias: images,
     guest_views: 10,
     user_views: 10,
   });
@@ -42,7 +75,7 @@ export const CommentTweet = async ({
     parent_id: parent_id,
     hashtags: ['#recycling'],
     mentions: ['@tuanvo'],
-    medias: 1,
+    medias: [],
     guest_views: 10,
     user_views: 10,
   });

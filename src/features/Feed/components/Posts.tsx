@@ -11,9 +11,9 @@ import {
 import { useState } from 'react';
 import { CommentModal } from './CommentModal';
 import HeartLike from './Like';
-import Slider from "react-slick";
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick-theme.css';
 import { time } from 'console';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
@@ -76,14 +76,16 @@ function Post({
   comment_count,
   onOpen,
   setTweetId,
+  medias,
 }: PostProps) {
   const [likeCount, setLikeCount] = useState(like_count);
+  console.log('medias: ', medias);
   const settings = {
-    dots:true,
+    dots: true,
     infinite: true,
-    speed:500,
-    slidesToShow:1,
-    slidesToScroll:1
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
   return (
     <div className="bg-white my-7 border-none ">
@@ -123,27 +125,24 @@ function Post({
       </div>
       </div> */}
       <div>
-        
         <Slider {...settings}>
-        <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm card">
-        {instruction.map((item, idx) =>
-          item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
-        )}
-        </div>
-          <div className='card items-center justify-center'>
-          <img
-          src={
-            
-          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
-          }
-          className=" object-contain w-[500px] h-[280px] border cursor-pointer"
-          alt=""
-        />
+          <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm card">
+            {instruction.map((item, idx) =>
+              item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
+            )}
           </div>
-          
+          {medias.length !== 0 &&
+            medias.map((media, idx) => (
+              <div className="card w-full h-full items-center justify-center">
+                <img
+                  src={media.url}
+                  className=" object-contain w-full h-full rounded-md  cursor-pointer"
+                  alt=""
+                />
+              </div>
+            ))}
         </Slider>
       </div>
-      
 
       <div className="flex justify-between px-1 pt-4">
         <div className="flex space-x-4 ">
@@ -153,14 +152,20 @@ function Post({
         </div>
         <BookmarkIcon className="h-6 cursor-pointer" />
       </div>
-      <Text color="#000" fontSize="14px" ml="8px" mt="2px" fontWeight="semibold">
+      <Text
+        color="#000"
+        fontSize="14px"
+        ml="8px"
+        mt="2px"
+        fontWeight="semibold"
+      >
         {`${likeCount} lượt thích`}
       </Text>
-      <div className='flex my-1 items-center ml-2'>
-      <p className="font-semibold text-sm mr-2 cursor-pointer">
-            {user_info[0].name}{' '}
-          </p>
-          <p className='text-sm'>{content}</p>
+      <div className="flex my-1 items-center ml-2">
+        <p className="font-semibold text-sm mr-2 cursor-pointer">
+          {user_info[0].name}{' '}
+        </p>
+        <p className="text-sm">{content}</p>
       </div>
       <Text
         onClick={() => {

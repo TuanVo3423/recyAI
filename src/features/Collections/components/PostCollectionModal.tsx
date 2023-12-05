@@ -1,3 +1,4 @@
+import { Uploader } from '@/components/Upload';
 import { useAuth } from '@/stores';
 import { TextAreaInputFieldWithoutLabel } from '@/ui-kit';
 import {
@@ -16,6 +17,8 @@ interface TPostCollectionModalProps extends UseDisclosureProps {
   PostCollectionModalStatus: UseDisclosureProps;
   onSubmit: any;
   form: any;
+  files: any;
+  setFiles: any;
 }
 
 export const PostCollectionModal = ({
@@ -23,6 +26,8 @@ export const PostCollectionModal = ({
   PostCollectionModalStatus,
   form,
   onSubmit,
+  files,
+  setFiles,
 }: TPostCollectionModalProps) => {
   const { handleSubmit } = form;
   const queryClient = useQueryClient();
@@ -84,9 +89,12 @@ export const PostCollectionModal = ({
                   type={'text'} // type="text"
                 />
               </div>
-              <div className='flex items-center space-x-2 mt-4'>
-                    <PhotographIcon className='w-6 h-6 '/>
-                    <p className='text-sm text-blue-400 cursor-pointer hover:text-blue-900'>Add Photos</p>
+              <div className="flex items-center space-x-2 mt-4">
+                {/* <PhotographIcon className="w-6 h-6 " />
+                <p className="text-sm text-blue-400 cursor-pointer hover:text-blue-900">
+                  Add Photos
+                </p> */}
+                <Uploader files={files} setFiles={setFiles} />
               </div>
               {/* <div className="flex items-center space-x-64 border-b-[1px] pb-2">
                 <EmojiHappyIcon className="h-6 cursor-pointer w-6 ml-4 text-gray-400" />
