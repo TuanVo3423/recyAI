@@ -17,6 +17,10 @@ export interface ITweet {
   updated_at: string;
 }
 
+export interface ITweetUpdate extends Partial<ITweet> {
+  _id: string;
+}
+
 export type ITweetsResponse = {
   tweets: Array<
     ITweet & {

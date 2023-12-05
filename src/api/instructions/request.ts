@@ -41,3 +41,15 @@ export const getMyInstructions = async () => {
   });
   return res;
 };
+
+export const editInstructionsInMyTweets = async (
+  instruction_id: String,
+  payload: any
+) => {
+  const res = await request({
+    url: `instructions/${instruction_id}`,
+    method: 'PATCH',
+    data: payload,
+  });
+  return res;
+};

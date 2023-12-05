@@ -1,5 +1,5 @@
 import { request } from '../axios';
-import { ITweet } from './types';
+import { ITweet, ITweetUpdate } from './types';
 
 export const createTweet = async (data: ITweet) => {
   const res = await request({
@@ -9,22 +9,6 @@ export const createTweet = async (data: ITweet) => {
   });
   return res;
 };
-
-// export const generateDocument = async (selectionId: number) => {
-//   const res = await request({
-//     url: `/chatgpt/generate-document/${selectionId}`,
-//     method: 'POST',
-//   });
-//   return res;
-// };
-
-// export const generateUserflow = async (selectionId: number) => {
-//   const res = await request({
-//     url: `/chatgpt/generate-user-flow/${selectionId}`,
-//     method: 'POST',
-//   });
-//   return res;
-// };
 
 export const getTweet = async (tweetId: string) => {
   const res = await request({
@@ -57,3 +41,4 @@ export const getMyInstructions = async (UserID: number | string) => {
   });
   return res;
 };
+

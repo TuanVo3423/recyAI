@@ -1,15 +1,17 @@
+import { editInstructionsInMyTweets } from '@/api/instructions';
 import { useGetTweet } from '@/api/tweets';
 import { Quadrilateral } from '@/components/skeleton';
 import { CommentTweet } from '@/utils/classifyTweetType';
 import {
+  Button,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
-  Slide,
+  Text,
   Textarea,
   UseDisclosureProps,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import {
   BookmarkIcon,
@@ -20,16 +22,23 @@ import {
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
 import { formatDistance } from 'date-fns';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
-import Slider from "react-slick";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css'
 interface TCommentModalProps extends UseDisclosureProps {
   tweetId: string;
   refresh: () => void;
 }
-
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 export const CommentModal = ({
   refresh,
   tweetId,
@@ -37,9 +46,21 @@ export const CommentModal = ({
   onClose,
   onOpen,
 }: TCommentModalProps) => {
-  const { data, isLoading, isError, refetch } = useGetTweet(tweetId, {
-    enabled: !!tweetId,
-  });
+  const { pathname } = useRouter();
+  const { data, isLoading, isError, refetch, isSuccess } = useGetTweet(
+    tweetId,
+    {
+      enabled: !!tweetId,
+    }
+  );
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentStep, setCurrentStep] = useState([]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setCurrentStep(data.tweet[0].instruction[0].steps);
+    }
+  }, [isSuccess]);
   const [comment, setComment] = useState('');
   const toast = useToast();
   const { mutateAsync: handleComment } = useMutation(
@@ -69,43 +90,124 @@ export const CommentModal = ({
       },
     }
   );
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
+  const { mutateAsync: handleSaveUpdate } = useMutation(
+    async () => {
+      const res = await editInstructionsInMyTweets(
+        data.tweet[0].instruction_id,
+        currentStep
+      );
+      return res;
+    },
+    {
+      onSuccess: async (data) => {
+        // await refetch();
+        await refresh();
+        toast({
+          description: data.message,
+          status: 'success',
+        });
+      },
+      onError: async (err: any) => {
+        toast({
+          description: err.message,
+          status: 'error',
+        });
+      },
+    }
+  );
+  const handleOnChange = (e, id: string) => {
+    const index = currentStep.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      // Tạo một bản sao của mảng state
+      const newcurrentStep = [...currentStep];
+
+      // Thay đổi nội dung của phần tử tại index bằng 2
+      newcurrentStep[index] = {
+        ...newcurrentStep[index],
+        content: e.target.value,
+      };
+
+      // Cập nhật trạng thái bằng mảng mới
+      setCurrentStep(newcurrentStep);
+    }
   };
+
+  const renderButton = () => {
+    if (isEdit) {
+      return (
+        <Button
+          height="fit-content"
+          lineHeight="32px"
+          onClick={async () => {
+            await handleSaveUpdate();
+            setIsEdit(false);
+          }}
+        >
+          Save
+        </Button>
+      );
+    }
+    return (
+      <Button
+        height="fit-content"
+        lineHeight="32px"
+        onClick={() => setIsEdit(true)}
+      >
+        Edit
+      </Button>
+    );
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent overflow="hidden" w="70vw" maxW="none">
+      <ModalContent overflow="hidden" w="70vw" maxH="90vh" maxW="none">
         <ModalBody p={0} w="full">
           {isLoading || !data ? (
-            <Quadrilateral p="24px" w="full" h="70vh" isLoading={isLoading} />
+            <Quadrilateral p="24px" w="full" isLoading={isLoading} />
           ) : (
-            <div className="flex justify-center items-center">
-
-              <div className="bg-white border-r-[1px] -mt-16 pb-10 w-[50%] px-[25px] ">
-                <Slider {...settings}>
-                  <div className='card'>{!data ? (
-                    <></>
-                  ) : (
-                    data.tweet[0].instruction[0].steps.map((step, idx) => (
-                      <textarea className='border-none w-[489px] scrollbar-none h-[60px]' key={idx}>{step.content}</textarea>
-                    ))
-                  )}</div> 
-                  <div className='card'>
-                    <img
-                      src={
-
-                        'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
-                      }
-                      className=" object-contain w-[500px] h-[280px] border cursor-pointer"
-                      alt=""
-                    />
+            <div className="flex">
+              <div className="flex flex-col bg-white w-[50%] px-4">
+                {pathname === '/profile' && (
+                  <div className="flex items-center py-3 border-b-[1px]">
+                    {renderButton()}
                   </div>
-                </Slider>
+                )}
+                <div className="flex-1">
+                  <Slider {...settings}>
+                    <div className="card">
+                      {!data ? (
+                        <></>
+                      ) : (
+                        currentStep.map((step, idx) => {
+                          return isEdit ? (
+                            <Textarea
+                              key={idx}
+                              onChange={(e) => handleOnChange(e, step.id)}
+                              h="fit-content"
+                              minH="fit-content"
+                            >
+                              {step.content}
+                            </Textarea>
+                          ) : (
+                            <Text className="mb-2" key={idx}>
+                              {step.content}
+                            </Text>
+                          );
+                        })
+                      )}
+                    </div>
+                    <div className="card">
+                      <img
+                        src={
+                          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+                        }
+                        className=" object-contain  border cursor-pointer"
+                        alt=""
+                      />
+                    </div>
+                  </Slider>
+                </div>
               </div>
 
               <div className="bg-white w-[50%]">
