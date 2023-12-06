@@ -29,7 +29,7 @@ export const PopoverSearch = ({
         returnFocusOnClose={false}
         isOpen={isOpen}
         onClose={onClose}
-        placement="right"
+        placement="left"
         closeOnBlur={false}
       >
         <PopoverTrigger>

@@ -20,7 +20,7 @@ export const UserInfo = (props: Props) => {
               alt=""
               className="w-full h-full object-cover"
             />
-            <PlusCircleIcon className="absolute w-8 h-8 top-2 left-24 hover:text-gray-400 cursor-pointer bg-white rounded-full" />
+            <PlusCircleIcon className="absolute w-8 h-8 top-14 left-16 hover:text-gray-400 cursor-pointer bg-transparent rounded-full" />
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">

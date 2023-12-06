@@ -21,6 +21,7 @@ import {
   MenuIcon,
   SearchIcon,
   TranslateIcon,
+  XIcon
 } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -57,14 +58,40 @@ export const SideBar = () => {
                   <p className="text-md flex-1">Search</p>
                 </div>
               </PopoverTrigger>
-              <PopoverContent>
-                <PopoverCloseButton />
-                <PopoverBody>
-                  <Box>
-                    Hello. Nice to meet you! This is the body of the popover
-                  </Box>
-                </PopoverBody>
+              {/* <PopoverCloseButton className=''/> */}
+              <PopoverContent className=' -ml-20  mt-10 h-[320px] bg-gray-500'>
+                <div className='border-b-[1px] border-gray-300'>
+                  <p className='text-xl font-semibold ml-5 my-6'>Search</p>
+                  <div className='flex mb-6'>
+                    <input
+                      
+                      type="text"
+                      placeholder="Searching ..."
+                      className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-2"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className='flex items-center mx-6 my-3'>
+                    <p className='flex-1 text-md font-semibold'>Recently</p>
+                    <p className='text-md font-semibold text-green-400'>Delete All</p>
+                  </div>
+                  <div className='flex items-center cursor-pointer hover:bg-green-200 py-4'>
+                    <div className='flex flex-1 space-x-3'>
+                    <div className='ml-5'>
+                      <img src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg" alt="" className='w-10 h-10 rounded-full border-[1px]' />
+                    </div>
+                    <div className=''>
+                      <p className='text-md font-normal '>pupuchino</p>
+                      <p className='text-xs text-gray-400 '>Ha Canh Hong Phuc</p>
+                    </div>
+                    </div>
+                   
+                    <XIcon className='w-6 h-6 mr-10'/>
+                  </div>
+                </div>
               </PopoverContent>
+
             </>
           )}
         </Popover>
