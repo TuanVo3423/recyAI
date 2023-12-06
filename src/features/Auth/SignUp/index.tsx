@@ -42,31 +42,57 @@ export const SignUp = () => {
   );
 
   return (
-    <div className="flex items-center justify-center mt-[30px]  mx-auto">
+    <div className="flex items-center justify-center mt-[20px]  mx-auto">
       <div>
-        <div className="border border-gray-300 w-[350px] h-[600px] ">
-          <div className="lg:block ml-[100px] mt-[50px] w-[160px] justify-center mb-2">
-            <img src="https://links.papareact.com/ocw" alt="" />
+        <div className="border-[1px] rounded-xl shadow-lg w-[350px] h-[600px] ">
+          <div className="lg:block ml-[100px] mt-[40px] w-[160px] justify-center mb-2 -mt-3">
+            <img src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png" alt="" />
           </div>
-          <div className="flex items-center justify-center text-sm text-[22px] font-semibold text-gray-500">
-            Đăng ký để xem ảnh và video từ bạn
+          <div className="flex items-center justify-center text-sm text-[22px] font-semibold text-gray-500 mb-10">
+            Login to join with us.
           </div>
-          <div className="flex items-center justify-center text-sm text-[22px] font-semibold text-gray-500 mb-5">
-            be.
-          </div>
-          <div className="bg-blue-400  hover:bg-blue-500 text-white w-[290px] h-[34px] ml-[27px] rounded-xl shadow-lg text-lg font-bold mt-2 ">
-            <div className="flex flex-col items-center justify-center pt-1">
-              <button className="flex items-center justify-center space-x-2 text-white text-lg font-semibold rounded ">
+          
+         
+          <div className="flex items-center justify-center mt-2">
+              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
                 <Image
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
                   alt="Facebook logo"
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                 />
-                <span className="text-sm">Đăng nhập bằng Facebook</span>
+                {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
+              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+                  alt="Google logo"
+                  width={20}
+                  height={20}
+                />
+                {/* <span className="text-sm">Log in by Facebook</span> */}
+              </button>
+              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/768px-Microsoft_logo.svg.png"
+                  alt="Windows logo"
+                  width={20}
+                  height={20}
+                />
+                {/* <span className="text-sm">Log in by Facebook</span> */}
+              </button>
+              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/758px-Apple_logo_grey.svg.png"
+                  alt="Apple logo"
+                  width={20}
+                  height={20}
+                />
+                {/* <span className="text-sm">Log in by Facebook</span> */}
+              </button>
+              
             </div>
-          </div>
+          
           <div className="font-bold my-4 flex justify-center items-center text-center text-gray-500">
             OR
           </div>
@@ -147,21 +173,21 @@ export const SignUp = () => {
               ) : (
                 <button
                   type="submit"
-                  className="bg-blue-400 hover:bg-blue-700 text-white w-[290px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+                  className="bg-green-400 hover:bg-green-700 text-white w-[200px] mt-8 h-[34px] text-sm rounded-xl shadow-lg font-bold"
                 >
-                  Đăng Ky
+                  Sign in
                 </button>
               )}
             </div>
           </VStack>
         </div>
-        <div className="flex border items-center justify-center border-gray-300 mt-10 w-[350px] h-[55px] ">
-          <p className="text-sm ">Ban da co tai khoan</p>
+        <div className="flex border-[1px] rounded-xl shadow-lg items-center justify-center border-gray-300 mt-10 w-[350px] h-[55px] ">
+          <p className="text-sm ">You already had account</p>
           <p
             onClick={() => router.push('/auth/sign-in')}
-            className="text-sm font-bold text-blue-500 hover:text-blue-800 ml-2 cursor-pointer"
+            className="text-sm font-bold text-green-500 hover:text-green-800 ml-2 cursor-pointer"
           >
-            Dang Nhap
+            Log in
           </p>
         </div>
       </div>

@@ -88,7 +88,7 @@ function Post({
     slidesToScroll: 1,
   };
   return (
-    <div className="bg-white my-7 border-none ">
+    <div className="bg-white mb-7 border-none ">
       <div className="flex items-center py-3 ">
         <img
           src={
@@ -126,7 +126,7 @@ function Post({
       </div> */}
       <div>
         <Slider {...settings}>
-          <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm card">
+          <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-green-200 shadow-sm card">
             {instruction.map((item, idx) =>
               item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
             )}

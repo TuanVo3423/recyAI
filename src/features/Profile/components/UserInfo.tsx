@@ -20,10 +20,10 @@ export const UserInfo = (props: Props) => {
               <p className="mt-3 mr-20 text-xl lg:text-xl">
                 {data.result.name}
               </p>
-              <button className="bg-gray-200 hover:bg-gray-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2">
+              <button className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2">
                 Chinh sua trang ca nhan
               </button>
-              <button className="bg-gray-200 hover:bg-gray-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
+              <button className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
                 Xem kho luu tru
               </button>
             </div>

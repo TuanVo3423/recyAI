@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { useEffect, useState } from 'react';
-
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 export const Stories = () => {
   const [suggestions, setSuggestions] = useState([]);
   useEffect(() => {
@@ -15,13 +17,19 @@ export const Stories = () => {
     }));
     setSuggestions(suggestions);
   }, []);
-
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 8,
+    slidesToScroll: 8,
+  };
   return (
-    <div className="flex space-x-6 h-[150px] w-[660px] -ml-[80px] p-6 bg-transparent mt-2 border-none rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
+    <Slider {...settings} className="flex space-x-6 h-[150px] w-[660px] -ml-[80px] items-center justify-center p-6 bg-transparent mt-2 border-none rounded-sm ">
       {suggestions.map((profile, idx) => (
-        <Story key={idx} img={profile.avatar} username={profile.username} />
+        <Story key={idx} img={profile.avatar} username={profile.username}/>
       ))}
-    </div>
+    </Slider>
   );
 };
 

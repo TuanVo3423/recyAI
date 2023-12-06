@@ -28,7 +28,7 @@ export const InstructionItem = ({
       }}
       maxW="sm"
     >
-      <CardBody className='bg-gray-100'>
+      <CardBody className='bg-green-200'>
         <Stack height="330px" overflow="hidden" spacing="3">
           
           <div><XIcon className='w-5 h-5 text-gray-400 cursor-pointer hover:text-black ml-[320px]'/>

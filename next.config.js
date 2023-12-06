@@ -14,6 +14,11 @@ const nextConfig = {
       'images.pexels.com',
       'i.guim.co.uk,',
       'upload.wikimedia.org',
+      'assets-global.website-files.com',
+      'cdn.dribbble.com',
+      'www.aperam.com',
+      'yesrecycling.org',
+      
     ],
   },
 };
