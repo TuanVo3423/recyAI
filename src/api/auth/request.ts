@@ -1,5 +1,5 @@
 import { request } from '../axios';
-import { ILogout, ISignIn, ISignUp } from './types';
+import { ILogout, ISignIn, ISignUp, UpdateMe } from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
@@ -48,6 +48,19 @@ export const getAuth = async () => {
       'Content-Type': 'application/json',
     },
     withCredentials: true,
+  });
+  return res;
+};
+
+export const updateMe = async (data: UpdateMe) => {
+  const res = await request({
+    url: `users/me`,
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+    data,
   });
   return res;
 };

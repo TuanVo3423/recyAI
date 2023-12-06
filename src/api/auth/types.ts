@@ -35,3 +35,15 @@ export interface IUserResponse {
   avatar: string;
   cover_photo: string;
 }
+
+export interface UpdateMe {
+  name?: string;
+  date_of_birth?: string;
+  bio?: string;
+  location?: string;
+  website?: string;
+  username?: string;
+  avatar?: string;
+  cover_photo?: string;
+  medias?: any;
+}

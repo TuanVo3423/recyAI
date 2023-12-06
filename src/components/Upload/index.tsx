@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Text,
-  Image as ChakraImage,
   Button,
-  Heading,
+  Image as ChakraImage,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
 
 type UploaderProps = {
   setFiles: any;
   files: any;
+  handleSubmitButton?: React.ReactElement;
 };
-export const Uploader = ({ files, setFiles }: UploaderProps) => {
+export const Uploader = ({
+  files,
+  setFiles,
+  handleSubmitButton,
+}: UploaderProps) => {
   //   const [files, setFiles] = useState<any[]>([]);
 
   const setFilesState = (data) => setFiles((p) => [...p, data]);
@@ -92,7 +96,7 @@ export const Uploader = ({ files, setFiles }: UploaderProps) => {
   }, [files]);
 
   return (
-    <Box m="0 auto" maxW="50rem" w="full">
+    <Stack flex={1}>
       {files.length > 0 ? (
         <Box display="flex" flexWrap="wrap">
           {files.map((file, index) => {
@@ -111,8 +115,9 @@ export const Uploader = ({ files, setFiles }: UploaderProps) => {
         <Box
           display="grid"
           placeItems="center"
-          minH="10rem"
           border="1px dashed black"
+          flex={1}
+          minH="8rem"
           {...getRootProps()}
         >
           <input {...getInputProps()} />
@@ -132,7 +137,8 @@ export const Uploader = ({ files, setFiles }: UploaderProps) => {
         <Button mt={2} onClick={() => setFiles([])}>
           Reset
         </Button>
+        {handleSubmitButton}
       </Box>
-    </Box>
+    </Stack>
   );
 };

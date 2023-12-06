@@ -5,3 +5,4 @@ export * from './Auth';
 export * from './CreateInstructions';
 export * from './PreviewInstructions';
 export * from './Collections';
+export * from './Chat';

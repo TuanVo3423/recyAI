@@ -15,6 +15,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { time } from 'console';
+import { formatDistance } from 'date-fns';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { data, isLoading, isError, refetch } = useGetTweets();
@@ -77,9 +78,9 @@ function Post({
   onOpen,
   setTweetId,
   medias,
+  created_at,
 }: PostProps) {
   const [likeCount, setLikeCount] = useState(like_count);
-  console.log('medias: ', medias);
   const settings = {
     dots: true,
     infinite: true,
@@ -104,26 +105,15 @@ function Post({
             {user_info[0].name}{' '}
           </p>
           <p className="mx-2 text-gray-500">•</p>
-          <p className="text-sm text-gray-500">6 hours</p>
+          <p className="text-sm text-gray-500">
+            {formatDistance(new Date(created_at), new Date(), {
+              addSuffix: true,
+            })}
+          </p>
         </div>
 
         <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
       </div>
-      {/* <div className=''>
-      <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-gray-200 shadow-sm">
-        {instruction.map((item, idx) =>
-          item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
-        )}
-        <img
-          src={
-            
-          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
-          }
-          className="absolute object-contain w-[200px] h-[200px] border cursor-pointer"
-          alt=""
-        />
-      </div>
-      </div> */}
       <div>
         <Slider {...settings}>
           <div className="px-[20px] py-[20px] rounded-lg bg-green-200 shadow-sm card">

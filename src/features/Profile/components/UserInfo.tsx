@@ -1,20 +1,26 @@
 import { useGetAuth } from '@/api/auth';
+import { useDisclosure } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
+import { UploadAvtModal } from './UploadAvtModal';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
-  const { data, isLoading } = useGetAuth();
+  const { data, isLoading, refetch } = useGetAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       {!isLoading && (
         <div className="flex items-center justify-center lg:space-x-20 ml-20 mt-16 ">
-          <div className='relative'>
+          <div
+            onClick={onOpen}
+            className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
+          >
             <img
-              src="https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg"
+              src={data.result.avatar || '/empty_avatar.png'}
               alt=""
-              className="rounded-full border p-[2px] hidden lg:block w-32"
+              className="w-full h-full object-cover"
             />
-            <PlusCircleIcon className='absolute w-8 h-8 top-2 left-24 hover:text-gray-400 cursor-pointer bg-white rounded-full'/>
+            <PlusCircleIcon className="absolute w-8 h-8 top-2 left-24 hover:text-gray-400 cursor-pointer bg-white rounded-full" />
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
@@ -46,6 +52,7 @@ export const UserInfo = (props: Props) => {
           </div>
         </div>
       )}
+      <UploadAvtModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} refetch={refetch} />
     </>
   );
 };
