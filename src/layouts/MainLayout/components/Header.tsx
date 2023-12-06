@@ -2,9 +2,11 @@ import {
   ArchiveIcon,
   DocumentAddIcon,
   MenuIcon,
-  ChatIcon
+  ChatIcon,
+  SearchIcon,
+  TranslateIcon
 } from '@heroicons/react/outline';
-import { HomeIcon } from '@heroicons/react/solid';
+import { HomeIcon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -18,35 +20,42 @@ export const Header = () => {
       <div className="mt-10 flex-col">
         <div
           onClick={() => router.push('/feed')}
-          className="flex justify-center space-x-2 items-center mb-6 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl   "
+          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl   "
         >
           <HomeIcon className=" h-8 w-8" />
           <p className="text-md flex-1 ">Feed</p>
         </div>
         <div
+          onClick={() => router.push('/')}
+          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl   "
+        >
+          <SearchIcon className=" h-8 w-8" />
+          <p className="text-md flex-1 ">Search</p>
+        </div>
+        <div
           onClick={() => router.push('/create-instructions')}
-          className="flex justify-center space-x-2 items-center mb-6 cursor-pointer bg-white hover:bg-green-200 pl-2 py-2 rounded-xl  "
+          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-2 rounded-xl  "
         >
           <DocumentAddIcon className="h-8 w-8" />
           <p className="text-md flex-1"> New Instruction</p>
         </div>
         <div
           onClick={() => router.push('/collections')}
-          className="flex space-x-2 justify-center items-center mb-6 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
+          className="flex space-x-2 justify-center items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
         >
           <ArchiveIcon className="h-8 w-8" />
           <p className="text-md flex-1 ">My Collection</p>
         </div>
         <div
           onClick={() => router.push('/')}
-          className="flex space-x-2 justify-center items-center mb-6 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
+          className="flex space-x-2 justify-center items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
         >
           <ChatIcon className="h-8 w-8" />
           <p className="text-md flex-1 ">Messages</p>
         </div>
         <div
           onClick={() => router.push('/profile')}
-          className="flex justify-center space-x-2 items-center mb-6 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
+          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
         >
           <img
             src="https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg"
@@ -58,10 +67,14 @@ export const Header = () => {
         </div>
       </div>
 
-      <div className="mt-16 border-t-2 border-t-gray-200">
-        <div className="flex space-x-2 ml-1 justify-center mt-10 items-center mb-11 cursor-pointer pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
+      <div className="mt-5 border-t-2 border-t-gray-200">
+        <div className="flex space-x-2 ml-1 justify-center mt-5 mb-4 items-center cursor-pointer pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
+          <TranslateIcon className="h-8 w-8" />
+          <p className="text-md flex-1">Language</p>
+        </div>
+        <div className="flex space-x-2 ml-1 justify-center items-center mb-11 cursor-pointer pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
           <MenuIcon className="h-8 w-8" />
-          <p className="text-md flex-1"> Setting</p>
+          <p className="text-md flex-1">Setting</p>
         </div>
       </div>
     </div>

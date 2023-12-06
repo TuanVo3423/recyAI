@@ -1,5 +1,5 @@
 import { useGetAuth } from '@/api/auth';
-
+import { PlusCircleIcon } from '@heroicons/react/solid';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
@@ -8,12 +8,13 @@ export const UserInfo = (props: Props) => {
     <>
       {!isLoading && (
         <div className="flex items-center justify-center lg:space-x-20 ml-20 mt-16 ">
-          <div>
+          <div className='relative'>
             <img
               src="https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg"
               alt=""
               className="rounded-full border p-[2px] hidden lg:block w-32"
             />
+            <PlusCircleIcon className='absolute w-8 h-8 top-2 left-24 hover:text-gray-400 cursor-pointer bg-white rounded-full'/>
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">

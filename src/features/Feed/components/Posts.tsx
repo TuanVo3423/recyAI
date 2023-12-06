@@ -96,7 +96,7 @@ function Post({
               ? user_info[0].avatar
               : 'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
           }
-          className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-1 cursor-pointer"
+          className="rounded-full h-9 w-9 object-contain border-black p-1 mr-3 cursor-pointer"
           alt=""
         />
         <div className="flex-1 flex items-center">
@@ -126,7 +126,7 @@ function Post({
       </div> */}
       <div>
         <Slider {...settings}>
-          <div className="px-[20px] py-[20px] border-[1px] rounded-lg bg-green-200 shadow-sm card">
+          <div className="px-[20px] py-[20px] rounded-lg bg-green-200 shadow-sm card">
             {instruction.map((item, idx) =>
               item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
             )}
