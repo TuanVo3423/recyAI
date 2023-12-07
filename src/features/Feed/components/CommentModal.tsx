@@ -166,8 +166,8 @@ export const CommentModal = ({
           {isLoading || !data ? (
             <Quadrilateral p="24px" w="full" isLoading={isLoading} />
           ) : (
-            <div className="flex">
-              <div className="flex flex-col bg-white w-[50%] px-4">
+            <div className="flex items-center">
+              <div className="flex flex-col bg-white w-[52%] px-4">
                 {pathname === '/profile' && (
                   <div className="flex items-center py-3 border-b-[1px]">
                     {renderButton()}
@@ -202,7 +202,7 @@ export const CommentModal = ({
                         src={
                           'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
                         }
-                        className=" object-contain  border cursor-pointer"
+                        className=" object-fill"
                         alt=""
                       />
                     </div>
@@ -210,7 +210,7 @@ export const CommentModal = ({
                 </div>
               </div>
 
-              <div className="bg-white w-[50%]">
+              <div className="bg-white w-[48%] border-l-[1px]">
                 <div>
                   <div className="flex items-center py-3 border-b-[1px]">
                     <img
@@ -303,7 +303,7 @@ export const CommentModal = ({
                       )}
                     </p>
                   </div>
-                  <form className="flex items-center px-4 pt-4 pb-4 ">
+                  <form className="flex items-center px-4 pt-2 pb-5">
                     <EmojiHappyIcon className="h-6 cursor-pointer" />
                     <input
                       value={comment}
