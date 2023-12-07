@@ -10,7 +10,7 @@ export const MainLayout = ({ children }: Props) => {
   return (
     <Grid
       templateAreas={`"nav main"`}
-      gridTemplateColumns={'260px 1fr'}
+      gridTemplateColumns={'250px 1fr'}
       h="100%"
       minH="100vh"
       w="100%"

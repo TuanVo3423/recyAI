@@ -2,11 +2,17 @@ import { useGetAuth } from '@/api/auth';
 import { useDisclosure } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
 import { UploadAvtModal } from './UploadAvtModal';
+import { UpdateProfileModal } from './UpdateProfileModal';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
   const { data, isLoading, refetch } = useGetAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenUpdateProfile,
+    onOpen: onOpenUpdateProfile,
+    onClose: onCloseUpdateProfile,
+  } = useDisclosure();
   return (
     <>
       {!isLoading && (
@@ -27,7 +33,10 @@ export const UserInfo = (props: Props) => {
               <p className="mt-3 mr-20 text-xl lg:text-xl">
                 {data.result.name}
               </p>
-              <button className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2">
+              <button
+                onClick={() => onOpenUpdateProfile()}
+                className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
+              >
                 Chinh sua trang ca nhan
               </button>
               <button className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
@@ -52,7 +61,17 @@ export const UserInfo = (props: Props) => {
           </div>
         </div>
       )}
-      <UploadAvtModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} refetch={refetch} />
+      <UploadAvtModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        refetch={refetch}
+      />
+      <UpdateProfileModal
+        isOpen={isOpenUpdateProfile}
+        onClose={onCloseUpdateProfile}
+        onOpen={onOpenUpdateProfile}
+      />
     </>
   );
 };

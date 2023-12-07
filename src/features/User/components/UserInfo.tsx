@@ -32,10 +32,10 @@ export const UserInfo = (props: Props) => {
                 {data.result.name}
               </p>
               <button className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2">
-                Chinh sua trang ca nhan
+                Theo dõi
               </button>
               <button className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
-                Xem kho luu tru
+                Nhắn tin
               </button>
             </div>
             <div className="flex justify-center items-center text-lg my-8 space-x-32">
