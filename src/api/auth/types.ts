@@ -47,3 +47,7 @@ export interface UpdateMe {
   cover_photo?: string;
   medias?: any;
 }
+
+export interface SearchUser {
+  name: string;
+}

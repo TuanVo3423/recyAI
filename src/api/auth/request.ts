@@ -1,5 +1,5 @@
 import { request } from '../axios';
-import { ILogout, ISignIn, ISignUp, UpdateMe } from './types';
+import { ILogout, ISignIn, ISignUp, SearchUser, UpdateMe } from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
@@ -61,6 +61,20 @@ export const updateMe = async (data: UpdateMe) => {
     },
     withCredentials: true,
     data,
+  });
+  return res;
+};
+
+export const getUserList = async (data: SearchUser) => {
+  console.log(data.name);
+  const res = await request({
+    url: `users/search`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+    params: data,
   });
   return res;
 };

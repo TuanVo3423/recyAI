@@ -1,4 +1,4 @@
-import { useGetAuth } from '@/api/auth';
+import { getUserList, useGetAuth } from '@/api/auth';
 import { PROJECT_AUTH_TOKEN } from '@/constants';
 import { LocalStorage } from '@/services/localStorage';
 import {
@@ -27,13 +27,59 @@ import {
   XIcon,
 } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import _ from 'lodash';
 
 export const SideBar = () => {
   const router = useRouter();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { data, isLoading, refetch } = useGetAuth();
   const initRef = React.useRef();
+  const [searchResult, setSearchResult] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+
+  // Tạo hàm debounce để trì hoãn chức năng search
+  const debouncedSearch = useCallback(
+    _.debounce(async (e) => {
+      if (e.target.value === '') {
+        setSearchResult([]);
+        return;
+      }
+      const userList = await getUserList({ name: e.target.value });
+      setSearchResult(userList.users);
+    }, 500),
+    []
+  );
+  console.log('searchResult: ', searchResult);
+
+  const renderSearchResult = () => {
+    if (searchResult.length === 0) {
+      return <p className="text-center text-gray-400">No result</p>;
+    }
+    return (
+      <>
+        {searchResult.map((user, idx) => (
+          <div className="flex items-center cursor-pointer hover:bg-green-200 py-4">
+            <div className="flex flex-1 space-x-3">
+              <div className="ml-5">
+                <img
+                  src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg"
+                  alt=""
+                  className="w-10 h-10 rounded-full border-[1px]"
+                />
+              </div>
+              <div className="">
+                <p className="text-md font-normal ">{user.name}</p>
+                <p className="text-xs text-gray-400 ">{user.name}</p>
+              </div>
+            </div>
+
+            <XIcon className="w-6 h-6 mr-10" />
+          </div>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div className="fixed top-0 left-0 h-full w-[250px] flex flex-col items-center bg-white text-black p-4 border-r-[1px] border-r-gray-200">
@@ -69,37 +115,22 @@ export const SideBar = () => {
                   <div className="flex mb-6">
                     <input
                       type="text"
-                      placeholder="Searching ..."
+                      placeholder="Search..."
+                      // value={searchInput}
+                      onChange={debouncedSearch}
                       className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-2"
                     />
                   </div>
                 </div>
-                <div>
+                <div className=" overflow-y-auto">
                   <div className="flex items-center mx-6 my-3">
                     <p className="flex-1 text-md font-semibold">Recently</p>
                     <p className="text-md font-semibold text-green-400">
                       Delete All
                     </p>
                   </div>
-                  <div className="flex items-center cursor-pointer hover:bg-green-200 py-4">
-                    <div className="flex flex-1 space-x-3">
-                      <div className="ml-5">
-                        <img
-                          src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg"
-                          alt=""
-                          className="w-10 h-10 rounded-full border-[1px]"
-                        />
-                      </div>
-                      <div className="">
-                        <p className="text-md font-normal ">pupuchino</p>
-                        <p className="text-xs text-gray-400 ">
-                          Ha Canh Hong Phuc
-                        </p>
-                      </div>
-                    </div>
 
-                    <XIcon className="w-6 h-6 mr-10" />
-                  </div>
+                  {renderSearchResult()}
                 </div>
               </PopoverContent>
             </>
