@@ -19,7 +19,7 @@ export const Suggestions = () => {
     <div className="mt-4 ml-10">
       <div className="flex justify-between text-sm mb-5">
         <h3 className="text-md font-bold text-gray-400">Suggestions for you</h3>
-        <button className="text-gray-600 font-semibold text-md">See All</button>
+        <button className="text-green-600 font-semibold text-md">See All</button>
       </div>
 
       {suggestions.map((profile, idx) => (
@@ -35,7 +35,7 @@ export const Suggestions = () => {
               Works at {profile.company}
             </h3>
           </div>
-          <button className="text-blue-400 text-xs font-bold">Follow</button>
+          <button className="text-green-400 text-xs font-bold">Follow</button>
         </div>
       ))}
     </div>

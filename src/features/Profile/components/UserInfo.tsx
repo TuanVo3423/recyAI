@@ -43,14 +43,14 @@ export const UserInfo = (props: Props) => {
                 Xem kho luu tru
               </button>
             </div>
-            <div className="flex justify-center items-center text-lg my-8 space-x-32">
-              <p>
-                <span className="font-bold">9</span> Post
+            <div className="flex justify-center items-center text-lg my-8 space-x-32 ">
+              <p >
+                <span className="font-bold " >9</span> Post
               </p>
-              <p>
+              <p className='cursor-pointer'>
                 <span className="font-bold">100</span> Followers
               </p>
-              <p>
+              <p className='cursor-pointer'>
                 <span className="font-bold">100</span> Followings
               </p>
             </div>

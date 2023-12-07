@@ -18,7 +18,9 @@ const nextConfig = {
       'cdn.dribbble.com',
       'www.aperam.com',
       'yesrecycling.org',
-      'mcdn.coolmate.me'
+      'mcdn.coolmate.me',
+      'i.natgeofe.com',
+      'hips.hearstapps.com'
       
     ],
   },
