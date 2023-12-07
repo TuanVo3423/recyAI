@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getAuth, getUserList } from './request';
+import { getAuth, getUser, getUserList } from './request';
 import { SearchUser } from './types';
 
 export const useGetAuth = (options?: any) =>
@@ -12,4 +12,12 @@ export const useGetAuth = (options?: any) =>
     { ...options }
   );
 
-
+export const useGetUser = (userId: string, options?: any) =>
+  useQuery(
+    ['getUser', userId],
+    async () => {
+      const data = await getUser(userId);
+      return data;
+    },
+    { ...options }
+  );

@@ -6,3 +6,4 @@ export * from './CreateInstructions';
 export * from './PreviewInstructions';
 export * from './Collections';
 export * from './Chat';
+export * from './User';

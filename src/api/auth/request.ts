@@ -52,6 +52,18 @@ export const getAuth = async () => {
   return res;
 };
 
+export const getUser = async (userId: string) => {
+  const res = await request({
+    url: `users/${userId}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  });
+  return res;
+};
+
 export const updateMe = async (data: UpdateMe) => {
   const res = await request({
     url: `users/me`,

@@ -34,6 +34,14 @@ export const getMyTweets = async () => {
   return res;
 };
 
+export const getUserTweets = async (userId: string) => {
+  const res = await request({
+    url: `tweets/user/${userId}`,
+    method: 'GET',
+  });
+  return res;
+};
+
 export const getMyInstructions = async (UserID: number | string) => {
   const res = await request({
     url: `instructions/me/${UserID}`,
