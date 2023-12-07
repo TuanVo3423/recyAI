@@ -1,3 +1,6 @@
+import { useGetAuth } from '@/api/auth';
+import { PROJECT_AUTH_TOKEN } from '@/constants';
+import { LocalStorage } from '@/services/localStorage';
 import {
   useDisclosure,
   Button,
@@ -21,7 +24,7 @@ import {
   MenuIcon,
   SearchIcon,
   TranslateIcon,
-  XIcon
+  XIcon,
 } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -29,6 +32,7 @@ import React from 'react';
 export const SideBar = () => {
   const router = useRouter();
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const { data, isLoading, refetch } = useGetAuth();
   const initRef = React.useRef();
 
   return (
@@ -59,12 +63,11 @@ export const SideBar = () => {
                 </div>
               </PopoverTrigger>
               {/* <PopoverCloseButton className=''/> */}
-              <PopoverContent className=' -ml-20  mt-10 h-[320px] bg-gray-500'>
-                <div className='border-b-[1px] border-gray-300'>
-                  <p className='text-xl font-semibold ml-5 my-6'>Search</p>
-                  <div className='flex mb-6'>
+              <PopoverContent className=" -ml-20  mt-10 h-[320px] bg-gray-500">
+                <div className="border-b-[1px] border-gray-300">
+                  <p className="text-xl font-semibold ml-5 my-6">Search</p>
+                  <div className="flex mb-6">
                     <input
-                      
                       type="text"
                       placeholder="Searching ..."
                       className="border-none flex-1 focus:ring-0 outline-none bg-gray-100 rounded-xl mx-4 p-2"
@@ -72,26 +75,33 @@ export const SideBar = () => {
                   </div>
                 </div>
                 <div>
-                  <div className='flex items-center mx-6 my-3'>
-                    <p className='flex-1 text-md font-semibold'>Recently</p>
-                    <p className='text-md font-semibold text-green-400'>Delete All</p>
+                  <div className="flex items-center mx-6 my-3">
+                    <p className="flex-1 text-md font-semibold">Recently</p>
+                    <p className="text-md font-semibold text-green-400">
+                      Delete All
+                    </p>
                   </div>
-                  <div className='flex items-center cursor-pointer hover:bg-green-200 py-4'>
-                    <div className='flex flex-1 space-x-3'>
-                    <div className='ml-5'>
-                      <img src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg" alt="" className='w-10 h-10 rounded-full border-[1px]' />
+                  <div className="flex items-center cursor-pointer hover:bg-green-200 py-4">
+                    <div className="flex flex-1 space-x-3">
+                      <div className="ml-5">
+                        <img
+                          src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg"
+                          alt=""
+                          className="w-10 h-10 rounded-full border-[1px]"
+                        />
+                      </div>
+                      <div className="">
+                        <p className="text-md font-normal ">pupuchino</p>
+                        <p className="text-xs text-gray-400 ">
+                          Ha Canh Hong Phuc
+                        </p>
+                      </div>
                     </div>
-                    <div className=''>
-                      <p className='text-md font-normal '>pupuchino</p>
-                      <p className='text-xs text-gray-400 '>Ha Canh Hong Phuc</p>
-                    </div>
-                    </div>
-                   
-                    <XIcon className='w-6 h-6 mr-10'/>
+
+                    <XIcon className="w-6 h-6 mr-10" />
                   </div>
                 </div>
               </PopoverContent>
-
             </>
           )}
         </Popover>
@@ -122,12 +132,12 @@ export const SideBar = () => {
           className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
         >
           <img
-            src="https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltaec838cb8cfa46a1/632d2ed604361d715f55321f/09262022_AgentInsightsPhoenixArticle_Phoenix_Portrait_In-Line_FINAL.jpg"
+            src={data.result.avatar || '/empty-avatar.png'}
             alt="profile-pic"
             className="h-8 w-8 rounded-full cursor-pointer"
           />
 
-          <p className="text-md flex-1 "> Profile</p>
+          <p className="text-md flex-1 ">Profile</p>
         </div>
       </div>
 
