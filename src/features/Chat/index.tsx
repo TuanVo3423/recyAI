@@ -1,33 +1,44 @@
-import React, { useState } from 'react';
-import {
-  PencilAltIcon,
-  ChevronDownIcon,
-  PhoneIcon,
-  VideoCameraIcon,
-  InformationCircleIcon,
-  EmojiHappyIcon,
-  MicrophoneIcon,
-  PhotographIcon,
-  HeartIcon,
-  MailIcon,
-} from '@heroicons/react/outline';
-import { useAuth } from '@/stores';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createMessages, getMessages } from '@/api/messages';
-import { useToast } from '@chakra-ui/react';
+import { createMessages } from '@/api/messages';
 import { useGetMyMesages } from '@/api/messages/queries';
+import { useAuth } from '@/stores';
+import { useToast } from '@chakra-ui/react';
+import {
+  ChevronDownIcon,
+  EmojiHappyIcon,
+  InformationCircleIcon,
+  MailIcon,
+  MicrophoneIcon,
+  PencilAltIcon,
+  PhoneIcon,
+  PhotographIcon,
+  VideoCameraIcon,
+} from '@heroicons/react/outline';
+import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { io } from 'socket.io-client';
 type TChatProps = {};
 
 export const Chat = (props: TChatProps) => {
+  const socket = io('http://localhost:3000/');
+
   const toast = useToast();
   const queryClient = useQueryClient();
   const profileStore = useAuth((state) => state.profile);
+  const [flag, setFlag] = useState<boolean>(false);
   const [currentChatId, setCurrentChatId] = useState<string>('');
   const [text, setText] = useState<string>('');
 
+  useEffect(() => {
+    if (currentChatId) {
+      console.log('currentChatId: ', currentChatId);
+      socket.emit('joinChat', profileStore.result[0]._id, currentChatId);
+    }
+  }, [currentChatId]);
   const { data } = useGetMyMesages(currentChatId, {
-    enabled: !!currentChatId,
-    onSucess: (data: any) => {},
+    enabled: !!currentChatId && !flag,
+    onSuccess: () => {
+      setFlag(true);
+    },
   });
 
   const { mutateAsync: handleSend } = useMutation(
@@ -40,6 +51,13 @@ export const Chat = (props: TChatProps) => {
     },
     {
       onSuccess: async (data: any) => {
+        socket.emit('createChat', {
+          name: data.result.name,
+          created_at: data.result.created_at,
+          content: data.result.content,
+          user_id: data.result.user_id,
+          user_recieved_id: currentChatId,
+        });
         queryClient.setQueryData(
           ['getMyMessages', currentChatId],
           (oldData: any) => {
@@ -62,6 +80,19 @@ export const Chat = (props: TChatProps) => {
       },
     }
   );
+  socket.on('sendChatToClient', (msg) => {
+    console.log('msg: ', msg);
+    queryClient.setQueryData(
+      ['getMyMessages', currentChatId],
+      (oldData: any) => {
+        return {
+          ...oldData,
+          result: [...oldData.result, msg],
+        };
+      }
+    );
+  });
+  console.log('data: ', data);
   const renderChat = () => {
     return (
       <div className="flex flex-col w-full gap-4 p-4 bg-gray-200 flex-1 overflow-auto">

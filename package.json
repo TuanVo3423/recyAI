@@ -63,6 +63,7 @@
     "reactflow": "^11.7.0",
     "recharts": "^2.5.0",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.7.2",
     "tailwind-scrollbar-hide": "^1.1.7",
     "typescript": "5.0.3",
     "uuid": "^9.0.1",
