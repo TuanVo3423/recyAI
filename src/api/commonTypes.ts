@@ -7,5 +7,4 @@ export type ResponseWithPagination<T> = {
 export interface GetParams {
   limit?: number;
   page?: string;
-  status?: number;
 }

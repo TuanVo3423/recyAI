@@ -16,6 +16,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { time } from 'console';
 import { formatDistance } from 'date-fns';
+import { useRouter } from 'next/router';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { data, isLoading, isError, refetch } = useGetTweets();
@@ -88,9 +89,14 @@ function Post({
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  
+  const router = useRouter();
   return (
     <div className="bg-white mb-7 border-none ">
-      <div className="flex items-center py-3 ">
+      <div
+        onClick={() => router.push(`/user/${user_info[0]._id}`)}
+        className="flex items-center py-3"
+      >
         <img
           src={
             user_info[0].avatar

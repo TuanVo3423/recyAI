@@ -51,3 +51,11 @@ export interface UpdateMe {
 export interface SearchUser {
   name: string;
 }
+
+export interface FollowUser {
+  followed_user_id: string;
+}
+
+export interface UnFollowUser {
+  followed_user_id: string;
+}

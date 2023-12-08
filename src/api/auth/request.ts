@@ -1,5 +1,12 @@
 import { request } from '../axios';
-import { ILogout, ISignIn, ISignUp, SearchUser, UpdateMe } from './types';
+import {
+  FollowUser,
+  ILogout,
+  ISignIn,
+  ISignUp,
+  SearchUser,
+  UpdateMe,
+} from './types';
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
@@ -78,7 +85,6 @@ export const updateMe = async (data: UpdateMe) => {
 };
 
 export const getUserList = async (data: SearchUser) => {
-  console.log(data.name);
   const res = await request({
     url: `users/search`,
     method: 'GET',
@@ -87,6 +93,31 @@ export const getUserList = async (data: SearchUser) => {
     },
     withCredentials: true,
     params: data,
+  });
+  return res;
+};
+
+export const follow = async (data: FollowUser) => {
+  const res = await request({
+    url: `users/follow`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+    data,
+  });
+  return res;
+};
+
+export const unFollow = async (followed_user_id: string) => {
+  const res = await request({
+    url: `users/follow/${followed_user_id}`,
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
   });
   return res;
 };

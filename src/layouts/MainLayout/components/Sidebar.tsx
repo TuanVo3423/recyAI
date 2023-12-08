@@ -168,7 +168,7 @@ export const SideBar = () => {
           className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
         >
           <img
-            src={data.result.avatar || '/empty-avatar.png'}
+            src={data.result[0].avatar || '/empty-avatar.png'}
             alt="profile-pic"
             className="h-8 w-8 rounded-full cursor-pointer"
           />

@@ -22,7 +22,7 @@ export const UserInfo = (props: Props) => {
             className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
           >
             <img
-              src={data.result.avatar || '/empty_avatar.png'}
+              src={data.result[0].avatar || '/empty_avatar.png'}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -31,7 +31,7 @@ export const UserInfo = (props: Props) => {
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
               <p className="mt-3 mr-20 text-xl lg:text-xl">
-                {data.result.name}
+                {data.result[0].name}
               </p>
               <button
                 onClick={() => onOpenUpdateProfile()}
@@ -44,13 +44,13 @@ export const UserInfo = (props: Props) => {
               </button>
             </div>
             <div className="flex justify-center items-center text-lg my-8 space-x-32 ">
-              <p >
-                <span className="font-bold " >9</span> Post
+              <p>
+                <span className="font-bold ">9</span> Post
               </p>
-              <p className='cursor-pointer'>
+              <p className="cursor-pointer">
                 <span className="font-bold">100</span> Followers
               </p>
-              <p className='cursor-pointer'>
+              <p className="cursor-pointer">
                 <span className="font-bold">100</span> Followings
               </p>
             </div>
