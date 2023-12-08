@@ -12,6 +12,7 @@ import {
   PhoneIcon,
   PhotographIcon,
   VideoCameraIcon,
+
 } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -95,18 +96,18 @@ export const Chat = (props: TChatProps) => {
   console.log('data: ', data);
   const renderChat = () => {
     return (
-      <div className="flex flex-col w-full gap-4 p-4 bg-gray-200 flex-1 overflow-auto">
+      <div className="flex flex-col w-full gap-4 p-4 bg-white flex-1 overflow-auto">
         {data.result.map((message, idx) => {
           if (message.user_id !== profileStore.result[0]._id) {
             return (
               <div className="w-full">
-                <div className="w-fit mr-auto">{message.content}</div>
+                <div className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto">{message.content}</div>
               </div>
             );
           } else {
             return (
               <div className="w-full ">
-                <div className="w-fit bg-blue-400 ml-auto">
+                <div className="w-fit bg-green-400 text-sm text-white p-3 rounded-2xl ml-auto">
                   {message.content}
                 </div>
               </div>
@@ -119,7 +120,7 @@ export const Chat = (props: TChatProps) => {
 
   return (
     <div className="flex">
-      <div className="bg-gray-200 h-screen w-[350px] border-gray-300 border-x-[1px]">
+      <div className="bg-white h-screen w-[350px] border-gray-300 border-x-[1px]">
         <div className="h-[110px] bg-white">
           <div className="flex items-center justify-center mx-4 pt-8">
             <div className="flex-1 flex items-center space-x-1">
@@ -139,8 +140,9 @@ export const Chat = (props: TChatProps) => {
             </p>
           </div>
         </div>
-        <div>
-          <h1>BẠN ĐANG FOLLOW</h1>
+        <div className='flex items-center space-x-1 bg-white border-y-[1px] py-1 border-gray-300'>
+          <h1 className='ml-4 text-sm text-green-400 cursor-pointer font-semibold'>Followings</h1>
+          <ChevronDownIcon className='h-3 w-3 text-gray-400 cursor-pointer'/>
         </div>
         {profileStore.result[0].followInfo.map((user, idx) => {
           return (
@@ -166,7 +168,10 @@ export const Chat = (props: TChatProps) => {
         })}
 
         <div>
-          <h1>NGƯỜI FOLLOW BẠN</h1>
+        <div className='flex items-center space-x-1 bg-white border-b-[1px] py-1 border-gray-300'>
+          <h1 className='ml-4 text-sm text-green-400 cursor-pointer font-semibold'>Followers</h1>
+          <ChevronDownIcon className='h-3 w-3 text-gray-400 cursor-pointer'/>
+        </div>
           {profileStore.result[0].followerInfo.map((user, idx) => {
             return (
               <div
@@ -210,7 +215,7 @@ export const Chat = (props: TChatProps) => {
             <InformationCircleIcon className="w-7 h-7 cursor-pointer" />
           </div>
         </div>
-        <div className="flex flex-col w-full gap-4 p-4 bg-gray-200 flex-1 overflow-auto">
+        <div className="flex flex-col w-full gap-4 p-4 bg-white flex-1 overflow-auto">
           {data && renderChat()}
         </div>
         <div className="bg-white flex items-center border-[1px] px-4 border-gray-300 h-[75px] w-full">

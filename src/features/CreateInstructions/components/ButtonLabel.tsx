@@ -17,7 +17,7 @@ export const ButtonLabel = ({
       bg={`${isActive && '#5E1379'}`}
       color={`${isActive ? 'white' : '#7E1AA1'}`}
       _hover={{
-        bgColor: isActive ? '' : '#EBD2F4',
+        bgColor: isActive ? '' : '#EBD2F3',
       }}
       _disabled={{
         cursor: 'not-allowed',
