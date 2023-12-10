@@ -12,16 +12,16 @@ import {
   PhoneIcon,
   PhotographIcon,
   VideoCameraIcon,
-
 } from '@heroicons/react/outline';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { io } from 'socket.io-client';
 type TChatProps = {};
 
 export const Chat = (props: TChatProps) => {
-  const socket = io('http://localhost:3000/');
-
+  const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL, {
+    autoConnect: true,
+  });
   const toast = useToast();
   const queryClient = useQueryClient();
   const profileStore = useAuth((state) => state.profile);
@@ -31,8 +31,12 @@ export const Chat = (props: TChatProps) => {
 
   useEffect(() => {
     if (currentChatId) {
-      console.log('currentChatId: ', currentChatId);
-      socket.emit('joinChat', profileStore.result[0]._id, currentChatId);
+      socket.emit(
+        'joinChat',
+        profileStore.result[0]._id,
+        currentChatId,
+        profileStore.result[0].name
+      );
     }
   }, [currentChatId]);
   const { data } = useGetMyMesages(currentChatId, {
@@ -52,8 +56,8 @@ export const Chat = (props: TChatProps) => {
     },
     {
       onSuccess: async (data: any) => {
-        socket.emit('createChat', {
-          name: data.result.name,
+        // console.log('data: ', data);
+        await socket.emit('createChat', {
           created_at: data.result.created_at,
           content: data.result.content,
           user_id: data.result.user_id,
@@ -81,6 +85,9 @@ export const Chat = (props: TChatProps) => {
       },
     }
   );
+  socket.onAny((event, ...args) => {
+    console.log(event, args);
+  });
   socket.on('sendChatToClient', (msg) => {
     console.log('msg: ', msg);
     queryClient.setQueryData(
@@ -101,7 +108,9 @@ export const Chat = (props: TChatProps) => {
           if (message.user_id !== profileStore.result[0]._id) {
             return (
               <div className="w-full">
-                <div className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto">{message.content}</div>
+                <div className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto">
+                  {message.content}
+                </div>
               </div>
             );
           } else {
@@ -140,9 +149,11 @@ export const Chat = (props: TChatProps) => {
             </p>
           </div>
         </div>
-        <div className='flex items-center space-x-1 bg-white border-y-[1px] py-1 border-gray-300'>
-          <h1 className='ml-4 text-sm text-green-400 cursor-pointer font-semibold'>Followings</h1>
-          <ChevronDownIcon className='h-3 w-3 text-gray-400 cursor-pointer'/>
+        <div className="flex items-center space-x-1 bg-white border-y-[1px] py-1 border-gray-300">
+          <h1 className="ml-4 text-sm text-green-400 cursor-pointer font-semibold">
+            Followings
+          </h1>
+          <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
         </div>
         {profileStore.result[0].followInfo.map((user, idx) => {
           return (
@@ -168,10 +179,12 @@ export const Chat = (props: TChatProps) => {
         })}
 
         <div>
-        <div className='flex items-center space-x-1 bg-white border-b-[1px] py-1 border-gray-300'>
-          <h1 className='ml-4 text-sm text-green-400 cursor-pointer font-semibold'>Followers</h1>
-          <ChevronDownIcon className='h-3 w-3 text-gray-400 cursor-pointer'/>
-        </div>
+          <div className="flex items-center space-x-1 bg-white border-b-[1px] py-1 border-gray-300">
+            <h1 className="ml-4 text-sm text-green-400 cursor-pointer font-semibold">
+              Followers
+            </h1>
+            <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
+          </div>
           {profileStore.result[0].followerInfo.map((user, idx) => {
             return (
               <div
