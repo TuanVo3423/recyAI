@@ -1,7 +1,67 @@
+import { InputField } from '@/ui-kit';
 import React from 'react';
 
 type TForgotPasswordProps = {};
 
-export const ForgotPassword = ({}: TForgotPasswordProps) => {
-  return <div>ForgotPassword</div>;
+export const ForgotPassword = ({ }: TForgotPasswordProps) => {
+  return (
+    <div className='flex-col space-y-[130px]'>
+      <div className='bg-white w-full items-center h-[60px] shadow-lg flex space-x-[500px]'>
+
+        <img src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png" alt="" className=' w-[100px] ml-5' />
+
+        <div className='flex flex-1 items-center space-x-5'>
+          <div className='flex space-x-5'>
+            <input
+              type="text"
+              placeholder="Email..."
+              className="border-none focus:ring-0 outline-none bg-gray-100 rounded-xl p-2"
+            />
+            <input
+              type="password"
+              placeholder="Password..."
+              className="border-none focus:ring-0 outline-none bg-gray-100 rounded-xl p-2"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+          >
+            Sign in
+          </button>
+
+        </div>
+      </div>
+      <div className='flex items-center justify-center'>
+        <div className='w-[500px] h-[285px] bg-white shadow-lg border-[1px] rounded-xl'>
+            <div className='border-b-[1px] border-gray-300 p-5'>
+              <p className='text-xl font-bold'>Forgot your password?</p>
+            </div>
+            <div className='p-5 flex-col space-y-5 border-b-[1px] border-gray-300 pb-7'>
+              <p className='text-md'>Please enter your account's email to verify and reset password...</p>
+              <input
+              type="text"
+              placeholder="Email..."
+              className="border-none focus:ring-0 outline-none bg-gray-100 rounded-xl w-full p-2"
+            />
+            </div>
+            <div className='flex items-center right-0 space-x-4 mt-6 ml-64'>
+            <button
+            type="submit"
+            className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+          >
+            Submit
+          </button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  );
 };
