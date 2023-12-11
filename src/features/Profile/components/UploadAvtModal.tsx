@@ -61,8 +61,8 @@ export const UploadAvtModal = ({
             files={files}
             setFiles={setFiles}
             handleSubmitButton={
-              <Button mt={2} onClick={() => handleSavePhoto()}>
-                Save Photo
+              <Button mt={2} mr={5} backgroundColor={'green.400'} onClick={() => handleSavePhoto()}>
+                Save Image
               </Button>
             }
           />

@@ -134,7 +134,7 @@ export const Uploader = ({
           display: 'flex',
         }}
       >
-        <Button mt={2} onClick={() => setFiles([])}>
+        <Button mt={2} mr={5} backgroundColor={'green.400'} onClick={() => setFiles([])}>
           Reset
         </Button>
         {handleSubmitButton}
