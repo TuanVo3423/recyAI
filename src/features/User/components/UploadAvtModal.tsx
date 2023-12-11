@@ -31,7 +31,7 @@ export const UploadAvtModal = ({
       return res;
     },
     {
-      onSuccess: async (data: any) => {
+      onSuccess: async (data) => {
         toast({
           description: data.message,
           status: 'success',

@@ -1,13 +1,18 @@
 import { useQuery } from 'react-query';
-import { GetMessageBody } from './types';
 import { getMessages } from './request';
+import { GetParams } from '../commonTypes';
+import { IGetMessageRequest } from './types';
 
-export const useGetMyMesages = (user_recieved_id: string, options?: any) =>
+export const useGetMyMesages = (
+  params: GetParams,
+  { user_recieved_id }: IGetMessageRequest,
+  options?: any
+) =>
   useQuery(
     ['getMyMessages', user_recieved_id],
     async () => {
       const data = await getMessages({
-        user_recieved_id: user_recieved_id,
+        query: { ...params, user_recieved_id },
       });
       return data;
     },

@@ -1,16 +1,9 @@
+import { IGetFollowMeResponse, IUser } from '@/api/auth';
 import { create } from 'zustand';
 
-type TData = {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  createdAt: string;
-};
-
 interface IAuth {
-  profile: any | null;
-  setProfile: (data: any) => void;
+  profile: (IUser & IGetFollowMeResponse) | null;
+  setProfile: (data: IUser & IGetFollowMeResponse) => void;
   clearProfile: () => void;
 }
 

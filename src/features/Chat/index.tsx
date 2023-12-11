@@ -22,6 +22,7 @@ export const Chat = (props: TChatProps) => {
   const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL, {
     autoConnect: true,
   });
+
   const toast = useToast();
   const queryClient = useQueryClient();
   const profileStore = useAuth((state) => state.profile);
@@ -33,18 +34,22 @@ export const Chat = (props: TChatProps) => {
     if (currentChatId) {
       socket.emit(
         'joinChat',
-        profileStore.result[0]._id,
+        profileStore._id,
         currentChatId,
-        profileStore.result[0].name
+        profileStore.name
       );
     }
   }, [currentChatId]);
-  const { data } = useGetMyMesages(currentChatId, {
-    enabled: !!currentChatId && !flag,
-    onSuccess: () => {
-      setFlag(true);
-    },
-  });
+  const { data } = useGetMyMesages(
+    {},
+    { user_recieved_id: currentChatId },
+    {
+      enabled: !!currentChatId && !flag,
+      onSuccess: () => {
+        setFlag(true);
+      },
+    }
+  );
 
   const { mutateAsync: handleSend } = useMutation(
     async () => {
@@ -105,7 +110,7 @@ export const Chat = (props: TChatProps) => {
     return (
       <div className="flex flex-col w-full gap-4 p-4 bg-white flex-1 overflow-auto">
         {data.result.map((message, idx) => {
-          if (message.user_id !== profileStore.result[0]._id) {
+          if (message.user_id !== profileStore._id) {
             return (
               <div className="w-full">
                 <div className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto">
@@ -155,7 +160,7 @@ export const Chat = (props: TChatProps) => {
           </h1>
           <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
         </div>
-        {profileStore.result[0].followInfo.map((user, idx) => {
+        {profileStore.followInfo.map((user, idx) => {
           return (
             <div
               onClick={() => {
@@ -185,7 +190,7 @@ export const Chat = (props: TChatProps) => {
             </h1>
             <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
           </div>
-          {profileStore.result[0].followerInfo.map((user, idx) => {
+          {profileStore.followerInfo.map((user, idx) => {
             return (
               <div
                 onClick={() => {

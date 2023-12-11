@@ -1,10 +1,10 @@
 import { follow, useGetUser } from '@/api/auth';
+import { useAuth } from '@/stores';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
-import { UploadAvtModal } from './UploadAvtModal';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
-import { useAuth } from '@/stores';
+import { UploadAvtModal } from './UploadAvtModal';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
@@ -38,8 +38,8 @@ export const UserInfo = (props: Props) => {
   );
 
   const renderButton = () => {
-    const isFollowed = data.result[0].followerIds.some(
-      (item: any) => item.user_id === profileStore.result[0]._id
+    const isFollowed = data.user.followerIds.some(
+      (item: any) => item.user_id === profileStore._id
     );
     if (isFollowed) {
       return (
@@ -73,7 +73,7 @@ export const UserInfo = (props: Props) => {
             className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
           >
             <img
-              src={data.result[0].avatar || '/empty_avatar.png'}
+              src={data.user.avatar || '/empty_avatar.png'}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -81,9 +81,7 @@ export const UserInfo = (props: Props) => {
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
-              <p className="mt-3 mr-20 text-xl lg:text-xl">
-                {data.result[0].name}
-              </p>
+              <p className="mt-3 mr-20 text-xl lg:text-xl">{data.user.name}</p>
               {renderButton()}
               <button className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
                 Nhắn tin
@@ -100,9 +98,7 @@ export const UserInfo = (props: Props) => {
                 <span className="font-bold">100</span> Followings
               </p>
             </div>
-            <div className="text-lg font-semibold mb-5">
-              {data.result.email}
-            </div>
+            <div className="text-lg font-semibold mb-5">{data.user.email}</div>
             <div className="text-lg">Tieu su ban than</div>
           </div>
         </div>

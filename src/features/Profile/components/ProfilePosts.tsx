@@ -1,42 +1,102 @@
-import { IInstructionResponse } from '@/api/instructions';
-import { ITweet, useGetMyTweets, useGetTweets } from '@/api/tweets';
-import { Text, useDisclosure } from '@chakra-ui/react';
+import { IUserResponse } from '@/api/auth';
+import { IInstruction, IInstructionResponse } from '@/api/instructions';
+import { ITweet, getMyTweets, useGetMyTweets } from '@/api/tweets';
+import { CommentModal } from '@/features/Feed/components';
+import HeartLike from '@/features/Feed/components/Like';
+import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  HeartIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
-import { useState } from 'react';
-import { CommentModal } from '@/features/Feed/components';
-import HeartLike from '@/features/Feed/components/Like';
-import { IUserResponse } from '@/api/auth';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from 'react-query';
 
 export type TProfilePostsProps = {};
 export const ProfilePosts = ({}: TProfilePostsProps) => {
-  const { data, isLoading, isError, refetch } = useGetMyTweets();
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { ref, inView } = useInView();
+
+  const {
+    data,
+    status,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isLoading,
+    isError,
+    refetch,
+  } = useInfiniteQuery(
+    'getMyTweets',
+    async ({ pageParam = 1 }) => {
+      const res = await getMyTweets({ page: pageParam });
+      return res;
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = lastPage.tweets.length
+          ? allPages.length + 1
+          : undefined;
+        return nextPage;
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  const result = data?.pages.map((page) =>
+    page.tweets.map((tweet, idx) => {
+      if (page.tweets.length == idx + 1) {
+        return (
+          <Box ref={ref} key={tweet._id}>
+            <Post
+              {...tweet}
+              setTweetId={setTweetId}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+            />
+          </Box>
+        );
+      }
+      return (
+        <Box key={tweet._id}>
+          <Post
+            {...tweet}
+            setTweetId={setTweetId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
+        </Box>
+      );
+    })
+  );
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (status === 'error') {
+    return <p>Error</p>;
+  }
 
   return (
     <>
-      {!isLoading && (
-        <div>
-          {data &&
-            data?.tweets.map((post) => (
-              <div key={post._id}>
-                <Post
-                  {...post}
-                  setTweetId={setTweetId}
-                  isOpen={isOpen}
-                  onOpen={onOpen}
-                  onClose={onClose}
-                />
-              </div>
-            ))}
-        </div>
-      )}
+      {result}
+      {isFetchingNextPage && <h3>Loading...</h3>}
       <CommentModal
         isOpen={isOpen}
         onOpen={onOpen}
@@ -53,7 +113,7 @@ export type PostProps = ITweet & {
   user_id: string;
   created_at: string;
   updated_at: string;
-  instruction: Array<IInstructionResponse>;
+  instruction: Array<IInstruction>;
   comments: Array<ITweet>;
   comment_count: number;
   user_info: Array<IUserResponse>;

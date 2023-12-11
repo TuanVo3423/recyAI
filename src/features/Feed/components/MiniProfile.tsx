@@ -37,13 +37,13 @@ export const MiniProfile = () => {
     <div className="flex items-center justify-between mt-14 ml-10 ">
       <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-full">
         <img
-          src={(data && data.result.avatar) || '/empty_avatar.png'}
+          src={(data && data.user.avatar) || '/empty_avatar.png'}
           alt=""
           className="rounded-full p-[2px] w-12 h-12"
         />
       </div>
       <div className="flex-1 mx-4">
-        <h2 className="font-bold text-sm">{data && data.result.name}</h2>
+        <h2 className="font-bold text-sm">{data && data.user.name}</h2>
         <h3 className="text-sm text-gray-400">Welcome back</h3>
       </div>
 

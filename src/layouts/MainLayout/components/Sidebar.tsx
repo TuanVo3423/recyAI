@@ -1,20 +1,10 @@
-import { getUserList, useGetAuth } from '@/api/auth';
-import { PROJECT_AUTH_TOKEN } from '@/constants';
-import { LocalStorage } from '@/services/localStorage';
+import { IUser, getUserList, useGetAuth } from '@/api/auth';
+import { useAuth } from '@/stores';
 import {
-  useDisclosure,
-  Button,
-  ButtonGroup,
   Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
   PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
   PopoverTrigger,
-  Box,
-  UseDisclosureReturn,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   ArchiveIcon,
@@ -26,15 +16,15 @@ import {
   TranslateIcon,
   XIcon,
 } from '@heroicons/react/outline';
-import { useRouter } from 'next/router';
-import React, { useCallback, useState } from 'react';
 import _ from 'lodash';
+import { useRouter } from 'next/router';
+import { useCallback, useState } from 'react';
 
 export const SideBar = () => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, isLoading, refetch } = useGetAuth();
-  const [searchResult, setSearchResult] = useState([]);
+  const profileStore = useAuth((state) => state.profile);
+  const [searchResult, setSearchResult] = useState<Array<IUser>>([]);
 
   // Tạo hàm debounce để trì hoãn chức năng search
   const debouncedSearch = useCallback(
@@ -168,7 +158,7 @@ export const SideBar = () => {
           className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
         >
           <img
-            src={data.result[0].avatar || '/empty-avatar.png'}
+            src={profileStore.avatar || '/empty_avatar.png'}
             alt="profile-pic"
             className="h-8 w-8 rounded-full cursor-pointer"
           />

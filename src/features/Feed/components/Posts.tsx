@@ -1,46 +1,106 @@
 import { IUserResponse } from '@/api/auth';
-import { IInstructionResponse } from '@/api/instructions';
-import { ITweet, useGetTweets } from '@/api/tweets';
-import { Text, useDisclosure } from '@chakra-ui/react';
+import { IInstruction, IInstructionResponse } from '@/api/instructions';
+import { ITweet, getTweets } from '@/api/tweets';
+import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
-import { useState } from 'react';
-import { CommentModal } from './CommentModal';
-import HeartLike from './Like';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { time } from 'console';
 import { formatDistance } from 'date-fns';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from 'react-query';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import { CommentModal } from './CommentModal';
+import HeartLike from './Like';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
-  const { data, isLoading, isError, refetch } = useGetTweets();
+  const { ref, inView } = useInView();
+
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    data,
+    status,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isLoading,
+    isError,
+    refetch,
+  } = useInfiniteQuery(
+    'getTweets',
+    async ({ pageParam = 1 }) => {
+      const res = await getTweets({ page: pageParam });
+      return res;
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = lastPage.tweets.length
+          ? allPages.length + 1
+          : undefined;
+        return nextPage;
+      },
+    }
+  );
+  const result = data?.pages.map((page) =>
+    page.tweets.map((tweet, idx) => {
+      if (page.tweets.length == idx + 1) {
+        return (
+          <Box ref={ref} key={tweet._id}>
+            <Post
+              {...tweet}
+              setTweetId={setTweetId}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+            />
+          </Box>
+        );
+      }
+      return (
+        <Box key={tweet._id}>
+          <Post
+            {...tweet}
+            setTweetId={setTweetId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
+        </Box>
+      );
+    })
+  );
+  // console.log(result);
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (status === 'error') {
+    return <p>Error</p>;
+  }
 
   return (
     <>
-      {!isLoading && (
-        <div>
-          {data &&
-            data?.tweets.map((post) => (
-              <div key={post._id}>
-                <Post
-                  {...post}
-                  setTweetId={setTweetId}
-                  isOpen={isOpen}
-                  onOpen={onOpen}
-                  onClose={onClose}
-                />
-              </div>
-            ))}
-        </div>
-      )}
+      {result}
+      {isFetchingNextPage && <h3>Loading...</h3>}
       <CommentModal
         isOpen={isOpen}
         onOpen={onOpen}
@@ -57,7 +117,7 @@ export type PostProps = ITweet & {
   user_id: string;
   created_at: string;
   updated_at: string;
-  instruction: Array<IInstructionResponse>;
+  instruction: Array<IInstruction>;
   comments: Array<ITweet>;
   comment_count: number;
   user_info: Array<IUserResponse>;
@@ -89,7 +149,7 @@ function Post({
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  
+
   const router = useRouter();
   return (
     <div className="bg-white mb-7 border-none ">

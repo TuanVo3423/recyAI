@@ -1,9 +1,9 @@
-import { signIn } from '@/api/auth';
+import { ISignInRequest, signIn } from '@/api/auth';
 import { PROJECT_AUTH_TOKEN } from '@/constants';
 import { LocalStorage } from '@/services/localStorage';
 import { useAuth } from '@/stores';
 import { InputField } from '@/ui-kit';
-import { Button, Img, VStack, useToast } from '@chakra-ui/react';
+import { Button, VStack, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -22,14 +22,14 @@ export const SignIn = () => {
   const setProfile = useAuth((state) => state.setProfile);
 
   const { mutateAsync: handleLogin, isLoading } = useMutation(
-    async (data: ILogin) => {
+    async (data: ISignInRequest) => {
       const res = await signIn(data);
       return res;
     },
     {
-      onSuccess: async (data: any) => {
+      onSuccess: async (data) => {
         await LocalStorage.set(PROJECT_AUTH_TOKEN, data.user);
-        await LocalStorage.set('REFRESH_TOKEN', data.result.refresh_token);
+        await LocalStorage.set('REFRESH_TOKEN', data.tokens.refresh_token);
         await setProfile(data.user);
         await router.push('/feed');
         toast({
@@ -49,12 +49,19 @@ export const SignIn = () => {
   return (
     <div className="relative mx-auto">
       <div className="w-[980px] ml-[40px] mt-6 hidden lg:block">
-      <img src="https://assets-global.website-files.com/5f16d530791d4326e79cd1b0/60bd1230b185b384bb7defb6_Tree%20Map.png" alt="" />
+        <img
+          src="https://assets-global.website-files.com/5f16d530791d4326e79cd1b0/60bd1230b185b384bb7defb6_Tree%20Map.png"
+          alt=""
+        />
       </div>
-      <div className='absolute top-20 right-32 rounded-xl bg-white'>
+      <div className="absolute top-20 right-32 rounded-xl bg-white">
         <div className="border-[1px] rounded-xl shadow-lg w-[350px] h-[400px] ">
           <div className="lg:block ml-[95px] w-[160px] justify-center -mb-1 mt-6 h-[100px]">
-            <img src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png" alt="" className='' />
+            <img
+              src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png"
+              alt=""
+              className=""
+            />
           </div>
           <VStack
             spacing={6}
@@ -131,19 +138,16 @@ export const SignIn = () => {
                 />
                 {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
-              
             </div>
             <a
-                href="/forgot-password"
-                className="text-green-600 text-xs hover:text-green-900 mt-3"
-              >
-                Forgot password?
-              </a>
+              href="/forgot-password"
+              className="text-green-600 text-xs hover:text-green-900 mt-3"
+            >
+              Forgot password?
+            </a>
           </VStack>
         </div>
-        <div className='h-[20px] bg-transparent'>
-
-        </div>
+        <div className="h-[20px] bg-transparent"></div>
         <div className="flex border-[1px] rounded-xl shadow-lg items-center justify-center border-gray-300 w-[350px] h-[60px] ">
           <p className="text-sm ">Don't have account?</p>
           <p
