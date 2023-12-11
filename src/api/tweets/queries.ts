@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { getMyTweets, getTweet, getTweets, getUserTweets } from './request';
 import { ITweetResponse, ITweetsResponse } from './types';
+import { GetParams } from '../commonTypes';
 // import { getDocument } from './request';
 
 export const useGetTweet = (tweetId: string, options?: any) =>
@@ -13,11 +14,11 @@ export const useGetTweet = (tweetId: string, options?: any) =>
     { ...options }
   );
 
-export const useGetTweets = (options?: any) =>
+export const useGetTweets = (params: GetParams, options?: any) =>
   useQuery<ITweetsResponse>(
-    ['getTweets'],
+    ['getTweets', { ...params }],
     async () => {
-      const data = await getTweets();
+      const data = await getTweets(params);
       return data;
     },
     { ...options }

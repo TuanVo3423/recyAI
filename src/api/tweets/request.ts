@@ -1,4 +1,5 @@
 import { request } from '../axios';
+import { GetParams } from '../commonTypes';
 import { ITweet, ITweetUpdate } from './types';
 
 export const createTweet = async (data: ITweet) => {
@@ -18,10 +19,11 @@ export const getTweet = async (tweetId: string) => {
   return res;
 };
 
-export const getTweets = async () => {
+export const getTweets = async (query: GetParams) => {
   const res = await request({
     url: `tweets`,
     method: 'GET',
+    params: query,
   });
   return res;
 };
