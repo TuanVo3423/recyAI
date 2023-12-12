@@ -1,5 +1,5 @@
 import { IUserResponse } from '@/api/auth';
-import { IInstructionResponse } from '@/api/instructions';
+import { IInstruction, IInstructionResponse } from '@/api/instructions';
 import { ITweet, getTweets } from '@/api/tweets';
 import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import {
@@ -38,8 +38,8 @@ export const Posts = ({}: TPostsProps) => {
     isLoading,
     isError,
     refetch,
-  } = useInfiniteQuery<any>(
-    'projects',
+  } = useInfiniteQuery(
+    'getTweets',
     async ({ pageParam = 1 }) => {
       const res = await getTweets({ page: pageParam });
       return res;
@@ -81,7 +81,7 @@ export const Posts = ({}: TPostsProps) => {
       );
     })
   );
-  console.log(result);
+  // console.log(result);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -117,7 +117,7 @@ export type PostProps = ITweet & {
   user_id: string;
   created_at: string;
   updated_at: string;
-  instruction: Array<IInstructionResponse>;
+  instruction: Array<IInstruction>;
   comments: Array<ITweet>;
   comment_count: number;
   user_info: Array<IUserResponse>;
@@ -127,7 +127,6 @@ export type PostProps = ITweet & {
   onClose: () => void;
   isOpen: boolean;
   setTweetId: (id: string) => void;
-  ref: (node?: Element) => void;
 };
 function Post({
   _id,

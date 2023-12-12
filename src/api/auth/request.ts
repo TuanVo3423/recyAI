@@ -1,123 +1,114 @@
 import { request } from '../axios';
 import {
-  FollowUser,
-  ILogout,
-  ISignIn,
+  IFollowUserRequest,
+  ISignInRequest,
   ISignUp,
-  SearchUser,
-  UpdateMe,
+  ISearchUserRequest,
+  ISignInResponse,
+  IUpdateMeRequest,
+  IGetMeResponse,
+  ILogoutResponse,
+  ILogoutRequest,
+  IRegisterResponse,
+  IGetUSerResponse,
+  IUpdateMeResponse,
+  IgetUserListResponse,
+  IFollowUserResponse,
+  IUnFollowUserRequest,
+  IUnFollowUserResponse,
 } from './types';
+
+const URL = 'users';
+const configs = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+};
 
 export const signUp = async (data: ISignUp) => {
   const res = await request({
-    url: `users/register`,
+    url: `${URL}/register`,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     data,
   });
-  return res;
+  return res as IRegisterResponse;
 };
 
-export const signIn = async (data: ISignIn) => {
+export const signIn = async (data: ISignInRequest) => {
   const res = await request({
-    url: `users/login`,
+    url: `${URL}/login`,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     data,
   });
-  return res;
+  return res as ISignInResponse;
 };
 
-export const Logout = async (data: ILogout) => {
+export const Logout = async (data: ILogoutRequest) => {
   const res = await request({
-    url: `users/logout`,
+    url: `${URL}/logout`,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     data,
   });
-  return res;
+  return res as ILogoutResponse;
 };
 
 export const getAuth = async () => {
   const res = await request({
-    url: `users/me`,
+    url: `${URL}/me`,
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
   });
-  return res;
+  return res as IGetMeResponse;
 };
 
 export const getUser = async (userId: string) => {
   const res = await request({
-    url: `users/${userId}`,
+    url: `${URL}/${userId}`,
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
   });
-  return res;
+  return res as IGetUSerResponse;
 };
 
-export const updateMe = async (data: UpdateMe) => {
+export const updateMe = async (data: IUpdateMeRequest) => {
   const res = await request({
-    url: `users/me`,
+    url: `${URL}/me`,
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     data,
   });
-  return res;
+  return res as IUpdateMeResponse;
 };
 
-export const getUserList = async (data: SearchUser) => {
+export const getUserList = async (data: ISearchUserRequest) => {
   const res = await request({
-    url: `users/search`,
+    url: `${URL}/search`,
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     params: data,
   });
-  return res;
+  return res as IgetUserListResponse;
 };
 
-export const follow = async (data: FollowUser) => {
+export const follow = async (data: IFollowUserRequest) => {
   const res = await request({
-    url: `users/follow`,
+    url: `${URL}/follow`,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
     data,
   });
-  return res;
+  return res as IFollowUserResponse;
 };
 
-export const unFollow = async (followed_user_id: string) => {
+export const unFollow = async ({ followed_user_id }: IUnFollowUserRequest) => {
   const res = await request({
-    url: `users/follow/${followed_user_id}`,
+    url: `${URL}/follow/${followed_user_id}`,
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+    ...configs,
   });
-  return res;
+  return res as IUnFollowUserResponse;
 };

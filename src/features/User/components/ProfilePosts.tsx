@@ -1,57 +1,112 @@
-import { IInstructionResponse } from '@/api/instructions';
-import {
-  ITweet,
-  useGetMyTweets,
-  useGetTweets,
-  useGetUserTweets,
-} from '@/api/tweets';
-import { Text, useDisclosure } from '@chakra-ui/react';
+import { IUserResponse } from '@/api/auth';
+import { IInstruction, IInstructionResponse } from '@/api/instructions';
+import { ITweet, getUserTweets, useGetUserTweets } from '@/api/tweets';
+import { CommentModal } from '@/features/Feed/components';
+import HeartLike from '@/features/Feed/components/Like';
+import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  HeartIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline';
-import { useState } from 'react';
-import { CommentModal } from '@/features/Feed/components';
-import HeartLike from '@/features/Feed/components/Like';
-import { IUserResponse } from '@/api/auth';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from 'react-query';
 
 export type TProfilePostsProps = {};
 export const ProfilePosts = ({}: TProfilePostsProps) => {
+  const { ref, inView } = useInView();
   const router = useRouter();
-  const { data, isLoading, refetch } = useGetUserTweets(
-    router.query.userId[0],
-    {
-      enabled: !!router.query.userId[0],
-    }
-  );
+  // const { data, isLoading, refetch } = useGetUserTweets(
+  //   router.query.userId[0],
+  //   {},
+  //   {
+  //     enabled: !!router.query.userId[0],
+  //   }
+  // );
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const {
+    data,
+    status,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isLoading,
+    isError,
+    refetch,
+  } = useInfiniteQuery(
+    'getMyTweets',
+    async ({ pageParam = 1 }) => {
+      const res = await getUserTweets(router.query.userId[0], {
+        page: pageParam,
+      });
+      return res;
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = lastPage.tweets.length
+          ? allPages.length + 1
+          : undefined;
+        return nextPage;
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  const result = data?.pages.map((page) =>
+    page.tweets.map((tweet, idx) => {
+      if (page.tweets.length == idx + 1) {
+        return (
+          <Box ref={ref} key={tweet._id}>
+            <Post
+              {...tweet}
+              setTweetId={setTweetId}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+            />
+          </Box>
+        );
+      }
+      return (
+        <Box key={tweet._id}>
+          <Post
+            {...tweet}
+            setTweetId={setTweetId}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+          />
+        </Box>
+      );
+    })
+  );
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (status === 'error') {
+    return <p>Error</p>;
+  }
   return (
     <>
-      {!isLoading && (
-        <div>
-          {data.tweets.length > 0 ? (
-            data.tweets.map((post) => (
-              <div key={post._id}>
-                <Post
-                  {...post}
-                  setTweetId={setTweetId}
-                  isOpen={isOpen}
-                  onOpen={onOpen}
-                  onClose={onClose}
-                />
-              </div>
-            ))
-          ) : (
-            <Text color="red">Bạn chưa đăng bài nào!</Text>
-          )}
-        </div>
-      )}
+      {result}
+      {isFetchingNextPage && <h3>Loading...</h3>}
       <CommentModal
         isOpen={isOpen}
         onOpen={onOpen}
@@ -68,7 +123,7 @@ export type PostProps = ITweet & {
   user_id: string;
   created_at: string;
   updated_at: string;
-  instruction: Array<IInstructionResponse>;
+  instruction: Array<IInstruction>;
   comments: Array<ITweet>;
   comment_count: number;
   user_info: Array<IUserResponse>;
@@ -115,7 +170,9 @@ function Post({
       </div>
       <div className="px-[20px] py-[20px] border-[1px] rounded-lg shadow-sm">
         {instruction.map((item, idx) =>
-          item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
+          item.steps.map((step, idx) => (
+            <p key={idx}>{step.content}</p>
+          ))
         )}
       </div>
 

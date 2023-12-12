@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
 import { Path, publicPaths } from './data';
 import { useAuthCheck } from './hook';
-import { useGetAuth } from '@/api/auth';
+import { IGetMeResponse, useGetAuth } from '@/api/auth';
 import { useAuth } from '@/stores';
+import _ from 'lodash';
 
 export const RouteGuard = ({ children }: { children: any }) => {
   const router = useRouter();
@@ -13,8 +14,12 @@ export const RouteGuard = ({ children }: { children: any }) => {
   const { checkAuthorization, authorized } = useAuthCheck();
   const setProfile = useAuth((state) => state.setProfile);
 
-  const { data } = useGetAuth({ enabled: !!profile });
-  setProfile(data);
+  const { data } = useGetAuth({
+    enabled: !!profile,
+    onSuccess: (data: IGetMeResponse) => {
+      setProfile(data.user);
+    },
+  });
 
   useEffect(() => {
     checkAuthorization(router.pathname);

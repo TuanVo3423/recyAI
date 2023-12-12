@@ -22,7 +22,7 @@ export const UserInfo = (props: Props) => {
             className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
           >
             <img
-              src={data.result[0].avatar || '/empty_avatar.png'}
+              src={data.user.avatar || '/empty_avatar.png'}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -31,7 +31,7 @@ export const UserInfo = (props: Props) => {
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
               <p className="mt-3 mr-20 text-xl lg:text-xl">
-                {data.result[0].name}
+                {data.user.name}
               </p>
               <button
                 onClick={() => onOpenUpdateProfile()}
@@ -55,7 +55,7 @@ export const UserInfo = (props: Props) => {
               </p>
             </div>
             <div className="text-lg font-semibold mb-5">
-              {data.result.email}
+              {data.user.email}
             </div>
             <div className="text-lg">Tieu su ban than</div>
           </div>

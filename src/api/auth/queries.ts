@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { getAuth, getUser, getUserList } from './request';
-import { SearchUser } from './types';
 
 export const useGetAuth = (options?: any) =>
   useQuery(

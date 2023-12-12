@@ -1,22 +1,28 @@
 import { request } from '../axios';
 import { GetParams } from '../commonTypes';
-import { ITweet, ITweetUpdate } from './types';
+import {
+  ICreateTweetRequest,
+  ICreateTweetResponse,
+  IGetTweetRequest,
+  ITweetResponse,
+  ITweetsResponse,
+} from './types';
 
-export const createTweet = async (data: ITweet) => {
+export const createTweet = async (data: ICreateTweetRequest) => {
   const res = await request({
     url: `tweets`,
     method: 'POST',
     data,
   });
-  return res;
+  return res as ICreateTweetResponse;
 };
 
-export const getTweet = async (tweetId: string) => {
+export const getTweet = async ({ tweet_id }: IGetTweetRequest) => {
   const res = await request({
-    url: `tweets/${tweetId}`,
+    url: `tweets/${tweet_id}`,
     method: 'GET',
   });
-  return res;
+  return res as ITweetResponse;
 };
 
 export const getTweets = async (query: GetParams) => {
@@ -25,36 +31,42 @@ export const getTweets = async (query: GetParams) => {
     method: 'GET',
     params: query,
   });
-  return res;
+  return res as ITweetsResponse;
 };
 
-export const getMyTweets = async () => {
+export const getMyTweets = async (query: GetParams) => {
   const res = await request({
     url: `tweets/me`,
     method: 'GET',
+    params: query,
   });
-  return res;
+  return res as ITweetsResponse;
 };
 
-export const getUserTweets = async (userId: string) => {
+export const getUserTweets = async (user_id: string, query: GetParams) => {
   const res = await request({
-    url: `tweets/user/${userId}`,
+    url: `tweets/user/${user_id}`,
     method: 'GET',
+    params: query,
   });
-  return res;
+  return res as ITweetsResponse;
 };
 
-export const getMyInstructions = async (UserID: number | string) => {
+export const getMyInstructions = async (
+  user_id: number | string,
+  query: GetParams
+) => {
   const res = await request({
-    url: `instructions/me/${UserID}`,
+    url: `instructions/me/${user_id}`,
     method: 'GET',
+    params: query,
   });
   return res;
 };
 
-export const uploadImage = async (UserID: number | string) => {
+export const uploadImage = async (user_id: number | string) => {
   const res = await request({
-    url: `instructions/me/${UserID}`,
+    url: `instructions/me/${user_id}`,
     method: 'GET',
   });
   return res;

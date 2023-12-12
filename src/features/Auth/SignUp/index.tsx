@@ -1,5 +1,4 @@
-import { signUp } from '@/api/auth';
-import { useAuth } from '@/stores';
+import { IRegisterResponse, signUp } from '@/api/auth';
 import { InputField } from '@/ui-kit';
 import { Button, VStack, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,7 +24,7 @@ export const SignUp = () => {
       return res;
     },
     {
-      onSuccess: async (data: any) => {
+      onSuccess: async (data: IRegisterResponse) => {
         await router.push('/auth/sign-in');
         toast({
           description: data.message,
@@ -46,53 +45,54 @@ export const SignUp = () => {
       <div>
         <div className="border-[1px] rounded-xl shadow-lg w-[350px] h-[600px] ">
           <div className="lg:block ml-[100px] mt-[40px] w-[160px] justify-center mb-2 -mt-3">
-            <img src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png" alt="" />
+            <img
+              src="https://yesrecycling.org/wp-content/uploads/2022/02/Yes-Recycling_Logo-green.png"
+              alt=""
+            />
           </div>
           <div className="flex items-center justify-center text-sm text-[22px] font-semibold text-gray-500 mb-10">
             Login to join with us.
           </div>
-          
-         
+
           <div className="flex items-center justify-center mt-2">
-              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
-                  alt="Facebook logo"
-                  width={20}
-                  height={20}
-                />
-                {/* <span className="text-sm">Log in by Facebook</span> */}
-              </button>
-              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
-                  alt="Google logo"
-                  width={20}
-                  height={20}
-                />
-                {/* <span className="text-sm">Log in by Facebook</span> */}
-              </button>
-              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/768px-Microsoft_logo.svg.png"
-                  alt="Windows logo"
-                  width={20}
-                  height={20}
-                />
-                {/* <span className="text-sm">Log in by Facebook</span> */}
-              </button>
-              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/758px-Apple_logo_grey.svg.png"
-                  alt="Apple logo"
-                  width={20}
-                  height={20}
-                />
-                {/* <span className="text-sm">Log in by Facebook</span> */}
-              </button>
-              
-            </div>
-          
+            <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+                alt="Facebook logo"
+                width={20}
+                height={20}
+              />
+              {/* <span className="text-sm">Log in by Facebook</span> */}
+            </button>
+            <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+                alt="Google logo"
+                width={20}
+                height={20}
+              />
+              {/* <span className="text-sm">Log in by Facebook</span> */}
+            </button>
+            <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/768px-Microsoft_logo.svg.png"
+                alt="Windows logo"
+                width={20}
+                height={20}
+              />
+              {/* <span className="text-sm">Log in by Facebook</span> */}
+            </button>
+            <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/758px-Apple_logo_grey.svg.png"
+                alt="Apple logo"
+                width={20}
+                height={20}
+              />
+              {/* <span className="text-sm">Log in by Facebook</span> */}
+            </button>
+          </div>
+
           <div className="font-bold my-4 flex justify-center items-center text-center text-gray-500">
             OR
           </div>

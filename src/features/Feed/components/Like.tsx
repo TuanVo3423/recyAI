@@ -16,7 +16,7 @@ type THeartLikeProps = {
 const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
   const profileStore = useAuth((state) => state.profile);
   const [like, setLike] = useState(
-    likes?.find((like: any) => like._id === profileStore.result[0]._id)
+    likes?.find((like: any) => like._id === profileStore._id)
   );
   console.log(like);
 

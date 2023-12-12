@@ -1,16 +1,26 @@
 import { request } from '../axios';
-import { CreateMessageBody, GetMessageBody } from './types';
+import { GetParams } from '../commonTypes';
+import {
+  ICreateMessageRequest,
+  ICreateMessagesResponse,
+  IGetMessageRequest,
+  IGetMessageResponse,
+} from './types';
 
-export const createMessages = async (data: CreateMessageBody) => {
+export const createMessages = async (data: ICreateMessageRequest) => {
   const res = await request({
     url: `messages`,
     method: 'POST',
     data,
   });
-  return res;
+  return res as ICreateMessagesResponse;
 };
 
-export const getMessages = async (data: GetMessageBody) => {
+export const getMessages = async ({
+  query
+}: {
+  query: GetParams & { user_recieved_id: string };
+}) => {
   const res = await request({
     url: `messages`,
     method: 'GET',
@@ -18,7 +28,7 @@ export const getMessages = async (data: GetMessageBody) => {
       'Content-Type': 'application/json',
     },
     withCredentials: true,
-    params: data,
+    params: query,
   });
-  return res;
+  return res as IGetMessageResponse;
 };

@@ -11,7 +11,7 @@ import {
   Text,
   Textarea,
   UseDisclosureProps,
-  useToast
+  useToast,
 } from '@chakra-ui/react';
 import {
   BookmarkIcon,
@@ -58,7 +58,7 @@ export const CommentModal = ({
 
   useEffect(() => {
     if (isSuccess) {
-      setCurrentStep(data.tweet[0].instruction[0].steps);
+      setCurrentStep(data.tweet.instruction[0].steps);
     }
   }, [isSuccess]);
   const [comment, setComment] = useState('');
@@ -92,10 +92,10 @@ export const CommentModal = ({
   );
   const { mutateAsync: handleSaveUpdate } = useMutation(
     async () => {
-      const res = await editInstructionsInMyTweets(
-        data.tweet[0].instruction_id,
-        currentStep
-      );
+      const res = await editInstructionsInMyTweets({
+        instruction_id: data.tweet.instruction_id,
+        payload: currentStep,
+      });
       return res;
     },
     {
@@ -222,10 +222,10 @@ export const CommentModal = ({
                     />
                     <div className="flex-1 flex items-center">
                       <p className="font-semibold text-sm mr-2 cursor-pointer">
-                        {data && data.tweet[0].user_info[0].name}
+                        {data && data.tweet.user_info[0].name}
                       </p>
                       <p className="mx-2">•</p>
-                      <p className="text-sm">{data.tweet[0].content}</p>
+                      <p className="text-sm">{data.tweet.content}</p>
                     </div>
 
                     <DotsHorizontalIcon className="h-5 mr-6" />
@@ -235,7 +235,7 @@ export const CommentModal = ({
                   {!data ? (
                     <>No cmt here</>
                   ) : (
-                    data.tweet[0].comments.map((cmt, idx) => (
+                    data.tweet.comments.map((cmt, idx) => (
                       <div key={idx} className="flex items-center py-3">
                         <img
                           src={
@@ -248,7 +248,7 @@ export const CommentModal = ({
                           <div className="flex">
                             <p className="font-semibold text-sm mr-2">
                               {
-                                data.tweet[0].comments_users.find(
+                                data.tweet.comments_users.find(
                                   (comment_and_user_info) =>
                                     cmt.user_id === comment_and_user_info._id
                                 ).name
@@ -290,12 +290,12 @@ export const CommentModal = ({
                   </div>
                   <div className="mt-2 pb-3 border-b-[1px]">
                     <p className="font-semibold text-sm ml-5">
-                      {`${data.tweet[0].like_count} lượt thích`}
+                      {`${data.tweet.like_count} lượt thích`}
                     </p>
                     <p className="text-xs text-gray-500 ml-5">
                       {' '}
                       {formatDistance(
-                        new Date(data.tweet[0].created_at),
+                        new Date(data.tweet.created_at),
                         new Date(),
                         {
                           addSuffix: true,

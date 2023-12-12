@@ -1,21 +1,19 @@
 import { useQuery } from 'react-query';
 import { getMyTweets, getTweet, getTweets, getUserTweets } from './request';
-import { ITweetResponse, ITweetsResponse } from './types';
 import { GetParams } from '../commonTypes';
-// import { getDocument } from './request';
 
-export const useGetTweet = (tweetId: string, options?: any) =>
-  useQuery<ITweetResponse>(
-    ['getTweet', tweetId],
+export const useGetTweet = (tweet_id: string, options?: any) =>
+  useQuery(
+    ['getTweet', tweet_id],
     async () => {
-      const data = await getTweet(tweetId);
+      const data = await getTweet({ tweet_id });
       return data;
     },
     { ...options }
   );
 
 export const useGetTweets = (params: GetParams, options?: any) =>
-  useQuery<ITweetsResponse>(
+  useQuery(
     ['getTweets', { ...params }],
     async () => {
       const data = await getTweets(params);
@@ -24,21 +22,25 @@ export const useGetTweets = (params: GetParams, options?: any) =>
     { ...options }
   );
 
-export const useGetMyTweets = (options?: any) =>
-  useQuery<ITweetsResponse>(
+export const useGetMyTweets = (params: GetParams, options?: any) =>
+  useQuery(
     ['getMyTweets'],
     async () => {
-      const data = await getMyTweets();
+      const data = await getMyTweets(params);
       return data;
     },
     { ...options }
   );
 
-export const useGetUserTweets = (userId: string, options?: any) =>
-  useQuery<ITweetsResponse>(
+export const useGetUserTweets = (
+  userId: string,
+  params: GetParams,
+  options?: any
+) =>
+  useQuery(
     ['getUserTweets', userId],
     async () => {
-      const data = await getUserTweets(userId);
+      const data = await getUserTweets(userId, params);
       return data;
     },
     { ...options }
