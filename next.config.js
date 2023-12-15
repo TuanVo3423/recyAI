@@ -20,7 +20,8 @@ const nextConfig = {
       'yesrecycling.org',
       'mcdn.coolmate.me',
       'i.natgeofe.com',
-      'hips.hearstapps.com'
+      'hips.hearstapps.com',
+      'encrypted-tbn0.gstatic.com'
       
     ],
   },

@@ -30,9 +30,20 @@ export const UserInfo = (props: Props) => {
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
-              <p className="mt-3 mr-20 text-xl lg:text-xl">
+              <p className="mt-3 mr-20 flex items-center text-xl lg:text-xl">
                 {data.result[0].name}
+                <img
+              src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Eo_circle_green_white_checkmark.svg/2048px-Eo_circle_green_white_checkmark.svg.png'}
+              alt=""
+              className="w-4 h-4 rounded-full cursor-pointer"
+            />
+              <img
+              src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYrpGhmTgESFbJ6kj8axLV0Vn1KjgeInvuhS84RNURfA&s'}
+              alt=""
+              className="w-4 h-4 rounded-full cursor-pointer"
+            />
               </p>
+              
               <button
                 onClick={() => onOpenUpdateProfile()}
                 className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
