@@ -21,7 +21,7 @@ export const TweetWithInstruction = async ({
   instruction_id: string;
   content: string;
 }) => {
-  const res = await createTweet({
+  return await createTweet({
     instruction_id: instruction_id,
     content,
     audience: 1,
@@ -33,7 +33,6 @@ export const TweetWithInstruction = async ({
     guest_views: 10,
     user_views: 10,
   });
-  return res;
 };
 
 export const TweetWithImages = async ({

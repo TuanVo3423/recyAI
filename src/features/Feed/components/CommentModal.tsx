@@ -1,6 +1,7 @@
 import { editInstructionsInMyTweets } from '@/api/instructions';
 import { useGetTweet } from '@/api/tweets';
 import { Quadrilateral } from '@/components/skeleton';
+import { useAuth } from '@/stores';
 import { CommentTweet } from '@/utils/classifyTweetType';
 import {
   Button,
@@ -47,6 +48,7 @@ export const CommentModal = ({
   onOpen,
 }: TCommentModalProps) => {
   const { pathname } = useRouter();
+  const profileStore = useAuth((state) => state.profile);
   const { data, isLoading, isError, refetch, isSuccess } = useGetTweet(
     tweetId,
     {
@@ -74,13 +76,20 @@ export const CommentModal = ({
     },
     {
       onSuccess: async (data) => {
-        await refetch();
-        await refresh();
-        toast({
-          description: data.message,
-          status: 'success',
-        });
-        setComment('');
+        if (profileStore) {
+          await refetch();
+          await refresh();
+          toast({
+            description: data.message,
+            status: 'success',
+          });
+          setComment('');
+        } else {
+          toast({
+            description: 'Login to comment this tweet',
+            status: 'error',
+          });
+        }
       },
       onError: async (err: any) => {
         toast({

@@ -4,10 +4,13 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { PROJECT_AUTH_TOKEN } from '@/constants';
 export const MiniProfile = () => {
   const toast = useToast();
   const router = useRouter();
-  const { data, isLoading, refetch } = useGetAuth();
+  const { data, isLoading, refetch } = useGetAuth({
+    enabled: !!LocalStorage.get(PROJECT_AUTH_TOKEN),
+  });
   const { mutateAsync: handleLogout } = useMutation(
     async () => {
       const res = await Logout({
@@ -43,7 +46,9 @@ export const MiniProfile = () => {
         />
       </div>
       <div className="flex-1 mx-4">
-        <h2 className="font-bold text-sm">{data && data.user.name}</h2>
+        <h2 className="font-bold text-sm">
+          {(data && data.user.name) || 'Guest'}
+        </h2>
         <h3 className="text-sm text-gray-400">Welcome back</h3>
       </div>
 

@@ -16,7 +16,13 @@ type THeartLikeProps = {
 const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
   const profileStore = useAuth((state) => state.profile);
   const [like, setLike] = useState(
-    likes?.find((like: any) => like._id === profileStore._id)
+    likes?.find((like: any) => {
+      if (profileStore) {
+        return like._id === profileStore._id;
+      } else {
+        return like._id === '';
+      }
+    })
   );
   console.log(like);
 
@@ -29,12 +35,19 @@ const HeartLike = ({ tweet_id, setLikeCount, likes }: THeartLikeProps) => {
     },
     {
       onSuccess: async (data) => {
-        toast({
-          description: data.message,
-          status: 'success',
-        });
-        setLike(!like);
-        setLikeCount((prev: number) => prev + 1);
+        if (profileStore) {
+          toast({
+            description: data.message,
+            status: 'success',
+          });
+          setLike(!like);
+          setLikeCount((prev: number) => prev + 1);
+        } else {
+          toast({
+            description: 'Login to like this tweet',
+            status: 'error',
+          });
+        }
       },
       onError: async (error: any) => {
         toast({

@@ -1,6 +1,6 @@
 import { IUserResponse } from '@/api/auth';
 import { IInstruction, IInstructionResponse } from '@/api/instructions';
-import { ITweet, getTweets } from '@/api/tweets';
+import { ITweet, getTweets, getTweetsForGuest } from '@/api/tweets';
 import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
@@ -18,9 +18,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { CommentModal } from './CommentModal';
 import HeartLike from './Like';
+import { LocalStorage } from '@/services/localStorage';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { ref, inView } = useInView();
+  // get id from localstorage
+  const local = LocalStorage.get('RECYCLING_AI_TOKEN');
 
   const [tweetId, setTweetId] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,8 +44,14 @@ export const Posts = ({}: TPostsProps) => {
   } = useInfiniteQuery(
     'getTweets',
     async ({ pageParam = 1 }) => {
-      const res = await getTweets({ page: pageParam });
-      return res;
+      // truyen id cua user vao day, neu id = null thi lay tat ca cac tweet
+      if (local && local.user_id) {
+        const res = await getTweets({ page: pageParam });
+        return res;
+      } else {
+        const res = await getTweetsForGuest({ page: pageParam });
+        return res;
+      }
     },
     {
       getNextPageParam: (lastPage, allPages) => {

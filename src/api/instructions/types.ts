@@ -27,7 +27,7 @@ export interface IInstructionResponse {
 
 export interface IGetMyInstructionsResponse {
   message: string;
-  instruction: Array<IInstruction>;
+  instructions: Array<IInstruction>;
 }
 
 export interface IEditInstructionsInMyTweetsRequest {

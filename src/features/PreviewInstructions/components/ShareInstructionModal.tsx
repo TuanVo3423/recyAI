@@ -83,7 +83,7 @@ export const ShareInstructionModal = ({
                   />
                   <div className="flex-1 flex">
                     <p className="font-semibold text-sm mr-9">
-                      {profileStore.result[0].name}
+                      {profileStore.name}
                     </p>
                   </div>
 

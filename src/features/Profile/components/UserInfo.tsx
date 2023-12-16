@@ -3,9 +3,12 @@ import { useDisclosure } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
 import { UploadAvtModal } from './UploadAvtModal';
 import { UpdateProfileModal } from './UpdateProfileModal';
+import { useRouter } from 'next/router';
+import { UserVerifyStatus } from '@/types';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
+  const router = useRouter();
   const { data, isLoading, refetch } = useGetAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -30,9 +33,7 @@ export const UserInfo = (props: Props) => {
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
-              <p className="mt-3 mr-20 text-xl lg:text-xl">
-                {data.user.name}
-              </p>
+              <p className="mt-3 mr-20 text-xl lg:text-xl">{data.user.name}</p>
               <button
                 onClick={() => onOpenUpdateProfile()}
                 className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
@@ -56,6 +57,14 @@ export const UserInfo = (props: Props) => {
             </div>
             <div className="text-lg font-semibold mb-5">
               {data.user.email}
+              {data.user.verify !== UserVerifyStatus.Verified && (
+                <button
+                  onClick={() => router.push('/auth/verify-email')}
+                  className="ml-10 bg-green-200 hover:bg-green-400 text-black w-[120px] h-[30px] rounded-xl text-sm font-semibold mt-2"
+                >
+                  Verify email!
+                </button>
+              )}
             </div>
             <div className="text-lg">Tieu su ban than</div>
           </div>

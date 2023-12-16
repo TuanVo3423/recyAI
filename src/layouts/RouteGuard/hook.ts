@@ -37,7 +37,12 @@ export const useAuthCheck = () => {
         }
         setAuthorized(true);
       }
-      if (path === Path.LOGIN || path === Path.SIGN_UP) {
+      if (isPublicPath) {
+        setAuthorized(true);
+        return;
+      }
+
+      if (path.includes('/auth/new-password') || path.includes('/auth/verify')) {
         setAuthorized(true);
         return;
       }

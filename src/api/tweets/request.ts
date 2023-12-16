@@ -34,6 +34,15 @@ export const getTweets = async (query: GetParams) => {
   return res as ITweetsResponse;
 };
 
+export const getTweetsForGuest = async (query: GetParams) => {
+  const res = await request({
+    url: `tweets/all`,
+    method: 'GET',
+    params: query,
+  });
+  return res as ITweetsResponse;
+};
+
 export const getMyTweets = async (query: GetParams) => {
   const res = await request({
     url: `tweets/me`,

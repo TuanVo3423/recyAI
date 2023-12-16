@@ -16,6 +16,13 @@ import {
   IFollowUserResponse,
   IUnFollowUserRequest,
   IUnFollowUserResponse,
+  IForgotPasswordRequest,
+  IForgotPasswordResponse,
+  IResetPasswordRequest,
+  IResetPasswordResponse,
+  ImailVerifyTokenResponse,
+  IverifyMailTokenRequest,
+  IverifyMailTokenResponse,
 } from './types';
 
 const URL = 'users';
@@ -111,4 +118,43 @@ export const unFollow = async ({ followed_user_id }: IUnFollowUserRequest) => {
     ...configs,
   });
   return res as IUnFollowUserResponse;
+};
+
+export const forgotPassword = async (data: IForgotPasswordRequest) => {
+  const res = await request({
+    url: `${URL}/forgot-password`,
+    method: 'POST',
+    ...configs,
+    data,
+  });
+  return res as IForgotPasswordResponse;
+};
+
+export const resetPassword = async (data: IResetPasswordRequest) => {
+  const res = await request({
+    url: `${URL}/reset-password`,
+    method: 'POST',
+    ...configs,
+    data,
+  });
+  return res as IResetPasswordResponse;
+};
+
+export const mailVerifyToken = async () => {
+  const res = await request({
+    url: `${URL}/mail-verify-token`,
+    method: 'POST',
+    ...configs,
+  });
+  return res as ImailVerifyTokenResponse;
+};
+
+export const verifyMailToken = async (data: IverifyMailTokenRequest) => {
+  const res = await request({
+    url: `${URL}/verify-email`,
+    method: 'POST',
+    ...configs,
+    data,
+  });
+  return res as IverifyMailTokenResponse;
 };

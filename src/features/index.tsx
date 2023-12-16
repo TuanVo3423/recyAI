@@ -7,3 +7,4 @@ export * from './PreviewInstructions';
 export * from './Collections';
 export * from './Chat';
 export * from './User';
+export * from './Verify';

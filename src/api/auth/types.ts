@@ -150,3 +150,32 @@ export interface IUnFollowUserResponse {
   message: string;
 }
 
+export interface IForgotPasswordRequest {
+  email: string;
+}
+
+export interface IForgotPasswordResponse {
+  message: string;
+}
+
+export interface IResetPasswordRequest {
+  password: string;
+  confirm_password: string;
+  forgot_password_token: string;
+}
+
+export interface IResetPasswordResponse {
+  message: string;
+}
+
+export interface ImailVerifyTokenResponse {
+  message: string;
+}
+
+export interface IverifyMailTokenRequest {
+  email_verify_token: string;
+}
+
+export interface IverifyMailTokenResponse {
+  message: string;
+}

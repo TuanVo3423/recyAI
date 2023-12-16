@@ -8,6 +8,7 @@ export const useGetAuth = (options?: any) =>
       const data = await getAuth();
       return data;
     },
+
     { ...options }
   );
 

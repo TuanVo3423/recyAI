@@ -32,20 +32,34 @@ export const Collections = (props: Props) => {
         instruction_id: instructionId,
         content,
       });
-      toast({
-        description: res.message,
-        status: 'success',
-      });
+      if (res) {
+        toast({
+          description: res.message,
+          status: 'success',
+        });
+      } else {
+        toast({
+          description: 'You need to verify your email to post tweet',
+          status: 'error',
+        });
+      }
     } else {
       const res = await TweetWithImages({
         instruction_id: instructionId,
         content,
         images: files,
       });
-      toast({
-        description: res.message,
-        status: 'success',
-      });
+      if (res) {
+        toast({
+          description: res.message,
+          status: 'success',
+        });
+      } else {
+        toast({
+          description: 'You need to verify your email to post tweet',
+          status: 'error',
+        });
+      }
     }
     // await router.push('/feed');
   };

@@ -140,7 +140,7 @@ export const SignIn = () => {
               </button>
             </div>
             <a
-              href="/forgot-password"
+              onClick={() => router.push('/auth/forgot-password')}
               className="text-green-600 text-xs hover:text-green-900 mt-3"
             >
               Forgot password?
