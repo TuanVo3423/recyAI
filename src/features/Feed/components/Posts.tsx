@@ -1,7 +1,16 @@
 import { IUserResponse } from '@/api/auth';
-import { IInstruction, IInstructionResponse } from '@/api/instructions';
+import { IInstruction } from '@/api/instructions';
 import { ITweet, getTweets, getTweetsForGuest } from '@/api/tweets';
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import { LocalStorage } from '@/services/localStorage';
+import {
+  Box,
+  Button,
+  HStack,
+  Text,
+  VStack,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/spinner';
 import {
   BookmarkIcon,
   ChatIcon,
@@ -18,11 +27,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { CommentModal } from './CommentModal';
 import HeartLike from './Like';
-import { LocalStorage } from '@/services/localStorage';
+import { Quadrilateral } from '@/components/skeleton';
 export type TPostsProps = {};
 export const Posts = ({}: TPostsProps) => {
   const { ref, inView } = useInView();
-  // get id from localstorage
   const local = LocalStorage.get('RECYCLING_AI_TOKEN');
 
   const [tweetId, setTweetId] = useState('');
@@ -30,16 +38,9 @@ export const Posts = ({}: TPostsProps) => {
   const {
     data,
     status,
-    error,
-    isFetching,
     isFetchingNextPage,
-    isFetchingPreviousPage,
     fetchNextPage,
-    fetchPreviousPage,
     hasNextPage,
-    hasPreviousPage,
-    isLoading,
-    isError,
     refetch,
   } = useInfiniteQuery(
     'getTweets',
@@ -64,15 +65,16 @@ export const Posts = ({}: TPostsProps) => {
   );
   const result = data?.pages.map((page) =>
     page.tweets.map((tweet, idx) => {
-      if (page.tweets.length == idx + 1) {
+      if (page.tweets.length === idx + 1) {
         return (
-          <Box ref={ref} key={tweet._id}>
+          <Box key={tweet._id}>
             <Post
               {...tweet}
               setTweetId={setTweetId}
               isOpen={isOpen}
               onOpen={onOpen}
               onClose={onClose}
+              viewRef={ref}
             />
           </Box>
         );
@@ -90,7 +92,6 @@ export const Posts = ({}: TPostsProps) => {
       );
     })
   );
-  // console.log(result);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -99,7 +100,12 @@ export const Posts = ({}: TPostsProps) => {
   }, [inView]);
 
   if (status === 'loading') {
-    return <p>Loading...</p>;
+    return (
+      <VStack spacing={10}>
+        <Quadrilateral isLoading={true} w="full" h="500px" />;
+        <Quadrilateral isLoading={true} w="full" h="500px" />;
+      </VStack>
+    );
   }
 
   if (status === 'error') {
@@ -109,7 +115,11 @@ export const Posts = ({}: TPostsProps) => {
   return (
     <>
       {result}
-      {isFetchingNextPage && <h3>Loading...</h3>}
+      {isFetchingNextPage && (
+        <HStack w="full" justify="center">
+          <Spinner size="md" color="green.500" />
+        </HStack>
+      )}
       <CommentModal
         isOpen={isOpen}
         onOpen={onOpen}
@@ -136,6 +146,7 @@ export type PostProps = ITweet & {
   onClose: () => void;
   isOpen: boolean;
   setTweetId: (id: string) => void;
+  viewRef?: any;
 };
 function Post({
   _id,
@@ -149,6 +160,7 @@ function Post({
   setTweetId,
   medias,
   created_at,
+  viewRef,
 }: PostProps) {
   const [likeCount, setLikeCount] = useState(like_count);
   const settings = {
@@ -233,6 +245,7 @@ function Post({
         <p className="text-sm">{content}</p>
       </div>
       <Text
+        ref={viewRef}
         onClick={() => {
           setTweetId(_id);
           onOpen();
