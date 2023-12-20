@@ -5,6 +5,7 @@ import { useAuth } from '@/stores';
 import { CommentTweet } from '@/utils/classifyTweetType';
 import {
   Button,
+  Heading,
   Modal,
   ModalBody,
   ModalContent,
@@ -173,10 +174,10 @@ export const CommentModal = ({
       <ModalContent overflow="hidden" w="70vw" maxH="90vh" maxW="none">
         <ModalBody p={0} w="full">
           {isLoading || !data ? (
-            <Quadrilateral p="24px" w="full" isLoading={isLoading} />
+            <Quadrilateral p="24px" w="full" h="500px" isLoading={isLoading} />
           ) : (
-            <div className="flex items-center">
-              <div className="flex flex-col bg-white w-[52%] px-4">
+            <div className="flex">
+              <div className="flex flex-col bg-white py-8 w-[52%] px-4">
                 {pathname === '/profile' && (
                   <div className="flex items-center py-3 border-b-[1px]">
                     {renderButton()}
@@ -185,6 +186,9 @@ export const CommentModal = ({
                 <div className="flex-1">
                   <Slider {...settings}>
                     <div className="card">
+                      <Heading mb={4} size="md">
+                        Các bước hướng dẫn:
+                      </Heading>
                       {!data ? (
                         <></>
                       ) : (
@@ -200,31 +204,26 @@ export const CommentModal = ({
                             </Textarea>
                           ) : (
                             <Text className="mb-2" key={idx}>
-                              {step.content}
+                              {idx + 1}. {step.content}
                             </Text>
                           );
                         })
                       )}
                     </div>
-                    <div className="card">
-                      <img
-                        src={
-                          'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
-                        }
-                        className=" object-fill"
-                        alt=""
-                      />
-                    </div>
+                    {data.tweet.medias.map((media, idx) => (
+                      <div key={idx} className="card">
+                        <img src={media.url} className=" object-fill" alt="" />
+                      </div>
+                    ))}
                   </Slider>
                 </div>
               </div>
-
               <div className="bg-white w-[48%] border-l-[1px]">
                 <div>
                   <div className="flex items-center py-3 border-b-[1px]">
                     <img
                       src={
-                        'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+                        data.tweet.user_info[0].avatar || '/empty_avatar.png'
                       }
                       className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
                       alt=""
@@ -241,14 +240,19 @@ export const CommentModal = ({
                   </div>
                 </div>
                 <div className="h-[460px]">
-                  {!data ? (
-                    <>No cmt here</>
+                  {data.tweet.comments.length === 0 ? (
+                    <Text p={4} as="em">
+                      No comment yet!
+                    </Text>
                   ) : (
                     data.tweet.comments.map((cmt, idx) => (
                       <div key={idx} className="flex items-center py-3">
                         <img
                           src={
-                            'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+                            data.tweet.comments_users.find(
+                              (comment_and_user_info) =>
+                                cmt.user_id === comment_and_user_info._id
+                            ).avatar || '/empty_avatar.png'
                           }
                           className="rounded-full h-8 w-8 object-contain border p-1 mr-3 ml-4"
                           alt=""
@@ -276,7 +280,7 @@ export const CommentModal = ({
                               )}
                             </p>
                             <p className="text-xs font-medium text-gray-400">
-                              5 Likes
+                              {`${data.tweet.like_count} lượt thích`}
                             </p>
                           </div>
                         </div>
