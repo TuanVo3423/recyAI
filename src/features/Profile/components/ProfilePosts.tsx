@@ -1,6 +1,6 @@
 import { IUserResponse } from '@/api/auth';
-import { IInstruction, IInstructionResponse } from '@/api/instructions';
-import { ITweet, getMyTweets, useGetMyTweets } from '@/api/tweets';
+import { IInstruction } from '@/api/instructions';
+import { ITweet, getMyTweets } from '@/api/tweets';
 import { Quadrilateral } from '@/components/skeleton';
 import { CommentModal } from '@/features/Feed/components';
 import HeartLike from '@/features/Feed/components/Like';

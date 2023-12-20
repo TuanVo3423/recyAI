@@ -1,10 +1,11 @@
 import { useGetAuth } from '@/api/auth';
-import { useDisclosure } from '@chakra-ui/react';
+import { Text, useDisclosure } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
 import { UploadAvtModal } from './UploadAvtModal';
 import { UpdateProfileModal } from './UpdateProfileModal';
 import { useRouter } from 'next/router';
 import { UserVerifyStatus } from '@/types';
+import { useQueryClient } from 'react-query';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
@@ -16,6 +17,7 @@ export const UserInfo = (props: Props) => {
     onOpen: onOpenUpdateProfile,
     onClose: onCloseUpdateProfile,
   } = useDisclosure();
+
   return (
     <>
       {!isLoading && (
@@ -40,19 +42,27 @@ export const UserInfo = (props: Props) => {
               >
                 Chinh sua trang ca nhan
               </button>
-              <button className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2">
+              <button
+                onClick={() => router.push('/collections')}
+                className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2"
+              >
                 Xem kho luu tru
               </button>
             </div>
             <div className="flex justify-center items-center text-lg my-8 space-x-32 ">
               <p>
-                <span className="font-bold ">9</span> Post
+                <span className="font-bold ">{data.user.tweets.length}</span>{' '}
+                Post
               </p>
               <p className="cursor-pointer">
-                <span className="font-bold">100</span> Followers
+                <span className="font-bold">
+                  {data.user.followerIds.length}
+                </span>{' '}
+                Followers
               </p>
               <p className="cursor-pointer">
-                <span className="font-bold">100</span> Followings
+                <span className="font-bold">{data.user.followIds.length}</span>{' '}
+                Followings
               </p>
             </div>
             <div className="text-lg font-semibold mb-5">
@@ -66,7 +76,7 @@ export const UserInfo = (props: Props) => {
                 </button>
               )}
             </div>
-            <div className="text-lg">Tieu su ban than</div>
+            <Text as="em">{data.user.bio || 'Tieu su ban than'}</Text>
           </div>
         </div>
       )}
@@ -77,6 +87,7 @@ export const UserInfo = (props: Props) => {
         refetch={refetch}
       />
       <UpdateProfileModal
+        refetch={refetch}
         isOpen={isOpenUpdateProfile}
         onClose={onCloseUpdateProfile}
         onOpen={onOpenUpdateProfile}

@@ -10,8 +10,8 @@ export const User = (props: Props) => {
   return (
     <div>
       <UserInfo />
-      <AdditionFeed />
-      <hr className="mx-[300px] border-gray-600"></hr>
+      {/* <AdditionFeed /> */}
+      <hr className="mx-[300px] border-gray-600 mt-10"></hr>
       <MyFeed />
       <PostModal onClose={onClose} />
     </div>

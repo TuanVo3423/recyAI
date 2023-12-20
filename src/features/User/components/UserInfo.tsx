@@ -1,6 +1,6 @@
 import { follow, unFollow, useGetUser } from '@/api/auth';
 import { useAuth } from '@/stores';
-import { useDisclosure, useToast } from '@chakra-ui/react';
+import { Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
@@ -24,7 +24,6 @@ export const UserInfo = (props: Props) => {
     },
   });
 
-  console.log(isFollowed);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { mutateAsync: handleFollow, isSuccess } = useMutation(
@@ -129,17 +128,22 @@ export const UserInfo = (props: Props) => {
             </div>
             <div className="flex justify-center items-center text-lg my-8 space-x-32">
               <p>
-                <span className="font-bold">9</span> Post
+                <span className="font-bold">{data.user.tweets.length}</span>{' '}
+                Post
               </p>
               <p>
-                <span className="font-bold">100</span> Followers
+                <span className="font-bold">
+                  {data.user.followerIds.length}
+                </span>{' '}
+                Followers
               </p>
               <p>
-                <span className="font-bold">100</span> Followings
+                <span className="font-bold">{data.user.followIds.length}</span>{' '}
+                Followings
               </p>
             </div>
             <div className="text-lg font-semibold mb-5">{data.user.email}</div>
-            <div className="text-lg">Tieu su ban than</div>
+            <Text as="em">{data.user.bio || 'Tieu su ban than'}</Text>
           </div>
         </div>
       )}

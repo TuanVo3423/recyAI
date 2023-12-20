@@ -1,4 +1,5 @@
 import { UserVerifyStatus } from '@/types';
+import { ITweet } from '../tweets';
 
 export interface ISignUp {
   email: string;
@@ -105,7 +106,7 @@ export interface IGetFollowMeResponse {
 
 export interface IGetMeResponse {
   message: string;
-  user: IUser & IGetFollowMeResponse;
+  user: IUser & IGetFollowMeResponse & { tweets: Array<ITweet> };
 }
 export interface IGetUSerResponse extends IGetMeResponse {}
 

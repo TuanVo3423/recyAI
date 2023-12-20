@@ -182,7 +182,7 @@ function Post({
           src={
             user_info[0].avatar
               ? user_info[0].avatar
-              : 'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
+              : 'empty_avatar.png'
           }
           className="rounded-full h-9 w-9 object-contain border-black p-1 mr-3 cursor-pointer"
           alt=""
