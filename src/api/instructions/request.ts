@@ -7,6 +7,8 @@ import {
   IGetMyInstructionsResponse,
   IEditInstructionsInMyTweetsRequest,
   IEditInstructionsInMyTweetsResponse,
+  IDeleteInstructionRequest,
+  IDeleteInstructionResponse,
 } from './types';
 
 const URL = 'instructions';
@@ -17,6 +19,14 @@ export const createInstruction = async (data: IInstructionRequest) => {
     data,
   });
   return res as ICreateInstructionResponse;
+};
+
+export const deleteInstruction = async (data: IDeleteInstructionRequest) => {
+  const res = await request({
+    url: `${URL}/${data.instruction_id}`,
+    method: 'DELETE',
+  });
+  return res as IDeleteInstructionResponse;
 };
 
 export const getInstruction = async ({

@@ -45,3 +45,11 @@ export interface IEditInstructionsInMyTweetsResponse {
     matchedCount: number;
   };
 }
+
+export interface IDeleteInstructionRequest {
+  instruction_id: string;
+}
+
+export interface IDeleteInstructionResponse {
+  message: string;
+}

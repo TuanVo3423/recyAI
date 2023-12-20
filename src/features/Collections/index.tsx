@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InstructionItem, PostCollectionModal } from './components';
 import { defaultValueShare, schema_share_my_collection } from './data';
+import { Quadrilateral } from '@/components/skeleton';
 
 type Props = {};
 
@@ -19,7 +20,7 @@ export const Collections = (props: Props) => {
   const toast = useToast();
   const [instructionId, setInstructionId] = useState<string | null>(null);
   const [files, setFiles] = useState<any[]>([]);
-  const { data, isLoading } = useGetMyCollections();
+  const { data, isLoading, refetch } = useGetMyCollections();
   const form_share_my_collection = useForm<any>({
     resolver: yupResolver(schema_share_my_collection),
     defaultValues: defaultValueShare,
@@ -65,7 +66,15 @@ export const Collections = (props: Props) => {
   };
   return (
     <Grid p={10} templateColumns="repeat(3, 1fr)" gap={6}>
-      {isLoading && <div>Loading...</div>}
+      {isLoading &&
+        Array.from(Array(6)).map((_, idx) => (
+          <Quadrilateral
+            w="full"
+            height="330px"
+            isLoading={isLoading}
+            key={idx}
+          />
+        ))}
       {!isLoading &&
         data &&
         data.instructions.map((instruction, idx: number) => (
@@ -74,6 +83,7 @@ export const Collections = (props: Props) => {
             PostCollectionModalStatus={PostCollectionModalStatus}
             instruction={instruction}
             setInstructionId={setInstructionId}
+            refetch={refetch}
           />
         ))}
 

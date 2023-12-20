@@ -76,3 +76,19 @@ export interface ICreateTweetResponse {
 export interface IGetTweetRequest {
   tweet_id: string;
 }
+
+export interface IDeleteTweetRequest {
+  tweet_id: string;
+}
+
+export interface IDeleteTweetResponse {
+  message: string;
+}
+
+export interface IDeleteTweetByInstructionRequest {
+  instruction_id: string;
+}
+
+export interface IDeleteTweetByInstructionResponse {
+  message: string;
+}

@@ -3,6 +3,10 @@ import { GetParams } from '../commonTypes';
 import {
   ICreateTweetRequest,
   ICreateTweetResponse,
+  IDeleteTweetByInstructionRequest,
+  IDeleteTweetByInstructionResponse,
+  IDeleteTweetRequest,
+  IDeleteTweetResponse,
   IGetTweetRequest,
   ITweetResponse,
   ITweetsResponse,
@@ -15,6 +19,26 @@ export const createTweet = async (data: ICreateTweetRequest) => {
     data,
   });
   return res as ICreateTweetResponse;
+};
+
+export const deleteTweet = async (data: IDeleteTweetRequest) => {
+  const res = await request({
+    url: `tweets/${data.tweet_id}`,
+    method: 'DELETE',
+    data,
+  });
+  return res as IDeleteTweetResponse;
+};
+
+export const deleteTweetByInstruction = async (
+  data: IDeleteTweetByInstructionRequest
+) => {
+  const res = await request({
+    url: `tweets/instruction/${data.instruction_id}`,
+    method: 'DELETE',
+    data,
+  });
+  return res as IDeleteTweetByInstructionResponse;
 };
 
 export const getTweet = async ({ tweet_id }: IGetTweetRequest) => {
