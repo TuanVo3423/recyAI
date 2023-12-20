@@ -46,7 +46,7 @@ export const Posts = ({}: TPostsProps) => {
     'getTweets',
     async ({ pageParam = 1 }) => {
       // truyen id cua user vao day, neu id = null thi lay tat ca cac tweet
-      if (local && local.user_id) {
+      if (local && local._id) {
         const res = await getTweets({ page: pageParam });
         return res;
       } else {
