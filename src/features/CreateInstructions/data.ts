@@ -36,15 +36,14 @@ export const defaultValues: ICreateProject = {
 export const documentModeData: Omit<TCardModeProps, 'form'>[] = [
   {
     mode: documentModes.available,
-    title: 'Existing App',
-    imageUrl:
-      'https://cdn.gamma.app/zc87vhr30n8uf3n/29a73f2a0f5840d4a9d30b150a8b0c22/optimized/slide-bg.svg',
+    title: 'Tái chế đồ vật',
+    imageUrl: 'https://www.boonton.org/ImageRepository/Document?documentID=773',
   },
   {
     mode: documentModes.new,
-    title: 'New App',
+    title: 'Comming soon',
     imageUrl:
-      'https://cdn.gamma.app/zc87vhr30n8uf3n/eae3778a581240728566defb10f789c6/optimized/landing-bg.svg',
+      'https://millerrecycling.com/wp-content/uploads/2020/02/commercial-food-waste-disposal.jpg',
   },
 ];
 

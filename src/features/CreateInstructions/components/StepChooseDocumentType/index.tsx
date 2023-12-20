@@ -27,7 +27,7 @@ export const StepChooseDocumentType = ({
     <Stack>
       <ReceiveContent>
         <Wrapper avgTypingDelay={30} cursor={{ hideWhenDone: true }}>
-          Hi guys, I am your AI design partner.
+          Hi guys, I'm your recycling guide AI design partner.
         </Wrapper>
       </ReceiveContent>
       {/* block */}
@@ -52,6 +52,7 @@ export const StepChooseDocumentType = ({
             title={item.title}
             mode={item.mode}
             imageUrl={item.imageUrl}
+            cursor={item.mode === 2 ? 'not-allowed' : 'pointer'}
           />
         ))}
       </HStack>

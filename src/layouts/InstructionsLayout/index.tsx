@@ -26,10 +26,13 @@ export const LayoutInstructions = ({
           pos="fixed"
           w="100%"
           h="100%"
-          bgImage="linear-gradient(to bottom, #fde6e1, #fffae8)"
+          bgImage="url('https://t4.ftcdn.net/jpg/04/55/43/29/360_F_455432971_UikdWVsLVVPRjoUAL4JfKkSKfUybQb6V.jpg')"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+          bgPosition="center"
           {...rest}
         >
-          <Icon as={BgCreateProjectIcon} w="400px" h="400px" />
+          {/* <Icon as={BgCreateProjectIcon} w="400px" h="400px" /> */}
         </Flex>
         <Flex zIndex={2} gap={1} p="18px">
           <Button

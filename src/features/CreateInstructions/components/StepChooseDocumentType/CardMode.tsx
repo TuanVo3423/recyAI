@@ -11,8 +11,8 @@ export interface TCardModeProps extends StackProps {
 }
 
 const bgMapping = {
-  1: 'rgb(204, 165, 218)',
-  2: 'rgb(244, 225, 200)',
+  1: 'white',
+  2: 'white',
 };
 const CardMode = ({ form, imageUrl, mode, title, ...rest }: TCardModeProps) => {
   const { setValue, watch } = form;
@@ -23,6 +23,7 @@ const CardMode = ({ form, imageUrl, mode, title, ...rest }: TCardModeProps) => {
       transitionProperty="filter, transform, border"
       transitionDuration="1000ms, 500ms, 400ms"
       onClick={() => {
+        if (mode === 2) return;
         setValue('documentMode', mode);
         setValue('step', 1);
       }}
@@ -46,7 +47,7 @@ const CardMode = ({ form, imageUrl, mode, title, ...rest }: TCardModeProps) => {
       w="100%"
       h="16rem"
       boxShadow="xl"
-      borderColor={`${isActive && '#C479DF'} `}
+      borderColor={`${isActive && '#40da64'} `}
       borderWidth={'4px'}
       {...rest}
     >
@@ -79,7 +80,7 @@ const CardMode = ({ form, imageUrl, mode, title, ...rest }: TCardModeProps) => {
       <Button
         w="full"
         variant="primary"
-        bg="blackAlpha.400"
+        bg="#40da64"
         backdropFilter="saturate(200%)"
         color="white"
         _hover={{

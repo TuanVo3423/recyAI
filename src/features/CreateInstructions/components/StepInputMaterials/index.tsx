@@ -92,8 +92,8 @@ export const StepInputMaterials = ({
     <Stack {...rest} spacing="24px">
       <ReceiveContent>
         <Wrapper avgTypingDelay={30} cursor={{ hideWhenDone: true }}>
-          Sounds good! Which kind of categories would you like the document to
-          be about?
+          Sounds good! Please provide me information about the item you want to
+          recycle!
         </Wrapper>
       </ReceiveContent>
       <Stack
@@ -142,11 +142,11 @@ export const StepInputMaterials = ({
           />
         </InputGroup>
         <Flex justify="flex-end" w="full" flexWrap="wrap" gap={4}>
-          <Button onClick={handleOnSend} bg="blue.500">
+          <Button onClick={handleOnSend} bg="#40da64" color="white">
             Add material
           </Button>
         </Flex>
-        <Table variant="striped" colorScheme="blue" size="md">
+        <Table variant="striped" colorScheme="#40da64" size="md">
           <Thead>
             <Tr>
               <Th>STT</Th>
@@ -190,7 +190,11 @@ export const StepInputMaterials = ({
           </Tbody>
         </Table>
         <Flex justify="flex-end" w="full" flexWrap="wrap" gap={4}>
-          <Button onClick={handleFinishCreateProject} bg="blue.500">
+          <Button
+            onClick={handleFinishCreateProject}
+            bg="#40da64"
+            color="white"
+          >
             Go to generate
           </Button>
         </Flex>
