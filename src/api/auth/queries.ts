@@ -19,5 +19,6 @@ export const useGetUser = (userId: string, options?: any) =>
       const data = await getUser(userId);
       return data;
     },
+
     { ...options }
   );
