@@ -1,9 +1,10 @@
 import { IUserResponse } from '@/api/auth';
 import { IInstruction, IInstructionResponse } from '@/api/instructions';
 import { ITweet, getMyTweets, useGetMyTweets } from '@/api/tweets';
+import { Quadrilateral } from '@/components/skeleton';
 import { CommentModal } from '@/features/Feed/components';
 import HeartLike from '@/features/Feed/components/Like';
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Text, VStack, useDisclosure } from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
@@ -86,7 +87,12 @@ export const ProfilePosts = ({}: TProfilePostsProps) => {
   );
 
   if (status === 'loading') {
-    return <p>Loading...</p>;
+    return (
+      <VStack mt={8} spacing={10}>
+        <Quadrilateral isLoading={true} w="full" h="500px" />;
+        <Quadrilateral isLoading={true} w="full" h="500px" />;
+      </VStack>
+    );
   }
 
   if (status === 'error') {
