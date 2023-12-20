@@ -1,8 +1,13 @@
-import { createMessages } from '@/api/messages';
+import { getUser } from '@/api/auth';
+import { createMessages, getMessages } from '@/api/messages';
 import { useGetMyMesages } from '@/api/messages/queries';
+import { Quadrilateral } from '@/components/skeleton';
+import { SendIcon } from '@/icons';
 import { useAuth } from '@/stores';
-import { useToast } from '@chakra-ui/react';
+import { ChatIcon } from '@chakra-ui/icons';
+import { Box, Heading, useToast, Text } from '@chakra-ui/react';
 import {
+  ChatAlt2Icon,
   ChevronDownIcon,
   EmojiHappyIcon,
   InformationCircleIcon,
@@ -13,8 +18,9 @@ import {
   PhotographIcon,
   VideoCameraIcon,
 } from '@heroicons/react/outline';
-import { useEffect, useMemo, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useEffect, useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
 import { io } from 'socket.io-client';
 type TChatProps = {};
 
@@ -26,9 +32,19 @@ export const Chat = (props: TChatProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const profileStore = useAuth((state) => state.profile);
-  const [flag, setFlag] = useState<boolean>(false);
   const [currentChatId, setCurrentChatId] = useState<string>('');
+  // const [infoReciever, setInfoReciever] = useState<any>();
   const [text, setText] = useState<string>('');
+  const { mutate, data: infoReciever } = useMutation(
+    async (id: string) => {
+      const res = await getUser(id);
+      return res;
+    }
+    // },
+    // {
+    //   onSuccess: (data) => {},
+    // }
+  );
 
   useEffect(() => {
     if (currentChatId) {
@@ -44,12 +60,97 @@ export const Chat = (props: TChatProps) => {
     {},
     { user_recieved_id: currentChatId },
     {
-      enabled: !!currentChatId && !flag,
-      onSuccess: () => {
-        setFlag(true);
-      },
+      enabled: !!currentChatId,
     }
   );
+  // const { ref, inView } = useInView();
+  // const {
+  //   data,
+  //   status,
+  //   isFetchingNextPage,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   refetch,
+  // } = useInfiniteQuery(
+  //   'getMessages',
+  //   async ({ pageParam = 1 }) => {
+  //     const res = await getMessages({
+  //       page: pageParam,
+  //       user_recieved_id: currentChatId,
+  //     });
+  //     return res;
+  //   },
+  //   {
+  //     getNextPageParam: (lastPage, allPages) => {
+  //       const nextPage = lastPage.message.length
+  //         ? allPages.length + 1
+  //         : undefined;
+  //       return nextPage;
+  //     },
+  //     enabled: !!currentChatId,
+  //   }
+  // );
+  // const renderChat = () =>
+  //   data?.pages.map((page, idx) => {
+  //     return page.result.map((message, messIdx) => {
+  //       if (message.user_id !== profileStore._id) {
+  //         if (messIdx === 0) {
+  //           return (
+  //             <div key={messIdx} className="w-full">
+  //               <div
+  //                 ref={ref}
+  //                 className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto"
+  //               >
+  //                 {message.content}
+  //               </div>
+  //             </div>
+  //           );
+  //         } else {
+  //           return (
+  //             <div key={messIdx} className="w-full">
+  //               <div className="w-fit bg-gray-400 p-3 text-black rounded-2xl mr-auto">
+  //                 {message.content}
+  //               </div>
+  //             </div>
+  //           );
+  //         }
+  //       } else {
+  //         if (messIdx === 0) {
+  //           return (
+  //             <div key={messIdx} className="w-full ">
+  //               <div
+  //                 ref={ref}
+  //                 className="w-fit bg-green-400 text-sm text-white p-3 rounded-2xl ml-auto"
+  //               >
+  //                 {message.content}
+  //               </div>
+  //             </div>
+  //           );
+  //         } else {
+  //           return (
+  //             <div key={messIdx} className="w-full ">
+  //               <div
+  //                 ref={ref}
+  //                 className="w-fit bg-green-400 text-sm text-white p-3 rounded-2xl ml-auto"
+  //               >
+  //                 {message.content}
+  //               </div>
+  //             </div>
+  //           );
+  //         }
+  //       }
+  //     });
+  //   });
+  const AlwaysScrollToBottom = () => {
+    const elementRef = useRef(null);
+    useEffect(() => elementRef?.current.scrollIntoView());
+    return <div ref={elementRef} />;
+  };
+  // useEffect(() => {
+  //   if (inView && hasNextPage) {
+  //     fetchNextPage();
+  //   }
+  // }, [inView]);
 
   const { mutateAsync: handleSend } = useMutation(
     async () => {
@@ -61,7 +162,6 @@ export const Chat = (props: TChatProps) => {
     },
     {
       onSuccess: async (data: any) => {
-        // console.log('data: ', data);
         await socket.emit('createChat', {
           created_at: data.result.created_at,
           content: data.result.content,
@@ -77,10 +177,11 @@ export const Chat = (props: TChatProps) => {
             };
           }
         );
-        toast({
-          description: data.message,
-          status: 'success',
-        });
+        setText('');
+        // toast({
+        //   description: data.message,
+        //   status: 'success',
+        // });
       },
       onError: (error: any) => {
         toast({
@@ -108,7 +209,7 @@ export const Chat = (props: TChatProps) => {
   console.log('data: ', data);
   const renderChat = () => {
     return (
-      <div className="flex flex-col w-full gap-4 p-4 bg-white flex-1 overflow-auto">
+      <>
         {data.result.map((message, idx) => {
           if (message.user_id !== profileStore._id) {
             return (
@@ -128,17 +229,19 @@ export const Chat = (props: TChatProps) => {
             );
           }
         })}
-      </div>
+      </>
     );
   };
 
   return (
-    <div className="flex">
-      <div className="bg-white h-screen w-[350px] border-gray-300 border-x-[1px]">
+    <div className="flex h-screen">
+      <div className="bg-white  w-[350px] border-gray-300 border-x-[1px]">
         <div className="h-[110px] bg-white">
           <div className="flex items-center justify-center mx-4 pt-8">
             <div className="flex-1 flex items-center space-x-1">
-              <p className="text-lg font-bold cursor-pointer">pupuchino</p>
+              <p className="text-lg font-bold cursor-pointer">
+                {profileStore.name}
+              </p>
               <ChevronDownIcon className="w-4 h-4 cursor-pointer" />
             </div>
 
@@ -163,8 +266,9 @@ export const Chat = (props: TChatProps) => {
         {profileStore.followInfo.map((user, idx) => {
           return (
             <div
-              onClick={() => {
+              onClick={async () => {
                 setCurrentChatId(user._id);
+                mutate(user._id);
               }}
               className="bg-green-200 h-[75px] flex items-center space-x-4 cursor-pointer"
             >
@@ -177,7 +281,7 @@ export const Chat = (props: TChatProps) => {
               </div>
               <div>
                 <p className="text-md font-normal ">{user.name}</p>
-                <p className="text-xs text-gray-400 ">Online 8 mins ago</p>
+                <p className="text-xs text-gray-400 ">Online now</p>
               </div>
             </div>
           );
@@ -195,6 +299,7 @@ export const Chat = (props: TChatProps) => {
               <div
                 onClick={() => {
                   setCurrentChatId(user._id);
+                  mutate(user._id);
                 }}
                 className="bg-green-200 h-[75px] flex items-center space-x-4 cursor-pointer"
               >
@@ -207,40 +312,52 @@ export const Chat = (props: TChatProps) => {
                 </div>
                 <div>
                   <p className="text-md font-normal ">{user.name}</p>
-                  <p className="text-xs text-gray-400 ">Online 8 mins ago</p>
+                  <p className="text-xs text-gray-400 ">Online now</p>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="flex flex-1 flex-col h-screen max-h-screen bg-white">
-        <div className="bg-white flex border-gray-300 h-[75px] w-[full] border-b-[1px]">
-          <div className="flex flex-1 items-center space-x-3 ml-3">
-            <img
-              src="https://mcdn.coolmate.me/image/March2023/meme-meo-2.jpg"
-              alt=""
-              className="w-12 h-12 rounded-full border-[1px]"
-            />
-            <div>
-              <p className="text-md font-semibold cursor-pointer">pupuchino</p>
-              <p className="text-xs text-gray-400 ">Online 8 mins ago</p>
+      <div className="flex flex-grow flex-col bg-white">
+        {currentChatId ? (
+          <div className="bg-white flex border-gray-300 h-[75px] w-[full] border-b-[1px]">
+            <div className="flex flex-1 items-center space-x-3 ml-3">
+              <img
+                src={infoReciever?.user.avatar || 'empty_avatar.png'}
+                alt=""
+                className="w-12 h-12 rounded-full border-[1px]"
+              />
+              <div>
+                <p className="text-md font-semibold cursor-pointer">
+                  {infoReciever?.user.name}
+                </p>
+                <p className="text-xs text-gray-400 ">Online now</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 mr-5">
+              <PhoneIcon className="w-7 h-7 cursor-pointer" />
+              <VideoCameraIcon className="w-7 h-7 cursor-pointer" />
+              <InformationCircleIcon className="w-7 h-7 cursor-pointer" />
             </div>
           </div>
-          <div className="flex items-center space-x-2 mr-5">
-            <PhoneIcon className="w-7 h-7 cursor-pointer" />
-            <VideoCameraIcon className="w-7 h-7 cursor-pointer" />
-            <InformationCircleIcon className="w-7 h-7 cursor-pointer" />
+        ) : (
+          <div className="bg-white flex items-center justify-center border-gray-300 h-[75px] w-[full] border-b-[1px]">
+            <Text>Select user who you want to chat!</Text>
           </div>
-        </div>
-        <div className="flex flex-col w-full gap-4 p-4 bg-white flex-1 overflow-auto">
+        )}
+
+        <div className="flex flex-col justify-start w-full gap-4 p-4  overflow-auto flex-1 ">
           {data && renderChat()}
+          <AlwaysScrollToBottom />
         </div>
         <div className="bg-white flex items-center border-[1px] px-4 border-gray-300 h-[75px] w-full">
           <div className="rounded-3xl w-full flex items-center border-[1px] border-gray-300 h-[45px]">
             <EmojiHappyIcon className="w-7 h-7 ml-3 cursor-pointer" />
             <input
+              value={text}
               onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => e.keyCode === 13 && handleSend()}
               type="text"
               placeholder="Enter message ..."
               className="border-none flex-1 focus:ring-0 outline-none bg-white w-[710px] rounded-xl mx-4 p-2 cursor-text"
@@ -248,7 +365,7 @@ export const Chat = (props: TChatProps) => {
             <div className="flex mr-3 space-x-2">
               <MicrophoneIcon className="w-7 h-7 cursor-pointer" />
               <PhotographIcon className="w-6 h-7 cursor-pointer" />
-              <MailIcon
+              <ChatAlt2Icon
                 onClick={() => {
                   handleSend();
                 }}

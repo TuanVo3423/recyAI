@@ -12,7 +12,8 @@ export const useGetMyMesages = (
     ['getMyMessages', user_recieved_id],
     async () => {
       const data = await getMessages({
-        query: { ...params, user_recieved_id },
+        ...params,
+        user_recieved_id,
       });
       return data;
     },

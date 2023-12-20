@@ -5,6 +5,7 @@ import {
   ICreateMessagesResponse,
   IGetMessageRequest,
   IGetMessageResponse,
+  IGetMessagesRequest,
 } from './types';
 
 export const createMessages = async (data: ICreateMessageRequest) => {
@@ -16,11 +17,7 @@ export const createMessages = async (data: ICreateMessageRequest) => {
   return res as ICreateMessagesResponse;
 };
 
-export const getMessages = async ({
-  query
-}: {
-  query: GetParams & { user_recieved_id: string };
-}) => {
+export const getMessages = async (query: IGetMessagesRequest) => {
   const res = await request({
     url: `messages`,
     method: 'GET',

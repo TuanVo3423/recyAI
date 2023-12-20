@@ -1,3 +1,5 @@
+import { GetParams } from '../commonTypes';
+
 export interface IMessage {
   _id: string;
   content: string;
@@ -23,4 +25,8 @@ export interface ICreateMessagesResponse {
 export interface IGetMessageResponse {
   message: string;
   result: Array<IMessage>;
+}
+
+export interface IGetMessagesRequest extends GetParams {
+  user_recieved_id: string;
 }
