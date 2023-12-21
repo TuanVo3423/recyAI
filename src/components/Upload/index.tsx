@@ -105,7 +105,8 @@ export const Uploader = ({
                 key={index}
                 src={file.preview}
                 alt=""
-                w="calc(40% - 1rem)"
+                w="calc(60% - 1rem)"
+                // minH="8rem"
                 m="0.5rem"
               />
             );
@@ -134,7 +135,15 @@ export const Uploader = ({
           display: 'flex',
         }}
       >
-        <Button mt={2} mr={5} backgroundColor={'green.400'} onClick={() => setFiles([])}>
+        <Button
+          variant="outline"
+          mt={2}
+          mr={4}
+          ml="auto"
+          color="green.200"
+          // backgroundColor={'green.400'}
+          onClick={() => setFiles([])}
+        >
           Reset
         </Button>
         {handleSubmitButton}

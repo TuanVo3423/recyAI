@@ -104,7 +104,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
     },
     {
       onSuccess: async (data) => {
-        await router.push('/feed');
+        await router.push('/collections');
         toast({
           description: data.message,
           status: 'success',
@@ -140,7 +140,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
         instruction_id: instruction.instruction_id,
         content,
       });
-      await router.push('/feed');
+      await router.push('/profile');
       toast({
         description: res.message,
         status: 'success',
@@ -171,14 +171,27 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
           </Box>
           <HStack>
             <Button
+              bg="green.500"
+              color="white"
+              disabled={!isFinish && true}
               onClick={() => {
                 CreateNewSection.onOpen();
               }}
             >
               Create New Part
             </Button>
-            <Button onClick={() => handleOnSave()}>Save</Button>
             <Button
+              bg="green.500"
+              color="white"
+              disabled={!isFinish && true}
+              onClick={() => handleOnSave()}
+            >
+              Save
+            </Button>
+            <Button
+              bg="green.500"
+              color="white"
+              disabled={!isFinish && true}
               onClick={() => {
                 ShareSection.onOpen();
                 console.log('final data: ', columns[0].tableOfContents);
@@ -236,11 +249,13 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
             );
           })}
         </DragDropContext>
-        <ModalAddSection
-          onSubmit={onSubmit}
-          form={form}
-          ModalStatus={CreateNewSection}
-        />
+        {isFinish && (
+          <ModalAddSection
+            onSubmit={onSubmit}
+            form={form}
+            ModalStatus={CreateNewSection}
+          />
+        )}
         {/* <ModalShareInstruction
           onSubmit={onSubmitShare}
           form={form_share}

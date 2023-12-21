@@ -1,11 +1,9 @@
 import { follow, unFollow, useGetUser } from '@/api/auth';
 import { useAuth } from '@/stores';
-import { Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { PlusCircleIcon } from '@heroicons/react/solid';
+import { Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useMutation } from 'react-query';
-import { UploadAvtModal } from './UploadAvtModal';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
 type Props = {};
 
 export const UserInfo = (props: Props) => {
@@ -23,8 +21,6 @@ export const UserInfo = (props: Props) => {
       );
     },
   });
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { mutateAsync: handleFollow, isSuccess } = useMutation(
     async () => {
@@ -100,16 +96,12 @@ export const UserInfo = (props: Props) => {
     <>
       {!isLoading && (
         <div className="flex items-center justify-center lg:space-x-20 ml-20 mt-16 ">
-          <div
-            onClick={onOpen}
-            className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
-          >
+          <div className="cursor-pointer rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden">
             <img
               src={data.user.avatar || '/empty_avatar.png'}
               alt=""
               className="w-full h-full object-cover"
             />
-            <PlusCircleIcon className="absolute w-8 h-8 top-14 left-16 hover:text-gray-400 cursor-pointer bg-transparent rounded-full" />
           </div>
           <div className="-mt-5">
             <div className="flex items-center justify-center space-x-3">
@@ -147,12 +139,6 @@ export const UserInfo = (props: Props) => {
           </div>
         </div>
       )}
-      <UploadAvtModal
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpen={onOpen}
-        refetch={refetch}
-      />
     </>
   );
 };

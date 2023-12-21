@@ -69,8 +69,7 @@ export const getAuth = async () => {
     method: 'GET',
     ...configs,
   });
-  // return res as IGetMeResponse;
-  return res as any;
+  return res as IGetMeResponse;
 };
 
 export const getUser = async (userId: string) => {

@@ -143,7 +143,7 @@ const StepInputMaterials = ({ form, ...rest }: StepInputMaterialsProps) => {
             Add material
           </Button>
         </Flex>
-        <Table variant="striped" colorScheme="blue" size="md">
+        <Table variant="striped" colorScheme="green" size="md">
           <Thead>
             <Tr>
               <Th>STT</Th>

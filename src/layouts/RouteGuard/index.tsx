@@ -16,7 +16,7 @@ export const RouteGuard = ({ children }: { children: any }) => {
 
   const { data } = useGetAuth({
     enabled: !!profile,
-    onSuccess: (data: any) => {
+    onSuccess: (data: IGetMeResponse) => {
       if (data) {
         setProfile(data.user);
       }

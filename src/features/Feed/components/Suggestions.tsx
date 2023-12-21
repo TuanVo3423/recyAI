@@ -24,9 +24,7 @@ export const Suggestions = () => {
     <div className="mt-4 ml-10">
       <div className="flex justify-between text-sm mb-5">
         <h3 className="text-md font-bold text-gray-400">Follower list</h3>
-        <button className="text-green-600 font-semibold text-md">
-          See All
-        </button>
+        <button className="btn-no-fill-primary">See All</button>
       </div>
 
       {profileStore?.followInfo.map((profile, idx) => (
@@ -42,7 +40,7 @@ export const Suggestions = () => {
           </div>
           <button
             onClick={() => router.push('/chat')}
-            className="text-green-400 text-xs font-bold"
+            className="btn-no-fill-secondary"
           >
             Nhắn tin
           </button>

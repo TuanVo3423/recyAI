@@ -47,7 +47,7 @@ export const LayoutInstructions = ({
             borderRadius="full"
             bgColor="white"
             _hover={{
-              color: 'blue',
+              color: 'green',
             }}
             leftIcon={<Icon as={Icons[page]} />}
           >

@@ -331,7 +331,7 @@ export const CommentModal = ({
                         handleComment();
                         refetch();
                       }}
-                      className="font-semibold text-blue-400 text-md"
+                      className="btn-no-fill-secondary"
                     >
                       Post
                     </button>

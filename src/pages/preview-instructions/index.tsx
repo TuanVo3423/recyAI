@@ -15,7 +15,7 @@ export default function PreviewInstructionsPage() {
         />
       </Head>
 
-      <LayoutInstructions page="Create project">
+      <LayoutInstructions page="Create instructions">
         <PreviewInstructions />
       </LayoutInstructions>
     </>

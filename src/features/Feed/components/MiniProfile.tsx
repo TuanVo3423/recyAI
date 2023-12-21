@@ -1,6 +1,6 @@
 import { Logout, useGetAuth } from '@/api/auth';
 import { LocalStorage } from '@/services/localStorage';
-import { useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
@@ -51,13 +51,16 @@ export const MiniProfile = () => {
         </h2>
         <h3 className="text-sm text-gray-400">Welcome back</h3>
       </div>
-
-      <button
-        onClick={() => handleLogout()}
-        className="text-green-400 hover:text-green-900 text-sm ml-2 font-semibold"
-      >
-        Sign out
-      </button>
+      {data && data.user.name ? (
+        <button
+          onClick={() => handleLogout()}
+          className="btn-no-fill-secondary"
+        >
+          Sign out
+        </button>
+      ) : (
+        <button onClick={() => router.push('auth/sign-in')} className="btn-no-fill-secondary">Sign in</button>
+      )}
     </div>
   );
 };

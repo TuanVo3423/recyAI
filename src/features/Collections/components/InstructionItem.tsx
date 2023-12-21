@@ -70,7 +70,8 @@ export const InstructionItem = ({
                 setInstructionId(instruction._id);
                 PostCollectionModalStatus.onOpen();
               }}
-              background="white"
+              background="green.500"
+              color="white"
             >
               Chỉnh sửa
             </Button>

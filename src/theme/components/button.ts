@@ -14,7 +14,7 @@ const Button: ComponentStyleConfig = {
   variants: {
     primary: {
       bg: '#3f04d8',
-      background: 'red',
+      background: 'red.400',
       color: 'gray.100',
       borderRadius: 'md',
       boxShadow: 'md',
@@ -143,7 +143,7 @@ const Button: ComponentStyleConfig = {
 
   // The default variant value
   defaultProps: {
-    variant: 'primary-fill',
+    variant: 'primary',
   },
 };
 

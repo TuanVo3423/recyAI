@@ -2,8 +2,8 @@ import { IGetFollowMeResponse, IUser } from '@/api/auth';
 import { create } from 'zustand';
 
 interface IAuth {
-  profile: any;
-  setProfile: (data: any) => void;
+  profile: (IUser & Partial<IGetFollowMeResponse>) | null;
+  setProfile: (data: IUser & Partial<IGetFollowMeResponse>) => void;
   clearProfile: () => void;
 }
 

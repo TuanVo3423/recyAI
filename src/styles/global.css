@@ -9,4 +9,14 @@
   .btn {
     @apply h-8 hover:scale-125 cursor-pointer transition-all duration-150 ease-out;
   }
+  .btn-no-fill-primary {
+    @apply text-green-600 hover:text-green-900 text-sm ml-2 font-semibold;
+  }
+  .btn-no-fill-secondary {
+    @apply text-green-400 hover:text-green-900 text-sm ml-2 font-semibold;
+  }
+
+  .btn-fill-primary {
+    @apply text-green-400 hover:text-green-900 text-sm ml-2 font-semibold;
+  }
 }
