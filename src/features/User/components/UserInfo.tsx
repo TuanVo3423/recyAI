@@ -95,7 +95,7 @@ export const UserInfo = (props: Props) => {
   return (
     <>
       {!isLoading && (
-        <div className="flex items-center justify-center lg:space-x-20 ml-20 mt-16 ">
+        <div className="flex lg:flex-row flex-col items-center justify-centerlg:space-x-20 space-y-2 lg:space-y-0 lg:ml-20 mt-16  ">
           <div className="cursor-pointer rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden">
             <img
               src={data.user.avatar || '/empty_avatar.png'}
@@ -103,9 +103,11 @@ export const UserInfo = (props: Props) => {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="-mt-5">
-            <div className="flex items-center justify-center space-x-3">
-              <p className="mt-3 mr-20 text-xl lg:text-xl">{data.user.name}</p>
+          <div className="lg:-mt-5">
+            <div className="flex lg:flex-row flex-col items-center justify-center space-x-3">
+              <p className="mt-3 lg:mr-20 mr-0 text-xl lg:text-xl">
+                {data.user.name}
+              </p>
               {profileStore._id !== data.user._id && (
                 <>
                   {renderButton()}
@@ -118,7 +120,7 @@ export const UserInfo = (props: Props) => {
                 </>
               )}
             </div>
-            <div className="flex justify-center items-center text-lg my-8 space-x-32">
+            <div className="flex justify-center items-center text-lg lg:my-8 my-2 lg:space-x-32 space-x-4">
               <p>
                 <span className="font-bold">{data.user.tweets.length}</span>{' '}
                 Post
@@ -134,8 +136,12 @@ export const UserInfo = (props: Props) => {
                 Followings
               </p>
             </div>
-            <div className="text-lg font-semibold mb-5">{data.user.email}</div>
-            <Text as="em">{data.user.bio || 'Tieu su ban than'}</Text>
+            <div className="text-lg font-semibold mb-5 text-center lg:text-left">
+              {data.user.email}
+            </div>
+            <Text as="em" className="block text-center lg:text-left">
+              {data.user.bio || 'Tieu su ban than'}
+            </Text>
           </div>
         </div>
       )}

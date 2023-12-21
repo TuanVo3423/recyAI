@@ -234,12 +234,12 @@ export const Chat = (props: TChatProps) => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="bg-white  w-[350px] border-gray-300 border-x-[1px]">
+    <div className="flex  h-screen">
+      <div className="bg-white lg:w-[350px] w-[100px] flex-shrink  border-gray-300 border-x-[1px]">
         <div className="h-[110px] bg-white">
           <div className="flex items-center justify-center mx-4 pt-8">
             <div className="flex-1 flex items-center space-x-1">
-              <p className="text-lg font-bold cursor-pointer">
+              <p className="lg:text-lg text-md font-bold cursor-pointer">
                 {profileStore.name}
               </p>
               <ChevronDownIcon className="w-4 h-4 cursor-pointer" />
@@ -247,12 +247,12 @@ export const Chat = (props: TChatProps) => {
 
             <PencilAltIcon className="w-7 h-7 cursor-pointer" />
           </div>
-          <div className="flex items-center justify-center mx-4 pt-6">
+          <div className="flex lg:flex-row flex-col items-center justify-center mx-4 pt-6">
             <div className="flex-1 flex items-center space-x-1">
-              <p className="text-sm font-bold cursor-pointer">New Messages</p>
+              <p className="text-sm font-bold cursor-pointer">Messages</p>
             </div>
 
-            <p className="text-sm font-semibold text-gray-400 cursor-pointer">
+            <p className="text-sm font-semibold text-gray-400 cursor-pointer lg:block hidden">
               Waiting messages
             </p>
           </div>
@@ -270,17 +270,17 @@ export const Chat = (props: TChatProps) => {
                 setCurrentChatId(user._id);
                 mutate(user._id);
               }}
-              className="bg-green-200 h-[75px] flex items-center space-x-4 cursor-pointer"
+              className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
             >
-              <div className="ml-5">
+              <div className="ml-5 hidden lg:block">
                 <img
                   src={user.avatar || '/empty_avatar.png'}
                   alt=""
-                  className="w-16 h-16 rounded-full border-[1px]"
+                  className="lg:w-16 lg:h-16 h-14 w-14 rounded-full border-[1px]"
                 />
               </div>
               <div>
-                <p className="text-md font-normal ">{user.name}</p>
+                <p className="lg:text-md text-sm font-normal ">{user.name}</p>
                 <p className="text-xs text-gray-400 ">Online now</p>
               </div>
             </div>
@@ -301,9 +301,9 @@ export const Chat = (props: TChatProps) => {
                   setCurrentChatId(user._id);
                   mutate(user._id);
                 }}
-                className="bg-green-200 h-[75px] flex items-center space-x-4 cursor-pointer"
+                className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
               >
-                <div className="ml-5">
+                <div className="ml-5  hidden lg:block">
                   <img
                     src={user.avatar || '/empty_avatar.png'}
                     alt=""
@@ -319,7 +319,7 @@ export const Chat = (props: TChatProps) => {
           })}
         </div>
       </div>
-      <div className="flex flex-grow flex-col bg-white">
+      <div className="flex lg:flex-1 flex-col bg-white">
         {currentChatId ? (
           <div className="bg-white flex border-gray-300 h-[75px] w-[full] border-b-[1px]">
             <div className="flex flex-1 items-center space-x-3 ml-3">
@@ -329,16 +329,16 @@ export const Chat = (props: TChatProps) => {
                 className="w-12 h-12 rounded-full border-[1px]"
               />
               <div>
-                <p className="text-md font-semibold cursor-pointer">
+                <p className="lg:text-md text-xs font-semibold cursor-pointer">
                   {infoReciever?.user.name}
                 </p>
                 <p className="text-xs text-gray-400 ">Online now</p>
               </div>
             </div>
             <div className="flex items-center space-x-2 mr-5">
-              <PhoneIcon className="w-7 h-7 cursor-pointer" />
-              <VideoCameraIcon className="w-7 h-7 cursor-pointer" />
-              <InformationCircleIcon className="w-7 h-7 cursor-pointer" />
+              <PhoneIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              <VideoCameraIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              <InformationCircleIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
             </div>
           </div>
         ) : (
@@ -360,7 +360,7 @@ export const Chat = (props: TChatProps) => {
               onKeyDown={(e) => e.keyCode === 13 && handleSend()}
               type="text"
               placeholder="Enter message ..."
-              className="border-none flex-1 focus:ring-0 outline-none bg-white w-[710px] rounded-xl mx-4 p-2 cursor-text"
+              className="border-none lg:flex-1 lg:w-fit w-[80px] focus:ring-0 outline-none bg-white  rounded-xl mx-4 p-2 cursor-text"
             />
             <div className="flex mr-3 space-x-2">
               <MicrophoneIcon className="w-7 h-7 cursor-pointer" />

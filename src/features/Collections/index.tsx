@@ -3,7 +3,12 @@ import {
   TweetWithImages,
   TweetWithInstruction,
 } from '@/utils/classifyTweetType';
-import { Grid, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  Grid,
+  useBreakpointValue,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -16,6 +21,12 @@ type Props = {};
 
 export const Collections = (props: Props) => {
   const PostCollectionModalStatus = useDisclosure();
+  const variant = useBreakpointValue({
+    base: 'mobile',
+    md: 'mobile',
+    lg: 'desktop',
+  });
+  const isMobile = variant === 'mobile';
   const router = useRouter();
   const toast = useToast();
   const [instructionId, setInstructionId] = useState<string | null>(null);
@@ -65,7 +76,7 @@ export const Collections = (props: Props) => {
     // await router.push('/feed');
   };
   return (
-    <Grid p={10} templateColumns="repeat(3, 1fr)" gap={6}>
+    <Grid p={10} templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap={6}>
       {isLoading &&
         Array.from(Array(6)).map((_, idx) => (
           <Quadrilateral

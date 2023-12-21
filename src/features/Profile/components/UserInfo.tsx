@@ -21,7 +21,7 @@ export const UserInfo = (props: Props) => {
   return (
     <>
       {!isLoading && (
-        <div className="flex items-center justify-center lg:space-x-20 ml-20 mt-16 ">
+        <div className="flex lg:flex-row flex-col items-center justify-center lg:space-x-20 space-y-2 lg:space-y-0 lg:ml-20 mt-16 ">
           <div
             onClick={onOpen}
             className="relative rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden"
@@ -33,9 +33,11 @@ export const UserInfo = (props: Props) => {
             />
             <PlusCircleIcon className="absolute w-8 h-8 top-14 left-16 hover:text-gray-400 cursor-pointer bg-transparent rounded-full" />
           </div>
-          <div className="-mt-5">
-            <div className="flex items-center justify-center space-x-3">
-              <p className="mt-3 mr-20 text-xl lg:text-xl">{data.user.name}</p>
+          <div className="lg:-mt-5">
+            <div className="flex lg:flex-row flex-col items-center justify-center space-x-3">
+              <p className="mt-3 lg:mr-20 mr-0 text-xl lg:text-xl">
+                {data.user.name}
+              </p>
               <button
                 onClick={() => onOpenUpdateProfile()}
                 className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
@@ -49,7 +51,7 @@ export const UserInfo = (props: Props) => {
                 Xem kho luu tru
               </button>
             </div>
-            <div className="flex justify-center items-center text-lg my-8 space-x-32 ">
+            <div className="flex justify-center items-center text-lg lg:my-8 my-2 lg:space-x-32 space-x-4">
               <p>
                 <span className="font-bold ">{data.user.tweets.length}</span>{' '}
                 Post
@@ -65,7 +67,7 @@ export const UserInfo = (props: Props) => {
                 Followings
               </p>
             </div>
-            <div className="text-lg font-semibold mb-5">
+            <div className="text-lg font-semibold lg:mb-5">
               {data.user.email}
               {data.user.verify !== UserVerifyStatus.Verified && (
                 <button

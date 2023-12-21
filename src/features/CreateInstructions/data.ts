@@ -36,12 +36,12 @@ export const defaultValues: ICreateProject = {
 export const documentModeData: Omit<TCardModeProps, 'form'>[] = [
   {
     mode: documentModes.available,
-    title: 'Tái chế đồ vật',
+    title: 'Recycle item',
     imageUrl: 'https://www.boonton.org/ImageRepository/Document?documentID=773',
   },
   {
     mode: documentModes.new,
-    title: 'Comming soon',
+    title: 'Coming soon',
     imageUrl:
       'https://millerrecycling.com/wp-content/uploads/2020/02/commercial-food-waste-disposal.jpg',
   },

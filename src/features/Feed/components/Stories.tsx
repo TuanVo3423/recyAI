@@ -30,7 +30,7 @@ export const Stories = () => {
   return (
     <Slider
       {...settings}
-      className="flex space-x-6 h-[150px] -mb-5 w-[660px] -ml-[80px] items-center justify-center p-6 bg-transparent mt-2 border-none rounded-sm "
+      className="flex space-x-6 h-[150px] -mb-5 min-w-[660px] -ml-[80px] items-center justify-center p-6 bg-transparent mt-2 border-none rounded-sm "
     >
       {suggestions &&
         suggestions.map((profile, idx) => (
