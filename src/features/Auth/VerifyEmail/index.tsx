@@ -1,4 +1,5 @@
 import { getAuth, mailVerifyToken } from '@/api/auth';
+import { useAuth } from '@/stores';
 import { UserVerifyStatus } from '@/types';
 import { Center, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -9,9 +10,14 @@ type TVerifyEmail = {};
 
 export const VerifyEmail = ({}: TVerifyEmail) => {
   const router = useRouter();
+  const profileStore = useAuth((state) => state.profile);
   const [email, setEmail] = React.useState('');
   const toast = useToast();
-  const { mutateAsync: handleSendVerifyMail, isSuccess } = useMutation(
+  const {
+    mutateAsync: handleSendVerifyMail,
+    isSuccess,
+    data,
+  } = useMutation(
     async () => {
       const res = await mailVerifyToken();
       return res;
@@ -60,7 +66,7 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
   );
   return (
     <Center h="100vh">
-      {isSuccess ? (
+      {isSuccess && data.message !== 'Email already verified before' ? (
         <div className="flex items-center justify-center">
           <div className=" bg-white shadow-lg border-[1px] rounded-xl">
             <div className="border-b-[1px] border-gray-300 p-5 flex items-center justify-center">
@@ -107,7 +113,16 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
                 Cancel
               </button>
               <button
-                onClick={() => handleSendVerifyMail()}
+                onClick={() => {
+                  if (profileStore && profileStore?.email === email) {
+                    handleSendVerifyMail();
+                  } else {
+                    toast({
+                      title: 'Email does not match email at registration!',
+                      status: 'error',
+                    });
+                  }
+                }}
                 className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
               >
                 Submit
