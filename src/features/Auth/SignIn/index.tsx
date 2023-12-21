@@ -100,7 +100,8 @@ export const SignIn = () => {
                 Log in
               </button>
             )}
-
+          </VStack>
+          <VStack mt={10} spacing={4}>
             <div className="font-bold -mt-4 text-gray-500">OR</div>
             <div className="flex items-center justify-center ">
               <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
@@ -130,8 +131,14 @@ export const SignIn = () => {
                 />
                 {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
-              <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <UserCircleIcon className='w-6 text-green-400 hover:text-green-800 h-6'/>
+              <button
+                onClick={() => router.push('/feed')}
+                className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded "
+              >
+                <UserCircleIcon
+                  //
+                  className="w-6 text-green-400 hover:text-green-800 h-6"
+                />
                 {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
             </div>

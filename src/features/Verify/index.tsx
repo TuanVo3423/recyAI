@@ -5,12 +5,14 @@ import { Center, Icon, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useQuery } from 'react-query';
+import Cookies from 'universal-cookie';
 
 type TVerifyProps = {};
 
 export const Verify = (props: TVerifyProps) => {
   const router = useRouter();
   const { token } = router.query;
+  const cookies = new Cookies();
   //   verify by send email-verify-token to server
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: 'verify',
@@ -19,6 +21,12 @@ export const Verify = (props: TVerifyProps) => {
       return res;
     },
     enabled: !!router.isReady,
+    onSuccess: async (data) => {
+      console.log(data.result.access_token);
+      await cookies.set('Authorization', data.result.access_token, {
+        path: '/',
+      });
+    },
   });
   console.log(data);
   const render = () => {

@@ -22,7 +22,7 @@ export const MiniProfile = () => {
       onSuccess: (data) => {
         localStorage.clear();
         deleteCookie('Authorization');
-        router.reload();
+        router.push('/auth/sign-in');
         toast({
           description: data.message,
           status: 'success',
@@ -59,7 +59,12 @@ export const MiniProfile = () => {
           Sign out
         </button>
       ) : (
-        <button onClick={() => router.push('auth/sign-in')} className="btn-no-fill-secondary">Sign in</button>
+        <button
+          onClick={() => router.push('auth/sign-in')}
+          className="btn-no-fill-secondary"
+        >
+          Sign in
+        </button>
       )}
     </div>
   );

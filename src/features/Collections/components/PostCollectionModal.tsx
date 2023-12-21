@@ -3,6 +3,8 @@ import { useAuth } from '@/stores';
 import { TextAreaInputFieldWithoutLabel } from '@/ui-kit';
 import {
   Box,
+  Button,
+  Heading,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,6 +22,7 @@ interface TPostCollectionModalProps extends UseDisclosureProps {
   form: any;
   files: any;
   setFiles: any;
+  isLoadingShare: boolean;
 }
 
 export const PostCollectionModal = ({
@@ -29,6 +32,7 @@ export const PostCollectionModal = ({
   onSubmit,
   files,
   setFiles,
+  isLoadingShare,
 }: TPostCollectionModalProps) => {
   const { handleSubmit } = form;
   const queryClient = useQueryClient();
@@ -49,6 +53,9 @@ export const PostCollectionModal = ({
         <ModalBody p={0} w="full">
           <div className="flex justify-center">
             <div className="bg-white border-r-[1px] w-[55%] py-[62px] px-[30px]">
+              <Heading mb={4} size="md">
+                Các bước hướng dẫn:
+              </Heading>
               {currentInstruction &&
                 currentInstruction.steps.map((step: any, idx: number) => (
                   <Text key={idx}>{step.content}</Text>
@@ -74,9 +81,14 @@ export const PostCollectionModal = ({
                     </p>
                   </div>
 
-                  <button type="submit" className="btn-no-fill-primary">
+                  <Button
+                    isLoading={isLoadingShare}
+                    type="submit"
+                    bg="green.400"
+                    color="white"
+                  >
                     Share
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className="w-full">

@@ -1,5 +1,5 @@
 import { resetPassword } from '@/api/auth';
-import { useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
@@ -13,7 +13,7 @@ export const NewPassword = ({}: TNewPasswordProps) => {
     password: '',
     confirmPassword: '',
   });
-  const { mutateAsync: handleResetPassword } = useMutation(
+  const { mutateAsync: handleResetPassword, isLoading } = useMutation(
     async () => {
       const res = await resetPassword({
         password: input.password,
@@ -95,18 +95,28 @@ export const NewPassword = ({}: TNewPasswordProps) => {
             />
           </div>
           <div className="flex items-center right-0 space-x-4 mt-6 ml-64">
-            <button
-              type="submit"
-              className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
-            >
+            <button className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold">
               Go back
             </button>
-            <button
+            <Button
+              isLoading={isLoading}
               onClick={() => handleResetPassword()}
-              className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+              bg={'green.400'}
+              color={'white'}
+              _hover={{
+                background: 'green.700',
+              }}
+              display="block"
+              ml={'auto'}
+              w={'100px'}
+              h={'34px'}
+              fontSize={'sm'}
+              rounded={'xl'}
+              boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+              fontWeight={'bold'}
             >
               Reset password
-            </button>
+            </Button>
           </div>
         </div>
       </div>

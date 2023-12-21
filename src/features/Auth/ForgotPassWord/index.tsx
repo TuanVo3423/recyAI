@@ -1,6 +1,7 @@
 import { forgotPassword } from '@/api/auth';
 import { InputField } from '@/ui-kit';
-import { useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useMutation } from 'react-query';
 
@@ -8,8 +9,13 @@ type TForgotPasswordProps = {};
 
 export const ForgotPassword = ({}: TForgotPasswordProps) => {
   const [email, setEmail] = React.useState('');
+  const router = useRouter();
   const toast = useToast();
-  const { isSuccess, mutateAsync: handleSendMail } = useMutation(
+  const {
+    isSuccess,
+    mutateAsync: handleSendMail,
+    isLoading,
+  } = useMutation(
     async () => {
       const res = await forgotPassword({ email });
       return res;
@@ -78,15 +84,31 @@ export const ForgotPassword = ({}: TForgotPasswordProps) => {
           </div>
           {!isSuccess && (
             <div className="flex items-center right-0 space-x-4 mt-6 ml-64">
-              <button className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold">
+              <button
+                onClick={() => router.push('/auth-sign-in')}
+                className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+              >
                 Cancel
               </button>
-              <button
+              <Button
+                isLoading={isLoading}
                 onClick={() => handleSendMail()}
-                className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+                bg={'green.400'}
+                color={'white'}
+                _hover={{
+                  background: 'green.700',
+                }}
+                display="block"
+                ml={'auto'}
+                w={'100px'}
+                h={'34px'}
+                fontSize={'sm'}
+                rounded={'xl'}
+                boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                fontWeight={'bold'}
               >
                 Submit
-              </button>
+              </Button>
             </div>
           )}
         </div>

@@ -75,6 +75,7 @@ export const Posts = ({}: TPostsProps) => {
               onOpen={onOpen}
               onClose={onClose}
               viewRef={ref}
+              local={local}
             />
           </Box>
         );
@@ -87,6 +88,7 @@ export const Posts = ({}: TPostsProps) => {
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
+            local={local}
           />
         </Box>
       );
@@ -147,6 +149,7 @@ export type PostProps = ITweet & {
   isOpen: boolean;
   setTweetId: (id: string) => void;
   viewRef?: any;
+  local: any;
 };
 function Post({
   _id,
@@ -161,7 +164,9 @@ function Post({
   medias,
   created_at,
   viewRef,
+  local,
 }: PostProps) {
+  // console.log(local);
   const [likeCount, setLikeCount] = useState(like_count);
   const settings = {
     dots: true,
@@ -175,15 +180,17 @@ function Post({
   return (
     <div className="bg-white mb-7 border-none ">
       <div
-        onClick={() => router.push(`/user/${user_info[0]._id}`)}
+        onClick={() => {
+          if (local._id === user_info[0]._id) {
+            router.push(`/profile`);
+          } else {
+            router.push(`/user/${user_info[0]._id}`);
+          }
+        }}
         className="flex items-center py-3"
       >
         <img
-          src={
-            user_info[0].avatar
-              ? user_info[0].avatar
-              : 'empty_avatar.png'
-          }
+          src={user_info[0].avatar ? user_info[0].avatar : 'empty_avatar.png'}
           className="rounded-full h-9 w-9 object-contain border-black p-1 mr-3 cursor-pointer"
           alt=""
         />
@@ -198,22 +205,45 @@ function Post({
             })}
           </p>
         </div>
+        {/* overflow="auto" */}
 
         <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
       </div>
       <div>
         <Slider {...settings}>
-          <div className="px-[20px] py-[20px] rounded-lg bg-green-200 shadow-sm card">
+          <Box
+            padding="20px"
+            rounded="lg"
+            w="full"
+            h="300px"
+            maxH="300px"
+            overflow="auto"
+            bg="green.200"
+            shadow="sm"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'gray',
+                borderRadius: '24px',
+              },
+            }}
+            className="card"
+          >
             {instruction.map((item, idx) =>
               item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
             )}
-          </div>
+          </Box>
           {medias.length !== 0 &&
             medias.map((media, idx) => (
-              <div className="card w-full h-full items-center justify-center">
+              <div className="card w-full max-h-[300px] items-center justify-center">
                 <img
                   src={media.url}
-                  className=" object-contain w-full h-full rounded-md  cursor-pointer"
+                  className=" object-cover h-[300px] max-h-[300px] w-full rounded-md cursor-pointer"
                   alt=""
                 />
               </div>

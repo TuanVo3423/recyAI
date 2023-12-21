@@ -4,6 +4,7 @@ import { Quadrilateral } from '@/components/skeleton';
 import { useAuth } from '@/stores';
 import { CommentTweet } from '@/utils/classifyTweetType';
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -78,54 +79,62 @@ export const CommentModal = ({
     },
     {
       onSuccess: async (data) => {
-        if (profileStore) {
-          await refetch();
-          await refresh();
-          toast({
-            description: data.message,
-            status: 'success',
-          });
-          setComment('');
+        if (data) {
+          if (profileStore) {
+            await refetch();
+            await refresh();
+            toast({
+              description: data.message,
+              status: 'success',
+            });
+            setComment('');
+          } else {
+            toast({
+              description: 'Login to comment this tweet',
+              status: 'error',
+            });
+          }
         } else {
           toast({
-            description: 'Login to comment this tweet',
+            description: 'Need to verify your email to comment this tweet',
             status: 'error',
           });
         }
       },
       onError: async (err: any) => {
         toast({
-          description: err.message,
+          description: 'Need to verify your email to comment this tweet',
           status: 'error',
         });
       },
     }
   );
-  const { mutateAsync: handleSaveUpdate } = useMutation(
-    async () => {
-      const res = await editInstructionsInMyTweets({
-        instruction_id: data.tweet.instruction_id,
-        payload: currentStep,
-      });
-      return res;
-    },
-    {
-      onSuccess: async (data) => {
-        // await refetch();
-        await refresh();
-        toast({
-          description: data.message,
-          status: 'success',
+  const { mutateAsync: handleSaveUpdate, isLoading: mutateUpdateLoading } =
+    useMutation(
+      async () => {
+        const res = await editInstructionsInMyTweets({
+          instruction_id: data.tweet.instruction_id,
+          payload: currentStep,
         });
+        return res;
       },
-      onError: async (err: any) => {
-        toast({
-          description: err.message,
-          status: 'error',
-        });
-      },
-    }
-  );
+      {
+        onSuccess: async (data) => {
+          // await refetch();
+          await refresh();
+          toast({
+            description: data.message,
+            status: 'success',
+          });
+        },
+        onError: async (err: any) => {
+          toast({
+            description: err.message,
+            status: 'error',
+          });
+        },
+      }
+    );
   const handleOnChange = (e, id: string) => {
     const index = currentStep.findIndex((item) => item.id === id);
     if (index !== -1) {
@@ -159,13 +168,14 @@ export const CommentModal = ({
             Undo
           </Button>
           <Button
+            isLoading={mutateUpdateLoading}
             color="white"
             background="green.500"
             height="fit-content"
             lineHeight="32px"
             onClick={async () => {
               await handleSaveUpdate();
-              setIsEdit(false);
+              await setIsEdit(false);
             }}
           >
             Save
@@ -195,13 +205,13 @@ export const CommentModal = ({
             <Quadrilateral p="24px" w="full" h="500px" isLoading={isLoading} />
           ) : (
             <div className="flex">
-              <div className="flex flex-col bg-white py-8 w-[52%] px-4">
+              <div className="flex h-full flex-col bg-white py-8 w-[52%] px-4">
                 {pathname === '/profile' && (
                   <div className="flex items-center py-3 border-b-[1px]">
                     {renderButton()}
                   </div>
                 )}
-                <div className="flex-1">
+                <div className="">
                   <Slider {...settings}>
                     <div className="card">
                       <Heading mb={4} size="md">
@@ -210,27 +220,49 @@ export const CommentModal = ({
                       {!data ? (
                         <></>
                       ) : (
-                        currentStep.map((step, idx) => {
-                          return isEdit ? (
-                            <Textarea
-                              key={idx}
-                              onChange={(e) => handleOnChange(e, step.id)}
-                              h="fit-content"
-                              minH="fit-content"
-                            >
-                              {step.content}
-                            </Textarea>
-                          ) : (
-                            <Text className="mb-2" key={idx}>
-                              {idx + 1}. {step.content}
-                            </Text>
-                          );
-                        })
+                        <Box
+                          p={4}
+                          css={{
+                            '&::-webkit-scrollbar': {
+                              width: '4px',
+                            },
+                            '&::-webkit-scrollbar-track': {
+                              width: '6px',
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                              background: 'green',
+                              borderRadius: '24px',
+                            },
+                          }}
+                          h="500px"
+                          overflow="auto"
+                        >
+                          {currentStep.map((step, idx) => {
+                            return isEdit ? (
+                              <Textarea
+                                key={idx}
+                                onChange={(e) => handleOnChange(e, step.id)}
+                                h="fit-content"
+                                minH="fit-content"
+                              >
+                                {step.content}
+                              </Textarea>
+                            ) : (
+                              <Text className="mb-2" key={idx}>
+                                {idx + 1}. {step.content}
+                              </Text>
+                            );
+                          })}
+                        </Box>
                       )}
                     </div>
                     {data.tweet.medias.map((media, idx) => (
-                      <div key={idx} className="card">
-                        <img src={media.url} className=" object-fill" alt="" />
+                      <div key={idx} className="card h-[500px] w-full">
+                        <img
+                          src={media.url}
+                          className="object-cover w-full h-full"
+                          alt=""
+                        />
                       </div>
                     ))}
                   </Slider>

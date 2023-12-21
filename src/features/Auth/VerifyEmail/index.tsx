@@ -1,15 +1,17 @@
 import { getAuth, mailVerifyToken } from '@/api/auth';
 import { useAuth } from '@/stores';
 import { UserVerifyStatus } from '@/types';
-import { Center, useToast } from '@chakra-ui/react';
+import { Button, Center, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useMutation } from 'react-query';
+import Cookies from 'universal-cookie';
 
 type TVerifyEmail = {};
 
 export const VerifyEmail = ({}: TVerifyEmail) => {
   const router = useRouter();
+  const cookies = new Cookies();
   const profileStore = useAuth((state) => state.profile);
   const [email, setEmail] = React.useState('');
   const toast = useToast();
@@ -17,6 +19,7 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
     mutateAsync: handleSendVerifyMail,
     isSuccess,
     data,
+    isLoading: isSendVerifyMailLoading,
   } = useMutation(
     async () => {
       const res = await mailVerifyToken();
@@ -37,33 +40,34 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
       },
     }
   );
-  const { mutateAsync: handleCheckVerify } = useMutation(
-    async () => {
-      const res = await getAuth();
-      return res;
-    },
-    {
-      onSuccess: (data) => {
-        if (data.user.verify === UserVerifyStatus.Verified) {
-          toast({
-            title:
-              'Your account has been verified! I will redirect you to profile page after 2 seconds!',
-            status: 'success',
-          });
-          setTimeout(() => {
-            router.push('/profile');
-          }, 2000);
-        }
-        if (data.user.verify === UserVerifyStatus.Unverified) {
-          toast({
-            title:
-              'Your account has not been verified! Please check your email!',
-            status: 'error',
-          });
-        }
+  const { mutateAsync: handleCheckVerify, isLoading: isCheckVerifyLoading } =
+    useMutation(
+      async () => {
+        const res = await getAuth();
+        return res;
       },
-    }
-  );
+      {
+        onSuccess: (data) => {
+          if (data.user.verify === UserVerifyStatus.Verified) {
+            toast({
+              title:
+                'Your account has been verified! I will redirect you to profile page after 2 seconds!',
+              status: 'success',
+            });
+            setTimeout(() => {
+              router.push('/profile');
+            }, 2000);
+          }
+          if (data.user.verify === UserVerifyStatus.Unverified) {
+            toast({
+              title:
+                'Your account has not been verified! Please check your email!',
+              status: 'error',
+            });
+          }
+        },
+      }
+    );
   return (
     <Center h="100vh">
       {isSuccess && data.message !== 'Email already verified before' ? (
@@ -76,17 +80,32 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
               <p className="text-md">
                 An email with your your account comfirmation link has been sent
                 to your email:{' '}
-                <span className="italic text-green-400">abc@gmail.com</span>
+                <span className="italic text-green-400">
+                  {profileStore && profileStore?.email}
+                </span>
               </p>
               <p className="text-md">
                 Check your email and come back to proceed!
               </p>
-              <button
+              <Button
+                isLoading={isCheckVerifyLoading}
+                background={'green.400'}
+                color={'white'}
+                _hover={{
+                  background: 'green.700',
+                }}
+                display="block"
+                ml={'auto'}
+                w={'100px'}
+                h={'34px'}
+                fontSize={'sm'}
+                rounded={'xl'}
+                boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                fontWeight={'bold'}
                 onClick={() => handleCheckVerify()}
-                className="bg-green-400 hover:bg-green-700 block ml-auto text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
               >
                 Proceed
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -109,10 +128,14 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
               />
             </div>
             <div className="flex items-center right-0 space-x-4 mt-6 ml-64">
-              <button className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold">
+              <button
+                onClick={() => router.push('/profile')}
+                className="bg-gray-200 text-gray-600 w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+              >
                 Cancel
               </button>
-              <button
+              <Button
+                isLoading={isSendVerifyMailLoading}
                 onClick={() => {
                   if (profileStore && profileStore?.email === email) {
                     handleSendVerifyMail();
@@ -123,10 +146,22 @@ export const VerifyEmail = ({}: TVerifyEmail) => {
                     });
                   }
                 }}
-                className="bg-green-400 hover:bg-green-700 text-white w-[100px] h-[34px] text-sm rounded-xl shadow-lg font-bold"
+                bg={'green.400'}
+                color={'white'}
+                _hover={{
+                  background: 'green.700',
+                }}
+                display="block"
+                ml={'auto'}
+                w={'100px'}
+                h={'34px'}
+                fontSize={'sm'}
+                rounded={'xl'}
+                boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                fontWeight={'bold'}
               >
                 Submit
-              </button>
+              </Button>
             </div>
           </div>
         </div>

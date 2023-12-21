@@ -30,7 +30,7 @@ export const DeleteConfirmModal = ({
 }: TDeleteConfirmModalProps) => {
   const { isOpen, onClose } = DeleteConfirmModalStatus;
   const toast = useToast();
-  const { mutateAsync: handleDeleteInstruction } = useMutation(
+  const { mutateAsync: handleDeleteInstruction, isLoading } = useMutation(
     async () => {
       // delete instruction
       const res = await deleteInstruction({ instruction_id });
@@ -74,6 +74,7 @@ export const DeleteConfirmModal = ({
             Close
           </Button>
           <Button
+            isLoading={isLoading}
             bg="red.400"
             color="white"
             onClick={() => handleDeleteInstruction()}

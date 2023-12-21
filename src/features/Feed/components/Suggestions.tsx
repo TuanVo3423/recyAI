@@ -27,7 +27,7 @@ export const Suggestions = () => {
       </div>
 
       {profileStore &&
-        profileStore?.followInfo.map((profile, idx) => (
+        profileStore?.followInfo?.map((profile, idx) => (
           <div key={idx} className="flex items-center justify-between mt-3">
             <img
               className="w-10 h-10 rounded-full border p-[2px]"
@@ -42,7 +42,7 @@ export const Suggestions = () => {
               onClick={() => router.push('/chat')}
               className="btn-no-fill-secondary"
             >
-            Mess now
+              Mess now
             </button>
           </div>
         ))}

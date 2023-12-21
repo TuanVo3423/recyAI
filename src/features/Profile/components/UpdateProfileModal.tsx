@@ -1,5 +1,6 @@
 import { updateMe } from '@/api/auth';
 import {
+  Button,
   Modal,
   ModalBody,
   ModalContent,
@@ -25,7 +26,7 @@ export const UpdateProfileModal = ({
     name: '',
     bio: '',
   });
-  const { mutateAsync } = useMutation(
+  const { mutateAsync, isLoading } = useMutation(
     async () => {
       const res = await updateMe({
         name: updateData.name,
@@ -89,12 +90,24 @@ export const UpdateProfileModal = ({
                 />
               </div>
               <div className="flex items-center justify-center mt-10">
-                <div
+                <Button
+                  isLoading={isLoading}
                   onClick={() => mutateAsync()}
-                  className="w-[100px] h-[50px] items-center rounded-3xl justify-center flex bg-green-400 hover:bg-green-900 cursor-pointer mb-8"
+                  w="100px"
+                  h="50px"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  rounded="3xl"
+                  bg="green.400"
+                  _hover={{ bg: 'green.900' }}
+                  cursor="pointer"
+                  mb="8"
+                  color="white"
+                  fontWeight="semibold"
                 >
-                  <p className="text-white font-semibold">Save</p>
-                </div>
+                  Save
+                </Button>
               </div>
             </div>
           </div>

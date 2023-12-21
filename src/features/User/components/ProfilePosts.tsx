@@ -5,6 +5,7 @@ import { Quadrilateral } from '@/components/skeleton';
 import { CommentModal } from '@/features/Feed/components';
 import HeartLike from '@/features/Feed/components/Like';
 import { Box, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import Slider from 'react-slick';
 import {
   BookmarkIcon,
   ChatIcon,
@@ -139,19 +140,30 @@ export type PostProps = ITweet & {
   onClose: () => void;
   isOpen: boolean;
   setTweetId: (id: string) => void;
+  viewRef?: any;
 };
 function Post({
   _id,
   user_info,
+  likes,
   content,
   like_count,
   instruction,
   comment_count,
-  likes,
   onOpen,
   setTweetId,
+  medias,
+  created_at,
+  viewRef,
 }: PostProps) {
   const [likeCount, setLikeCount] = useState(like_count);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   return (
     <div className="bg-white my-7 border-none ">
       <div className="flex items-center py-3 ">
@@ -174,10 +186,46 @@ function Post({
 
         <DotsHorizontalIcon className="h-6 mr-1 cursor-pointer" />
       </div>
-      <div className="px-[20px] py-[20px] border-[1px] rounded-lg shadow-sm">
-        {instruction.map((item, idx) =>
-          item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
-        )}
+      <div>
+        <Slider {...settings}>
+          <Box
+            padding="20px"
+            rounded="lg"
+            w="full"
+            h="300px"
+            maxH="300px"
+            overflow="auto"
+            bg="green.200"
+            shadow="sm"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'gray',
+                borderRadius: '24px',
+              },
+            }}
+            className="card"
+          >
+            {instruction.map((item, idx) =>
+              item.steps.map((step, idx) => <p key={idx}>{step.content}</p>)
+            )}
+          </Box>
+          {medias.length !== 0 &&
+            medias.map((media, idx) => (
+              <div className="card w-full max-h-[300px] items-center justify-center">
+                <img
+                  src={media.url}
+                  className=" object-cover h-[300px] max-h-[300px] w-full rounded-md cursor-pointer"
+                  alt=""
+                />
+              </div>
+            ))}
+        </Slider>
       </div>
 
       <div className="flex justify-between px-1 pt-4">

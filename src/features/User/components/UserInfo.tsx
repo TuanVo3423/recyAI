@@ -1,6 +1,6 @@
 import { follow, unFollow, useGetUser } from '@/api/auth';
 import { useAuth } from '@/stores';
-import { Text, useToast } from '@chakra-ui/react';
+import { Button, Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
@@ -22,7 +22,11 @@ export const UserInfo = (props: Props) => {
     },
   });
 
-  const { mutateAsync: handleFollow, isSuccess } = useMutation(
+  const {
+    mutateAsync: handleFollow,
+    isSuccess,
+    isLoading: mutateFollowLoading,
+  } = useMutation(
     async () => {
       const res = await follow({ followed_user_id: router.query.userId[0] });
       return res;
@@ -34,6 +38,7 @@ export const UserInfo = (props: Props) => {
           status: 'success',
         });
         setIsFollowed(true);
+        refetch();
       },
       onError: (error: any) => {
         toast({
@@ -43,27 +48,31 @@ export const UserInfo = (props: Props) => {
       },
     }
   );
-  const { mutateAsync: handleUnFollow } = useMutation(
-    async () => {
-      const res = await unFollow({ followed_user_id: router.query.userId[0] });
-      return res;
-    },
-    {
-      onSuccess: async (data: any) => {
-        toast({
-          description: data.message,
-          status: 'success',
+  const { mutateAsync: handleUnFollow, isLoading: mutateUnFollowLoading } =
+    useMutation(
+      async () => {
+        const res = await unFollow({
+          followed_user_id: router.query.userId[0],
         });
-        setIsFollowed(false);
+        return res;
       },
-      onError: (error: any) => {
-        toast({
-          description: error.message,
-          status: 'error',
-        });
-      },
-    }
-  );
+      {
+        onSuccess: async (data: any) => {
+          toast({
+            description: data.message,
+            status: 'success',
+          });
+          setIsFollowed(false);
+          refetch();
+        },
+        onError: (error: any) => {
+          toast({
+            description: error.message,
+            status: 'error',
+          });
+        },
+      }
+    );
 
   const renderButton = () => {
     // const isFollowed = data.user.followerIds.some(
@@ -71,21 +80,30 @@ export const UserInfo = (props: Props) => {
     // );
     if (isFollowed) {
       return (
-        <button
+        <Button
+          isLoading={mutateUnFollowLoading}
           onClick={() => handleUnFollow()}
           className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
         >
           Unfollow
-        </button>
+        </Button>
       );
     } else {
       return (
-        <button
+        <Button
+          isLoading={mutateFollowLoading}
           onClick={() => handleFollow()}
-          className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
+          bg="green.200"
+          w="200px"
+          h="30px"
+          rounded="xl"
+          fontSize="sm"
+          fontWeight="semibold"
+          mt="2"
+          _hover={{ bg: 'green.400' }}
         >
           Follow
-        </button>
+        </Button>
       );
     }
   };
@@ -111,12 +129,19 @@ export const UserInfo = (props: Props) => {
               {profileStore._id !== data.user._id && (
                 <>
                   {renderButton()}
-                  <button
+                  <Button
                     onClick={() => router.push('/chat')}
-                    className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2"
+                    bg="green.200"
+                    w="200px"
+                    h="30px"
+                    rounded="xl"
+                    fontSize="sm"
+                    fontWeight="semibold"
+                    mt="2"
+                    _hover={{ bg: 'green.400' }}
                   >
                     Send message
-                  </button>
+                  </Button>
                 </>
               )}
             </div>
@@ -140,7 +165,7 @@ export const UserInfo = (props: Props) => {
               {data.user.email}
             </div>
             <Text as="em" className="block text-center lg:text-left">
-              {data.user.bio || 'Tieu su ban than'}
+              {data.user.bio || ''}
             </Text>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { getUser } from '@/api/auth';
 import { createMessages, getMessages } from '@/api/messages';
 import { useGetMyMesages } from '@/api/messages/queries';
+import { PopoverComingSoon } from '@/components';
 import { Quadrilateral } from '@/components/skeleton';
 import { SendIcon } from '@/icons';
 import { useAuth } from '@/stores';
@@ -242,10 +243,12 @@ export const Chat = (props: TChatProps) => {
               <p className="lg:text-lg text-md font-bold cursor-pointer">
                 {profileStore && profileStore.name}
               </p>
+
               <ChevronDownIcon className="w-4 h-4 cursor-pointer" />
             </div>
-
-            <PencilAltIcon className="w-7 h-7 cursor-pointer" />
+            <PopoverComingSoon>
+              <PencilAltIcon className="w-7 h-7 cursor-pointer" />
+            </PopoverComingSoon>
           </div>
           <div className="flex lg:flex-row flex-col items-center justify-center mx-4 pt-6">
             <div className="flex-1 flex items-center space-x-1">
@@ -338,9 +341,15 @@ export const Chat = (props: TChatProps) => {
               </div>
             </div>
             <div className="flex items-center space-x-2 mr-5">
-              <PhoneIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
-              <VideoCameraIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
-              <InformationCircleIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              <PopoverComingSoon>
+                <PhoneIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              </PopoverComingSoon>
+              <PopoverComingSoon>
+                <VideoCameraIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              </PopoverComingSoon>
+              <PopoverComingSoon>
+                <InformationCircleIcon className="lg:w-7 lg:h-7 w-4 h-3 cursor-pointer" />
+              </PopoverComingSoon>
             </div>
           </div>
         ) : (
@@ -355,7 +364,9 @@ export const Chat = (props: TChatProps) => {
         </div>
         <div className="bg-white flex items-center border-[1px] px-4 border-gray-300 h-[75px] w-full">
           <div className="rounded-3xl w-full flex items-center border-[1px] border-gray-300 h-[45px]">
-            <EmojiHappyIcon className="w-7 h-7 ml-3 cursor-pointer" />
+            <PopoverComingSoon>
+              <EmojiHappyIcon className="w-7 h-7 ml-3 cursor-pointer" />
+            </PopoverComingSoon>
             <input
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -365,8 +376,13 @@ export const Chat = (props: TChatProps) => {
               className="border-none lg:flex-1 lg:w-fit w-[80px] focus:ring-0 outline-none bg-white  rounded-xl mx-4 p-2 cursor-text"
             />
             <div className="flex mr-3 space-x-2">
-              <MicrophoneIcon className="w-7 h-7 cursor-pointer" />
-              <PhotographIcon className="w-6 h-7 cursor-pointer" />
+              <PopoverComingSoon>
+                <MicrophoneIcon className="w-7 h-7 cursor-pointer" />
+              </PopoverComingSoon>
+              <PopoverComingSoon>
+                <PhotographIcon className="w-6 h-7 cursor-pointer" />
+              </PopoverComingSoon>
+
               <ChatAlt2Icon
                 onClick={() => {
                   handleSend();

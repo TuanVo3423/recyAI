@@ -37,9 +37,11 @@ export const Collections = (props: Props) => {
     resolver: yupResolver(schema_share_my_collection),
     defaultValues: defaultValueShare,
   });
+  const [isLoadingShare, setIsLoadingShare] = useState<boolean | null>(false);
 
   const onSubmitShareMyCollection = async (values) => {
     const { content } = values;
+    setIsLoadingShare(true);
     if (files.length === 0) {
       const res = await TweetWithInstruction({
         instruction_id: instructionId,
@@ -50,12 +52,14 @@ export const Collections = (props: Props) => {
           description: res.message,
           status: 'success',
         });
+        setIsLoadingShare(false);
         PostCollectionModalStatus.onClose();
       } else {
         toast({
           description: 'You need to verify your email to post tweet',
           status: 'error',
         });
+        setIsLoadingShare(false);
       }
     } else {
       const res = await TweetWithImages({
@@ -68,12 +72,14 @@ export const Collections = (props: Props) => {
           description: res.message,
           status: 'success',
         });
+        setIsLoadingShare(false);
         PostCollectionModalStatus.onClose();
       } else {
         toast({
           description: 'You need to verify your email to post tweet',
           status: 'error',
         });
+        setIsLoadingShare(false);
       }
     }
     // await router.push('/feed');
@@ -112,6 +118,7 @@ export const Collections = (props: Props) => {
         onSubmit={onSubmitShareMyCollection}
         instructionId={instructionId}
         PostCollectionModalStatus={PostCollectionModalStatus}
+        isLoadingShare={isLoadingShare}
       />
     </Grid>
   );
