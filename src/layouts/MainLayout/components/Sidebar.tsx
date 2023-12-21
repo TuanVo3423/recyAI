@@ -1,4 +1,5 @@
 import { IUser, getUserList, useGetAuth } from '@/api/auth';
+import { PopoverComingSoon } from '@/components';
 import { useAuth } from '@/stores';
 import {
   Popover,
@@ -86,7 +87,9 @@ export const SideBar = () => {
       <div className="mt-10 flex-col">
         <div
           onClick={() => router.push('/feed')}
-          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl   "
+          className={`flex justify-center space-x-2 items-center mb-4 cursor-pointer  hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl ${
+            router.pathname === '/feed' ? 'bg-green-200' : 'bg-white'
+          }`}
         >
           <HomeIcon className=" h-8 w-8" />
           <p className="text-md flex-1 ">Feed</p>
@@ -100,7 +103,9 @@ export const SideBar = () => {
           placement="left"
         >
           <PopoverTrigger>
-            <div className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl">
+            <div
+              className={`flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 py-2 pl-2 pr-[100px] rounded-xl`}
+            >
               <SearchIcon className=" h-8 w-8" />
               <p className="text-md flex-1">Search</p>
             </div>
@@ -134,28 +139,38 @@ export const SideBar = () => {
 
         <div
           onClick={() => router.push('/create-instructions')}
-          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-2 rounded-xl  "
+          className={`flex justify-center space-x-2 items-center mb-4 cursor-pointer  hover:bg-green-200 pl-2 py-2 rounded-xl ${
+            router.pathname === '/create-instructions'
+              ? 'bg-green-200'
+              : 'bg-white'
+          }`}
         >
           <DocumentAddIcon className="h-8 w-8" />
-          <p className="text-md flex-1"> New Instruction</p>
+          <p className="text-md flex-1">New Instruction</p>
         </div>
         <div
           onClick={() => router.push('/collections')}
-          className="flex space-x-2 justify-center items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
+          className={`flex space-x-2 justify-center items-center mb-4 cursor-pointer  hover:bg-green-200 pl-2 py-3 rounded-xl ${
+            router.pathname === '/collections' ? 'bg-green-200' : 'bg-white'
+          }`}
         >
           <ArchiveIcon className="h-8 w-8" />
           <p className="text-md flex-1 ">My Collection</p>
         </div>
         <div
           onClick={() => router.push('/chat')}
-          className="flex space-x-2 justify-center items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl "
+          className={`flex space-x-2 justify-center items-center mb-4 cursor-pointer  hover:bg-green-200 pl-2 py-3 rounded-xl ${
+            router.pathname === '/chat' ? 'bg-green-200' : 'bg-white'
+          }`}
         >
           <ChatIcon className="h-8 w-8" />
           <p className="text-md flex-1 ">Messages</p>
         </div>
         <div
           onClick={() => router.push('/profile')}
-          className="flex justify-center space-x-2 items-center mb-4 cursor-pointer bg-white hover:bg-green-200 pl-2 py-3 rounded-xl  "
+          className={`flex justify-center space-x-2 items-center mb-4 cursor-pointer ${
+            router.pathname === '/profile' ? 'bg-green-200' : 'bg-white'
+          } hover:bg-green-200 pl-2 py-3 rounded-xl`}
         >
           <img
             src={profileStore?.avatar || '/empty_avatar.png'}
@@ -168,14 +183,18 @@ export const SideBar = () => {
       </div>
 
       <div className="mt-5 border-t-2 border-t-gray-200">
-        <div className="flex space-x-2 ml-1 justify-center mt-5 mb-4 items-center cursor-pointer pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
-          <TranslateIcon className="h-8 w-8" />
-          <p className="text-md flex-1">Language</p>
-        </div>
-        <div className="flex space-x-2 ml-1 justify-center items-center mb-11 cursor-pointer pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
-          <MenuIcon className="h-8 w-8" />
-          <p className="text-md flex-1">Setting</p>
-        </div>
+        <PopoverComingSoon>
+          <div className="flex cursor-not-allowed space-x-2 ml-1 justify-center mt-5 mb-4 items-center  pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
+            <TranslateIcon className="h-8 w-8" />
+            <p className="text-md flex-1">Language</p>
+          </div>
+        </PopoverComingSoon>
+        <PopoverComingSoon>
+          <div className="flex space-x-2 ml-1 justify-center items-center mb-11 cursor-not-allowed pl-2 pr-[80px] bg-white hover:bg-green-200 py-3 rounded-xl ">
+            <MenuIcon className="h-8 w-8" />
+            <p className="text-md flex-1">Setting</p>
+          </div>
+        </PopoverComingSoon>
       </div>
     </div>
   );

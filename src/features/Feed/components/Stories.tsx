@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useAuth } from '@/stores';
+import { PopoverComingSoon } from '@/components';
 export const Stories = () => {
   const [suggestions, setSuggestions] = useState([]);
   const profileStore = useAuth((state) => state.profile);
@@ -45,15 +46,17 @@ export const Stories = () => {
 
 export const Story = function Story({ img, username }) {
   return (
-    <div className="">
-      <img
-        className="h-14 w-14 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-[2px] rounded-full cursor-pointer"
-        src={img}
-        alt=""
-      />
+    <PopoverComingSoon>
+      <div className="cursor-not-allowed">
+        <img
+          className="h-14 w-14 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-[2px] rounded-full"
+          src={img}
+          alt=""
+        />
 
-      <p className="text-md w-14 truncate text-center ">{username}</p>
-    </div>
+        <p className="text-md w-14 truncate text-center ">{username}</p>
+      </div>
+    </PopoverComingSoon>
   );
 };
 export default Stories;

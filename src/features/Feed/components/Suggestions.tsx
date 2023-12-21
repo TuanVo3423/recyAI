@@ -7,6 +7,7 @@ export const Suggestions = () => {
   const [suggestions, setSuggestions] = useState([]);
   const router = useRouter();
   const profileStore = useAuth((state) => state.profile);
+  console.log(profileStore);
   useEffect(() => {
     const suggestions = [...Array(5)].map((_, i) => ({
       userId: faker.datatype.uuid(),
@@ -22,13 +23,13 @@ export const Suggestions = () => {
   return (
     <div className="mt-4 ml-10">
       <div className="flex justify-between text-sm mb-5">
-        <h3 className="text-md font-bold text-gray-400">Suggestions for you</h3>
+        <h3 className="text-md font-bold text-gray-400">Follower list</h3>
         <button className="text-green-600 font-semibold text-md">
           See All
         </button>
       </div>
 
-      {profileStore.followInfo.map((profile, idx) => (
+      {profileStore?.followInfo.map((profile, idx) => (
         <div key={idx} className="flex items-center justify-between mt-3">
           <img
             className="w-10 h-10 rounded-full border p-[2px]"

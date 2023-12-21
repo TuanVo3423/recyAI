@@ -4,7 +4,14 @@ import { ITweet, getMyTweets } from '@/api/tweets';
 import { Quadrilateral } from '@/components/skeleton';
 import { CommentModal } from '@/features/Feed/components';
 import HeartLike from '@/features/Feed/components/Like';
-import { Box, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  HStack,
+  Spinner,
+  Text,
+  VStack,
+  useDisclosure,
+} from '@chakra-ui/react';
 import {
   BookmarkIcon,
   ChatIcon,
@@ -102,7 +109,16 @@ export const ProfilePosts = ({}: TProfilePostsProps) => {
   return (
     <>
       {result}
-      {isFetchingNextPage && <h3>Loading...</h3>}
+      {isFetchingNextPage && (
+        <HStack w="full" justify="center">
+          <Spinner size="md" color="green.500" />
+        </HStack>
+      )}
+      {!hasNextPage && (
+        <Text align="center" as="em" color="green.400" mt={4}>
+          There are no posts here!
+        </Text>
+      )}
       <CommentModal
         isOpen={isOpen}
         onOpen={onOpen}
