@@ -24,7 +24,7 @@ export const MainLayout = ({ children }: Props) => {
       w="100%"
       p={isMobile ? 4 : 0}
     >
-      <GridItem area={'nav'} position="fixed" zIndex={9999} top={0}>
+      <GridItem area={'nav'} position="fixed" top={0}>
         {isMobile ? <SideBarMobile /> : <SideBar />}
       </GridItem>
       <GridItem area={'main'} overflowX="hidden">

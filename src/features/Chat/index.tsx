@@ -240,7 +240,7 @@ export const Chat = (props: TChatProps) => {
           <div className="flex items-center justify-center mx-4 pt-8">
             <div className="flex-1 flex items-center space-x-1">
               <p className="lg:text-lg text-md font-bold cursor-pointer">
-                {profileStore.name}
+                {profileStore && profileStore.name}
               </p>
               <ChevronDownIcon className="w-4 h-4 cursor-pointer" />
             </div>
@@ -263,29 +263,30 @@ export const Chat = (props: TChatProps) => {
           </h1>
           <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
         </div>
-        {profileStore.followInfo.map((user, idx) => {
-          return (
-            <div
-              onClick={async () => {
-                setCurrentChatId(user._id);
-                mutate(user._id);
-              }}
-              className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
-            >
-              <div className="ml-5 hidden lg:block">
-                <img
-                  src={user.avatar || '/empty_avatar.png'}
-                  alt=""
-                  className="lg:w-16 lg:h-16 h-14 w-14 rounded-full border-[1px]"
-                />
+        {profileStore &&
+          profileStore.followInfo.map((user, idx) => {
+            return (
+              <div
+                onClick={async () => {
+                  setCurrentChatId(user._id);
+                  mutate(user._id);
+                }}
+                className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
+              >
+                <div className="ml-5 hidden lg:block">
+                  <img
+                    src={user.avatar || '/empty_avatar.png'}
+                    alt=""
+                    className="lg:w-16 lg:h-16 h-14 w-14 rounded-full border-[1px]"
+                  />
+                </div>
+                <div>
+                  <p className="lg:text-md text-sm font-normal ">{user.name}</p>
+                  <p className="text-xs text-gray-400 ">Online now</p>
+                </div>
               </div>
-              <div>
-                <p className="lg:text-md text-sm font-normal ">{user.name}</p>
-                <p className="text-xs text-gray-400 ">Online now</p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
         <div>
           <div className="flex items-center space-x-1 bg-white border-b-[1px] py-1 border-gray-300">
@@ -294,29 +295,30 @@ export const Chat = (props: TChatProps) => {
             </h1>
             <ChevronDownIcon className="h-3 w-3 text-gray-400 cursor-pointer" />
           </div>
-          {profileStore.followerInfo.map((user, idx) => {
-            return (
-              <div
-                onClick={() => {
-                  setCurrentChatId(user._id);
-                  mutate(user._id);
-                }}
-                className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
-              >
-                <div className="ml-5  hidden lg:block">
-                  <img
-                    src={user.avatar || '/empty_avatar.png'}
-                    alt=""
-                    className="w-16 h-16 rounded-full border-[1px]"
-                  />
+          {profileStore &&
+            profileStore.followerInfo.map((user, idx) => {
+              return (
+                <div
+                  onClick={() => {
+                    setCurrentChatId(user._id);
+                    mutate(user._id);
+                  }}
+                  className="bg-green-200 lg:h-[75px] flex items-center space-x-4 cursor-pointer"
+                >
+                  <div className="ml-5  hidden lg:block">
+                    <img
+                      src={user.avatar || '/empty_avatar.png'}
+                      alt=""
+                      className="w-16 h-16 rounded-full border-[1px]"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-md font-normal ">{user.name}</p>
+                    <p className="text-xs text-gray-400 ">Online now</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-md font-normal ">{user.name}</p>
-                  <p className="text-xs text-gray-400 ">Online now</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       <div className="flex lg:flex-1 flex-col bg-white">

@@ -95,7 +95,7 @@ export const UserInfo = (props: Props) => {
   return (
     <>
       {!isLoading && (
-        <div className="flex lg:flex-row flex-col items-center justify-centerlg:space-x-20 space-y-2 lg:space-y-0 lg:ml-20 mt-16  ">
+        <div className="flex lg:flex-row flex-col items-center justify-center lg:space-x-20 space-y-2 lg:space-y-0 lg:ml-20 mt-16  ">
           <div className="cursor-pointer rounded-full border p-[2px] w-[150px] h-[150px] overflow-hidden">
             <img
               src={data.user.avatar || '/empty_avatar.png'}

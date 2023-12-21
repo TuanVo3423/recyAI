@@ -7,7 +7,6 @@ export const Suggestions = () => {
   const [suggestions, setSuggestions] = useState([]);
   const router = useRouter();
   const profileStore = useAuth((state) => state.profile);
-  console.log(profileStore);
   useEffect(() => {
     const suggestions = [...Array(5)].map((_, i) => ({
       userId: faker.datatype.uuid(),
@@ -27,25 +26,26 @@ export const Suggestions = () => {
         <button className="btn-no-fill-primary">See All</button>
       </div>
 
-      {profileStore?.followInfo.map((profile, idx) => (
-        <div key={idx} className="flex items-center justify-between mt-3">
-          <img
-            className="w-10 h-10 rounded-full border p-[2px]"
-            src={profile.avatar}
-            alt=""
-          />
-          <div className="flex-1 ml-4">
-            <h2 className="font-semibold text-sm ">{profile.name}</h2>
-            <h3 className="text-sm text-gray-400">{profile.email}</h3>
+      {profileStore &&
+        profileStore.followInfo.map((profile, idx) => (
+          <div key={idx} className="flex items-center justify-between mt-3">
+            <img
+              className="w-10 h-10 rounded-full border p-[2px]"
+              src={profile.avatar}
+              alt=""
+            />
+            <div className="flex-1 ml-4">
+              <h2 className="font-semibold text-sm ">{profile.name}</h2>
+              <h3 className="text-sm text-gray-400">{profile.email}</h3>
+            </div>
+            <button
+              onClick={() => router.push('/chat')}
+              className="btn-no-fill-secondary"
+            >
+              Nhắn tin
+            </button>
           </div>
-          <button
-            onClick={() => router.push('/chat')}
-            className="btn-no-fill-secondary"
-          >
-            Nhắn tin
-          </button>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };
