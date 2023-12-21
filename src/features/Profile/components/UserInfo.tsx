@@ -42,13 +42,13 @@ export const UserInfo = (props: Props) => {
                 onClick={() => onOpenUpdateProfile()}
                 className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
               >
-                Chinh sua trang ca nhan
+                Edit Profile Page
               </button>
               <button
                 onClick={() => router.push('/collections')}
                 className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2"
               >
-                Xem kho luu tru
+                See Storage
               </button>
             </div>
             <div className="flex justify-center items-center text-lg lg:my-8 my-2 lg:space-x-32 space-x-4">

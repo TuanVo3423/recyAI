@@ -63,7 +63,7 @@ export const InstructionItem = ({
               onClick={() => DeleteConfirmModalStatus.onOpen()}
               background="white"
             >
-              Xóa
+              Delete
             </Button>
             <Button
               onClick={() => {
@@ -73,7 +73,7 @@ export const InstructionItem = ({
               background="green.500"
               color="white"
             >
-              Chỉnh sửa
+              Edit
             </Button>
           </HStack>
         </Stack>

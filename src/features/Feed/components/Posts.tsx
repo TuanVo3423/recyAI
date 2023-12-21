@@ -236,7 +236,7 @@ function Post({
         mt="2px"
         fontWeight="semibold"
       >
-        {`${likeCount} lượt thích`}
+        {`${likeCount} likes`}
       </Text>
       <div className="flex my-1 items-center ml-2">
         <p className="font-semibold text-sm mr-2 cursor-pointer">
@@ -251,7 +251,7 @@ function Post({
           onOpen();
         }}
         className="text-[14px] text-gray-500 cursor-pointer ml-2 mt-2 pb-5 border-b-[1px]"
-      >{`Xem tất cả ${comment_count} binh luan`}</Text>
+      >{`See all ${comment_count} comments`}</Text>
     </div>
   );
 }

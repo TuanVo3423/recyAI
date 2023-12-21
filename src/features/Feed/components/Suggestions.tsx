@@ -42,7 +42,7 @@ export const Suggestions = () => {
               onClick={() => router.push('/chat')}
               className="btn-no-fill-secondary"
             >
-              Nhắn tin
+            Mess now
             </button>
           </div>
         ))}

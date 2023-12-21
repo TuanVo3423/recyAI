@@ -195,7 +195,7 @@ function Post({
         <BookmarkIcon className="h-6 cursor-pointer" />
       </div>
       <Text color="#000" fontSize="14px" ml="8px" mt="2px" fontWeight="bold">
-        {`${likeCount} lượt thích`}
+        {`${likeCount} likes`}
       </Text>
       <Text
         onClick={() => {
@@ -203,7 +203,7 @@ function Post({
           onOpen();
         }}
         className="text-[14px] text-gray-500 cursor-pointer ml-2 mt-2 pb-5 border-b-[1px]"
-      >{`Xem tất cả ${comment_count} binh luan`}</Text>
+      >{`See all ${comment_count} comments`}</Text>
     </div>
   );
 }

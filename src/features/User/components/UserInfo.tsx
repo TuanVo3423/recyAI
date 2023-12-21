@@ -75,7 +75,7 @@ export const UserInfo = (props: Props) => {
           onClick={() => handleUnFollow()}
           className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
         >
-          Hủy theo dõi
+          Unfollow
         </button>
       );
     } else {
@@ -84,7 +84,7 @@ export const UserInfo = (props: Props) => {
           onClick={() => handleFollow()}
           className="bg-green-200 hover:bg-green-400 text-black w-[200px] h-[30px] rounded-xl text-sm font-semibold mt-2"
         >
-          Theo dõi
+          Follow
         </button>
       );
     }
@@ -115,7 +115,7 @@ export const UserInfo = (props: Props) => {
                     onClick={() => router.push('/chat')}
                     className="bg-green-200 hover:bg-green-400 text-black w-[150px] h-[30px] rounded-xl text-sm font-semibold mt-2"
                   >
-                    Nhắn tin
+                    Send message
                   </button>
                 </>
               )}

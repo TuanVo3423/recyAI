@@ -7,6 +7,7 @@ import { Button, VStack, useToast } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { UserCircleIcon } from '@heroicons/react/outline';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { DefaultLoginValues, ILogin, schema_login } from '../data';
@@ -130,18 +131,13 @@ export const SignIn = () => {
                 {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
               <button className="flex items-center text-blue-800 hover:text-blue-950 text-lg font-semibold -mt-3 px-4 rounded ">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Apple_logo_grey.svg/758px-Apple_logo_grey.svg.png"
-                  alt="Apple logo"
-                  width={20}
-                  height={20}
-                />
+                <UserCircleIcon className='w-6 text-green-400 hover:text-green-800 h-6'/>
                 {/* <span className="text-sm">Log in by Facebook</span> */}
               </button>
             </div>
             <a
               onClick={() => router.push('/auth/forgot-password')}
-              className="text-green-600 text-xs hover:text-green-900 mt-3"
+              className="text-green-600 text-xs cursor-pointer hover:text-green-900 mt-3"
             >
               Forgot password?
             </a>
@@ -154,7 +150,7 @@ export const SignIn = () => {
             onClick={() => router.push('/auth/sign-up')}
             className="text-sm font-bold text-green-500 hover:text-green-800 ml-2 cursor-pointer"
           >
-            Sign in
+            Register now
           </p>
         </div>
       </div>

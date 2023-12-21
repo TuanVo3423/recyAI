@@ -298,7 +298,7 @@ export const CommentModal = ({
                               )}
                             </p>
                             <p className="text-xs font-medium text-gray-400">
-                              {`${data.tweet.like_count} lượt thích`}
+                              {`${data.tweet.like_count} likes`}
                             </p>
                           </div>
                         </div>
@@ -321,7 +321,7 @@ export const CommentModal = ({
                   </div>
                   <div className="mt-2 pb-3 border-b-[1px]">
                     <p className="font-semibold text-sm ml-5">
-                      {`${data.tweet.like_count} lượt thích`}
+                      {`${data.tweet.like_count} likes`}
                     </p>
                     <p className="text-xs text-gray-500 ml-5">
                       {' '}
