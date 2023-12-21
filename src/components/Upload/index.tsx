@@ -140,7 +140,7 @@ export const Uploader = ({
           mt={2}
           mr={4}
           ml="auto"
-          color="green.200"
+          color="green.400"
           // backgroundColor={'green.400'}
           onClick={() => setFiles([])}
         >

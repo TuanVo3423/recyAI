@@ -73,7 +73,11 @@ export const DeleteConfirmModal = ({
           <Button mr={4} onClick={onClose}>
             Close
           </Button>
-          <Button bg="red.400" onClick={() => handleDeleteInstruction()}>
+          <Button
+            bg="red.400"
+            color="white"
+            onClick={() => handleDeleteInstruction()}
+          >
             Yes
           </Button>
         </ModalFooter>

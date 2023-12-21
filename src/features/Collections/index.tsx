@@ -5,6 +5,7 @@ import {
 } from '@/utils/classifyTweetType';
 import {
   Grid,
+  Text,
   useBreakpointValue,
   useDisclosure,
   useToast,
@@ -49,6 +50,7 @@ export const Collections = (props: Props) => {
           description: res.message,
           status: 'success',
         });
+        PostCollectionModalStatus.onClose();
       } else {
         toast({
           description: 'You need to verify your email to post tweet',
@@ -66,6 +68,7 @@ export const Collections = (props: Props) => {
           description: res.message,
           status: 'success',
         });
+        PostCollectionModalStatus.onClose();
       } else {
         toast({
           description: 'You need to verify your email to post tweet',
@@ -86,8 +89,7 @@ export const Collections = (props: Props) => {
             key={idx}
           />
         ))}
-      {!isLoading &&
-        data &&
+      {!isLoading && data.instructions.length > 0 ? (
         data.instructions.map((instruction, idx: number) => (
           <InstructionItem
             key={idx}
@@ -96,7 +98,12 @@ export const Collections = (props: Props) => {
             setInstructionId={setInstructionId}
             refetch={refetch}
           />
-        ))}
+        ))
+      ) : (
+        <Text as="em" color="green.400">
+          You don't have any instructions!
+        </Text>
+      )}
 
       <PostCollectionModal
         files={files}

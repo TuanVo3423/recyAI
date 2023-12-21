@@ -188,7 +188,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
             >
               Save
             </Button>
-            <Button
+            {/* <Button
               bg="green.500"
               color="white"
               disabled={!isFinish && true}
@@ -198,7 +198,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
               }}
             >
               Share
-            </Button>
+            </Button> */}
           </HStack>
         </HStack>
 
@@ -249,7 +249,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
             );
           })}
         </DragDropContext>
-        {isFinish && (
+        {true && (
           <ModalAddSection
             onSubmit={onSubmit}
             form={form}
@@ -261,14 +261,14 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
           form={form_share}
           ModalShareStatus={ShareSection}
         /> */}
-        {isFinish && (
+        {/* {isFinish && (
           <ShareInstructionModal
             currentInstruction={columns[0].tableOfContents}
             form={form_share}
             onSubmit={onSubmitShare}
             shareInstructionModalStatus={ShareSection}
           />
-        )}
+        )} */}
       </Box>
     </Flex>
   );

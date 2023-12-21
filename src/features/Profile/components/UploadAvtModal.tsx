@@ -25,7 +25,7 @@ export const UploadAvtModal = ({
 }: IUploadAvtModalProps) => {
   const [files, setFiles] = useState<any[]>([]);
   const toast = useToast();
-  const { mutateAsync: handleSavePhoto } = useMutation(
+  const { mutateAsync: handleSavePhoto, isLoading } = useMutation(
     async () => {
       const res = await updateMe({ medias: files });
       return res;
@@ -62,6 +62,7 @@ export const UploadAvtModal = ({
             setFiles={setFiles}
             handleSubmitButton={
               <Button
+                isLoading={isLoading}
                 mt={2}
                 mr={5}
                 backgroundColor={'green.500'}

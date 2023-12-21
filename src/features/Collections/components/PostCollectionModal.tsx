@@ -11,6 +11,7 @@ import {
   UseDisclosureProps,
 } from '@chakra-ui/react';
 import { PhotographIcon } from '@heroicons/react/outline';
+import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 interface TPostCollectionModalProps extends UseDisclosureProps {
   instructionId?: string;
@@ -31,8 +32,10 @@ export const PostCollectionModal = ({
 }: TPostCollectionModalProps) => {
   const { handleSubmit } = form;
   const queryClient = useQueryClient();
+
   const data: any = queryClient.getQueryData('getMyCollections');
   const profileStore = useAuth((state) => state.profile);
+
   const currentInstruction = data?.instructions.filter(
     (item) => item._id === instructionId
   )[0];
@@ -44,8 +47,8 @@ export const PostCollectionModal = ({
       <ModalOverlay />
       <ModalContent overflow="hidden" w="70vw" maxW="none">
         <ModalBody p={0} w="full">
-          <div className="flex justify-center ">
-            <div className="bg-white border-r-[1px]  w-[55%] py-[62px] px-[30px]">
+          <div className="flex justify-center">
+            <div className="bg-white border-r-[1px] w-[55%] py-[62px] px-[30px]">
               {currentInstruction &&
                 currentInstruction.steps.map((step: any, idx: number) => (
                   <Text key={idx}>{step.content}</Text>
@@ -61,9 +64,7 @@ export const PostCollectionModal = ({
               <div>
                 <div className="flex items-center py-3 border-b-[1px]">
                   <img
-                    src={
-                      'https://shophotproperties.com/cdn/shop/products/IMG_8557_grande.jpg?v=1503263004'
-                    }
+                    src={profileStore.avatar || 'empty_avatar.png'}
                     className="rounded-full h-8 w-8 object-contain border p-1 mr-3"
                     alt=""
                   />
@@ -73,10 +74,7 @@ export const PostCollectionModal = ({
                     </p>
                   </div>
 
-                  <button
-                    type="submit"
-                    className="font-semibold text-blue-400 cursor-pointer hover:text-blue-950 text-sm mr-2"
-                  >
+                  <button type="submit" className="btn-no-fill-primary">
                     Share
                   </button>
                 </div>

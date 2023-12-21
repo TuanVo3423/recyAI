@@ -1,6 +1,8 @@
-import { InputField } from '@/ui-kit';
+import { InputField, TextAreaInputFieldWithoutLabel } from '@/ui-kit';
 import {
+  Box,
   Button,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -36,20 +38,37 @@ export const ModalAddSection = ({ ModalStatus, form, onSubmit }: Props) => {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{'New section'}</ModalHeader>
+        <ModalHeader>{'Add new instruction'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack onSubmit={handleSubmit(onSubmit)} as="form" h="100%" gap={4}>
-            <InputField
+            <TextAreaInputFieldWithoutLabel
               form={form}
               label="New instruction"
               name="instruction"
               placeholder="Enter new instruction..."
               type="text"
             />
-            <Button variant="secondary" type="submit">
-              {'Save'}
-            </Button>
+            <HStack>
+              <Button
+                variant="outline"
+                display="block"
+                ml="auto"
+                w="fit-content"
+                color="green.500"
+                onClick={() => ModalStatus.onClose()}
+              >
+                {'Close'}
+              </Button>
+              <Button
+                background="green.500"
+                w="fit-content"
+                color="white"
+                type="submit"
+              >
+                {'Save'}
+              </Button>
+            </HStack>
           </Stack>
         </ModalBody>
       </ModalContent>

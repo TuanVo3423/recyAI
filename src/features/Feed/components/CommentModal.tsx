@@ -5,6 +5,7 @@ import { useAuth } from '@/stores';
 import { CommentTweet } from '@/utils/classifyTweetType';
 import {
   Button,
+  HStack,
   Heading,
   Modal,
   ModalBody,
@@ -145,20 +146,37 @@ export const CommentModal = ({
   const renderButton = () => {
     if (isEdit) {
       return (
-        <Button
-          height="fit-content"
-          lineHeight="32px"
-          onClick={async () => {
-            await handleSaveUpdate();
-            setIsEdit(false);
-          }}
-        >
-          Save
-        </Button>
+        <HStack>
+          <Button
+            variant="outline"
+            height="fit-content"
+            lineHeight="32px"
+            onClick={() => {
+              setIsEdit(false);
+              setCurrentStep(data.tweet.instruction[0].steps);
+            }}
+          >
+            Undo
+          </Button>
+          <Button
+            color="white"
+            background="green.500"
+            height="fit-content"
+            lineHeight="32px"
+            onClick={async () => {
+              await handleSaveUpdate();
+              setIsEdit(false);
+            }}
+          >
+            Save
+          </Button>
+        </HStack>
       );
     }
     return (
       <Button
+        color="white"
+        background="green.500"
         height="fit-content"
         lineHeight="32px"
         onClick={() => setIsEdit(true)}

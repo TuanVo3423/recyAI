@@ -13,7 +13,7 @@ export const Profile = (props: Props) => {
       {/* <AdditionFeed /> */}
       <hr className="mx-[300px] border-gray-600 mt-10"></hr>
       <MyFeed />
-      <PostModal onClose={onClose} />
+      {/* <PostModal onClose={onClose} /> */}
     </div>
   );
 };
