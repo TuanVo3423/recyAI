@@ -95,7 +95,7 @@ export const Collections = (props: Props) => {
             key={idx}
           />
         ))}
-      {!isLoading && data.instructions.length > 0 ? (
+      {!isLoading && data?.instructions.length > 0 ? (
         data.instructions.map((instruction, idx: number) => (
           <InstructionItem
             key={idx}

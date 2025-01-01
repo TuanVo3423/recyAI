@@ -22,11 +22,16 @@ export const Verify = (props: TVerifyProps) => {
     },
     enabled: !!router.isReady,
     onSuccess: async (data) => {
-      console.log(data.result.access_token);
+      console.log(data?.result.access_token);
+      console.log('data', data);
       await cookies.set('Authorization', data.result.access_token, {
         path: '/',
       });
     },
+    onError: (error) => {
+      console.log(error);
+      
+    }
   });
   console.log(data);
   const render = () => {

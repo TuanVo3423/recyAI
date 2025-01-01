@@ -1,4 +1,4 @@
-import { OpenAIRequest } from '@/services/openai';
+import { GeminiRequest } from '@/services/openai';
 import { useGenerateStepsPrompt } from '@/services/openai/prompt';
 import {
   Box,
@@ -41,7 +41,7 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
   const { StepChain } = useMemo(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { chatPrompt: stepPrompt } = useGenerateStepsPrompt(data);
-    const { chain: StepChain } = OpenAIRequest({
+    const { chain: StepChain } = GeminiRequest({
       prompt: stepPrompt,
       handleStream: (token: string) => {
         setStepToken((prev) => (prev += token));

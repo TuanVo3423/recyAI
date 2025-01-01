@@ -1,28 +1,27 @@
-import { OpenAI } from 'langchain/llms/openai';
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ConversationSummaryMemory } from 'langchain/memory';
 import { LLMChain } from 'langchain/chains';
 import { PromptTemplate } from 'langchain/prompts';
 
-interface IOpenAIRequest {
+interface IGeminiRequest {
   handleStream: (token: string) => void;
   handleStreamEnd: (token: string) => void;
   handleStreamStart?: () => void;
   prompt?: any;
-  OpenAIParams?: any;
+  GeminiParams?: any;
 }
 
-export const OpenAIRequest = ({
+export const GeminiRequest = ({
   handleStream,
   handleStreamEnd,
   handleStreamStart,
   prompt,
-  OpenAIParams,
-}: IOpenAIRequest) => {
-  const model = new OpenAI({
-    openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  GeminiParams,
+}: IGeminiRequest) => {
+  const model = new ChatGoogleGenerativeAI({
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
     temperature: 0.3,
     streaming: true,
-    modelName: 'gpt-3.5-turbo',
     callbacks: [
       {
         handleLLMNewToken(token: string) {
@@ -39,7 +38,7 @@ export const OpenAIRequest = ({
         },
       },
     ],
-    ...OpenAIParams,
+    ...GeminiParams,
   });
 
   const chain = new LLMChain({ llm: model, prompt });
@@ -48,11 +47,10 @@ export const OpenAIRequest = ({
   };
 };
 
-export const OpenAIRequestNotStream = ({ prompt }: IOpenAIRequest) => {
-  const model = new OpenAI({
-    openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+export const GeminiRequestNotStream = ({ prompt }: IGeminiRequest) => {
+  const model = new ChatGoogleGenerativeAI({
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
     temperature: 0.3,
-    modelName: 'gpt-3.5-turbo',
   });
 
   const chain = new LLMChain({ llm: model, prompt });
@@ -61,16 +59,15 @@ export const OpenAIRequestNotStream = ({ prompt }: IOpenAIRequest) => {
   };
 };
 
-export const OpenAIRequestWithMemory = ({
+export const GeminiRequestWithMemory = ({
   handleStream,
   prompt,
-  OpenAIParams,
-}: IOpenAIRequest) => {
-  const model = new OpenAI({
-    openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  GeminiParams,
+}: IGeminiRequest) => {
+  const model = new ChatGoogleGenerativeAI({
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
     temperature: 0.3,
     streaming: true,
-    modelName: 'gpt-3.5-turbo',
     callbacks: [
       {
         handleLLMNewToken(token: string) {
@@ -78,7 +75,7 @@ export const OpenAIRequestWithMemory = ({
         },
       },
     ],
-    ...OpenAIParams,
+    ...GeminiParams,
   });
   const memory = new ConversationSummaryMemory({
     memoryKey: 'chat_history',
